@@ -1,0 +1,5 @@
+const SignUp = (props) => {
+    return <h1>SignUp page</h1>;
+};
+
+export default SignUp;
