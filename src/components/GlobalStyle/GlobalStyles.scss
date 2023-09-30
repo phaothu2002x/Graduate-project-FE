@@ -24,6 +24,18 @@ body {
     text-rendering: optimizeSpeed;
 }
 
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
 //common
 // .wrapper {
 //     display: flex;

@@ -1,0 +1,113 @@
+.feedback {
+    margin-top: 151px;
+    padding: 50px 0;
+}
+
+.body {
+    display: flex;
+}
+
+.feedback-left {
+    width: 36%;
+    .desc {
+        width: 419px;
+        margin-top: 27px;
+        font-weight: 400;
+        font-size: 3.2rem;
+        line-height: 1.5;
+        color: #5d6564;
+    }
+
+    .student-feedback {
+        margin-top: 33px;
+        font-weight: 400;
+        font-size: 1.6rem;
+        color: #767e7e;
+
+        span {
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: #070707;
+        }
+    }
+    .chervon-group {
+        margin-top: 52px;
+        display: flex;
+        gap: 30px;
+    }
+
+    .right-chervon,
+    .left-chervon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        color: white;
+        border: 1px solid #2ac9bf;
+        background: var(--primary-color);
+
+        &:hover {
+            transition: all linear 0.2s;
+            background: #fff;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+    }
+}
+.feedback-right {
+    position: relative;
+    width: 64%;
+
+    .main-avatar,
+    .sub-ava1,
+    .sub-ava2,
+    .sub-ava3,
+    .sub-ava4,
+    .sub-ava5 {
+        position: absolute;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .main-avatar {
+        left: 345px;
+        top: 70px;
+        width: 235px;
+        height: 235px;
+    }
+    .sub-ava1 {
+        right: 0;
+        top: -18px;
+        width: 110px;
+        height: 110px;
+    }
+    .sub-ava2 {
+        width: 92px;
+        height: 92px;
+        top: -37px;
+        left: 216px;
+    }
+
+    .sub-ava3 {
+        top: 221px;
+        left: 72px;
+    }
+
+    .sub-ava4 {
+        left: 284px;
+        top: 366px;
+    }
+    .sub-ava5 {
+        top: 337px;
+        left: 641px;
+    }
+
+    .sub-ava3,
+    .sub-ava4,
+    .sub-ava5 {
+        width: 78px;
+        height: 78px;
+    }
+}

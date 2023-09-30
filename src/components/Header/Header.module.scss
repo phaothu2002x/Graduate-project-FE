@@ -53,39 +53,17 @@
     display: flex;
 }
 .btn {
+    width: 108px;
+    padding: 12px 24px;
     font-weight: 600;
     font-size: 1.4rem;
     text-align: center;
     border: 1px solid transparent;
+    transition: 0.3s ease;
     &:hover {
         color: #1ebfc1;
         border-radius: 6px;
         border: 1px solid var(--primary-color);
         cursor: pointer;
-    }
-}
-
-a {
-    text-decoration: none;
-}
-
-.btn {
-    width: 108px;
-    text-align: center;
-    padding: 12px 24px;
-}
-
-.start-btn {
-    font-weight: 600;
-    font-size: 1.8rem;
-    color: #ffffff;
-    background: var(--primary-color);
-    padding: 20px 41px;
-    text-align: center;
-    width: 186px;
-    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.05);
-    border-radius: 14px;
-    &:hover {
-        opacity: 0.8;
     }
 }

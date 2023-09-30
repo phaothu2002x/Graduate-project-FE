@@ -1,8 +1,8 @@
-import Home from '~/pages/Home';
-import Product from '~/pages/Product';
+import Home from '~/pages/Home/home';
+import Product from '~/pages/Product/product';
 import Cart from '~/pages/Cart';
-import SignUp from '~/pages/SignUp';
-import Login from '~/pages/Login';
+import SignUp from '~/pages/SignUp/signUp';
+import Login from '~/pages/Login/login';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },

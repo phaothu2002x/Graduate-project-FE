@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Product.module.scss';
-import Header from '~/components/Header';
+import Header from '~/components/Header/header';
 
 const cx = classNames.bind(styles);
 const Product = (props) => {

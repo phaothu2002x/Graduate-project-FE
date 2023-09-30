@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
+import images from '~/assets/images';
 // import { Route } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
@@ -10,7 +11,7 @@ const Header = (props) => {
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
                     <Link to="/product">
-                        <img src="~/1assets/img/course" alt="logo" />
+                        <img src={images.logo} alt="logo" />
                     </Link>
                 </div>
                 <div className={cx('nav')}>
@@ -34,8 +35,12 @@ const Header = (props) => {
                 </div>
 
                 <div className={cx('register')}>
-                    <a className={cx('btn')}>Sign in</a>
-                    <a className={cx('btn')}>Sign up</a>
+                    <a href="#!" className={cx('btn')}>
+                        Sign in
+                    </a>
+                    <a href="#!" className={cx('btn')}>
+                        Sign up
+                    </a>
                 </div>
             </div>
         </header>

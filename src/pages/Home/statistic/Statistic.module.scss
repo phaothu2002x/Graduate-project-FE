@@ -1,0 +1,24 @@
+.statistic {
+    margin-top: 230px;
+    padding: 50px 0 100px;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    gap: 210px;
+
+    .heading {
+        font-weight: 700;
+        font-size: 6.2rem;
+        text-align: center;
+        color: #0d1111;
+    }
+    .desc {
+        margin-top: 11px;
+        font-weight: 400;
+        font-size: 1.8rem;
+        text-align: center;
+        color: #767e7e;
+    }
+}

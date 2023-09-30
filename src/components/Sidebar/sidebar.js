@@ -4,11 +4,7 @@ import styles from './Sidebar.module.scss';
 const cx = classNames.bind(styles);
 
 const Sidebar = (props) => {
-    return (
-        <div className={cx('wrapper')}>
-            <h1>Side bar</h1>
-        </div>
-    );
+    return <div className={cx('wrapper')}>Side bar</div>;
 };
 
 export default Sidebar;

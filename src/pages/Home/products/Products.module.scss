@@ -1,0 +1,138 @@
+.body {
+    margin-top: 50px;
+    padding-bottom: 100px;
+}
+
+.course-top {
+    .title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #767e7e;
+    }
+    .heading {
+        margin-top: 18px;
+        font-weight: 700;
+        font-size: 4.2rem;
+        color: #0d1111;
+    }
+
+    .course-desc {
+        margin-top: 19px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .desc {
+            width: 525px;
+            font-weight: 400;
+            font-size: 1.8rem;
+            line-height: 1.78;
+            color: #767e7e;
+        }
+
+        .courses-view {
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-decoration-line: underline;
+            color: #1ebfc1;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+.course-content {
+    margin-top: 80px;
+
+    .course-list {
+        display: flex;
+        gap: 47px;
+
+        .course-item {
+            position: relative;
+
+            .thumb-wrap {
+                overflow: hidden;
+                border-radius: 8px;
+            }
+
+            .thumb {
+                width: 359px;
+                height: 393px;
+                object-fit: cover;
+                opacity: 0.35;
+                border-radius: 8px;
+                transition: all ease 0.3s;
+            }
+
+            &:hover .course-info {
+                box-shadow: 0px 16px 90px rgba(0, 0, 0, 0.05);
+            }
+            &:hover .thumb {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.course-info {
+    position: absolute;
+    top: 322px;
+    right: 17px;
+    width: 325px;
+    padding: 18px 25px 19px;
+    background: #ffffff;
+    border-radius: 8px;
+
+    .course-title {
+        font-weight: 700;
+        font-size: 2.2rem;
+        color: #0d1111;
+    }
+    .price {
+        margin-top: 18px;
+        font-weight: 400;
+        font-size: 1.6rem;
+        color: #767e7e;
+
+        strong {
+            color: #0d1111;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+    }
+    .course-length p,
+    .desc {
+        margin-top: 6px;
+        font-weight: 400;
+        font-size: 1.4rem;
+        color: #9da6a5;
+    }
+}
+
+.course-length {
+    display: flex;
+    margin-top: 18px;
+
+    .class-numb,
+    .class-time {
+        display: flex;
+        align-items: center;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            margin: 0 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+    }
+    .class-numb::before {
+        margin-left: 0;
+    }
+}
