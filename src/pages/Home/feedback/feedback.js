@@ -24,9 +24,9 @@ const Feedback = (props) => {
                                     <path
                                         d="M7 13L1 7L7 1"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     />
                                 </svg>
                             </button>
@@ -35,9 +35,9 @@ const Feedback = (props) => {
                                     <path
                                         d="M1 13L7 7L1 1"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     />
                                 </svg>
                             </button>

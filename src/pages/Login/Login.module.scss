@@ -1,0 +1,39 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
+.wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.content-right {
+    width: 400px;
+    height: 350px;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    .heading {
+        text-align: center;
+        font-weight: 600;
+        font-size: 4.8rem;
+    }
+
+    label {
+        font-size: 2rem;
+    }
+
+    input {
+        font-size: 1.4rem;
+        padding: 12px;
+    }
+
+    .action-btn {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        .btn {
+            min-width: 70px;
+            font-size: 1.6rem;
+        }
+    }
+}

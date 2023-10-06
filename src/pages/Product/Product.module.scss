@@ -1,7 +1,32 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .inner {
-    width: 1170px;
+    width: var(--content-width);
+    min-height: 1000px;
     max-width: calc(100% - 48px);
     margin-left: auto;
     margin-right: auto;
     padding-top: 24px;
+    background-color: #eeeeee;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-content {
+    flex-grow: 1;
+
+    // border: 1px solid blue;
+
+    .product-list {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
 }

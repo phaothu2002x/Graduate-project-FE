@@ -23,24 +23,24 @@ const Header = (props) => {
                             <Link to="/cart">Feature</Link>
                         </li>
                         <li className={cx('item')}>
-                            <a href="#!">Products</a>
+                            <Link to="/product">Products</Link>
                         </li>
                         <li className={cx('item')}>
                             <a href="#!">About</a>
                         </li>
                         <li className={cx('item')}>
-                            <a href="#!">Contact</a>
+                            <Link to="/cart">Cart</Link>
                         </li>
                     </ul>
                 </div>
 
                 <div className={cx('register')}>
-                    <a href="#!" className={cx('btn')}>
+                    <Link to="/login" className={cx('btn')}>
                         Sign in
-                    </a>
-                    <a href="#!" className={cx('btn')}>
+                    </Link>
+                    <Link to="/sign-up" className={cx('btn')}>
                         Sign up
-                    </a>
+                    </Link>
                 </div>
             </div>
         </header>

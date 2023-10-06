@@ -48,7 +48,8 @@
 
     .course-list {
         display: flex;
-        gap: 47px;
+        // gap: 47px;
+        justify-content: space-around;
 
         .course-item {
             position: relative;
@@ -59,8 +60,8 @@
             }
 
             .thumb {
-                width: 359px;
-                height: 393px;
+                width: 400px;
+                height: 450px;
                 object-fit: cover;
                 opacity: 0.35;
                 border-radius: 8px;
@@ -81,7 +82,7 @@
 .course-info {
     position: absolute;
     top: 322px;
-    right: 17px;
+    right: 35px;
     width: 325px;
     padding: 18px 25px 19px;
     background: #ffffff;
