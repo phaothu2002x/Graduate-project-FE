@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 12px;
+
+    .title {
+        width: 75px;
+        margin-right: 20px;
+    }
+
+    .filter-items {
+        flex: 1;
+        height: 32px;
+        font-size: 1.6rem;
+    }
+}

@@ -20,11 +20,6 @@ const Product = (props) => {
                             <Item thumb={images.productImg2} />
                             <Item thumb={images.productImg4} />
                             <Item thumb={images.productImg5} />
-                            <Item thumb={images.productImg2} />
-                            <Item thumb={images.productImg5} />
-                            <Item thumb={images.productImg5} />
-                            <Item thumb={images.productImg5} />
-                            <Item thumb={images.productImg5} />
                         </div>
                     </div>
                 </main>

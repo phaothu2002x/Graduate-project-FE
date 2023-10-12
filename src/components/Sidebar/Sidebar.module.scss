@@ -1,4 +1,37 @@
 .wrapper {
     width: 285px;
     border: 1px solid darkcyan;
+    background-color: lightblue;
+    border-radius: 12px;
+
+    .title {
+        padding: 24px 18px;
+        font-size: 2.4rem;
+        border-bottom: 1px ridge rgb(214 214 214);
+    }
+    .category-list {
+        height: 150px;
+
+        overflow-y: auto;
+        border-bottom: 1px ridge rgb(214 214 214);
+    }
+
+    .filter-list {
+        padding: 8px 0;
+        border-bottom: 1px ridge rgb(214 214 214);
+    }
+
+    .filter-action {
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+        .filter-btn {
+            background-color: cornflowerblue;
+            color: whitesmoke;
+            width: 108px;
+            height: 47px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+    }
 }
