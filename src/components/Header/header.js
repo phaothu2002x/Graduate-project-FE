@@ -38,7 +38,7 @@ const Header = (props) => {
                     <Link to="/login" className={cx('btn')}>
                         Sign in
                     </Link>
-                    <Link to="/sign-up" className={cx('btn')}>
+                    <Link to="/register" className={cx('btn')}>
                         Sign up
                     </Link>
                 </div>

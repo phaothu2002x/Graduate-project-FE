@@ -28,7 +28,7 @@ const Login = (props) => {
                         <Link to="/login" className={cx('btn', 'btn-primary')}>
                             Login
                         </Link>
-                        <Link to="/sign-up" className={cx('btn', 'btn-primary')}>
+                        <Link to="/register" className={cx('btn', 'btn-primary')}>
                             Create new account
                         </Link>
                     </div>
