@@ -5,6 +5,7 @@ import Sidebar from '~/components/Sidebar/sidebar';
 import Item from '~/components/ProductItem/item';
 import Search from '~/components/Search/search';
 import images from '~/assets/images';
+
 const cx = classNames.bind(styles);
 const Product = (props) => {
     return (

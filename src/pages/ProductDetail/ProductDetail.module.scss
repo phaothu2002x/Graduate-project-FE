@@ -1,0 +1,188 @@
+.wrapper {
+    height: 5000px;
+    background-color: #eeeeee;
+}
+
+.inner {
+    width: var(--content-width);
+    max-width: calc(100% - 48px);
+    margin-left: auto;
+    margin-right: auto;
+    height: 1000px;
+    .banner {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        border: 1px solid green;
+    }
+}
+
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.content-right {
+    width: 50%;
+
+    .product-item {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        border-radius: 12px;
+        .thumb {
+            height: 710px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: 0.3s ease;
+            &:active {
+                transform: scale(1.2);
+            }
+        }
+    }
+    .product-slider {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 20px;
+
+        .slider-items {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 24px;
+            margin: 0 8px 8px;
+            &.active {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+.content-left {
+    flex: 1;
+
+    .heading {
+        margin: 20px 0;
+        font-size: 2.6rem;
+        font-weight: 600;
+        color: #0f52ba;
+    }
+    .rating {
+        margin: 20px 0;
+        font-size: 1.8rem;
+        .star-icon {
+            color: #ffb700;
+        }
+    }
+    .desc-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #0f52ba;
+    }
+    .desc {
+        font-size: 1.8rem;
+    }
+
+    .category {
+        display: flex;
+        justify-content: space-between;
+        min-height: 120px;
+        gap: 10px;
+        .desc-title {
+            font-size: 1.8rem;
+        }
+
+        .product-category,
+        .product-type {
+            width: 50%;
+            border-radius: 12px;
+
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            .category-tags,
+            .type-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 3px;
+                margin-top: 10px;
+                .tags {
+                    color: var(--text-color);
+                    padding: 5px;
+                    margin-right: 3px;
+                    border: 1px solid transparent;
+                    border-radius: 99px;
+
+                    &:hover {
+                        opacity: 0.85;
+                    }
+                }
+
+                .brand-tag {
+                    background-color: #90bfc7;
+                }
+                .type-tag {
+                    background-color: #c2df9e;
+                }
+                .switch-tag {
+                    background-color: #f6d8ec;
+                }
+            }
+        }
+        .product-type {
+            flex: 1;
+        }
+    }
+
+    .purchase {
+        width: 50%;
+        min-height: 186px;
+        margin-top: 27px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+        .original-price {
+            display: flex;
+            font-size: 1.6rem;
+
+            .discount {
+                margin-left: 10px;
+                padding: 0 8px;
+                color: #67b044;
+                background-color: #67b0443d;
+            }
+        }
+
+        .price {
+            margin: 20px 0;
+            font-size: 2.6rem;
+            font-weight: 600;
+        }
+
+        .purchase-action {
+            .add-cart-btn {
+                padding: 10px 55px;
+                font-size: 1.8rem;
+                border-radius: 12px;
+                margin-right: 20px;
+            }
+
+            .like {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 46px;
+                height: 46px;
+                border-radius: 6px;
+                border: 1px solid #d2d1d6;
+
+                .like-icon {
+                    padding: 11px;
+                }
+            }
+        }
+    }
+}

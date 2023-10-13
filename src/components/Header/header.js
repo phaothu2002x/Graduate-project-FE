@@ -26,7 +26,7 @@ const Header = (props) => {
                             <Link to="/product">Products</Link>
                         </li>
                         <li className={cx('item')}>
-                            <a href="#!">About</a>
+                            <Link to="/productDetail">About</Link>
                         </li>
                         <li className={cx('item')}>
                             <Link to="/cart">Cart</Link>
