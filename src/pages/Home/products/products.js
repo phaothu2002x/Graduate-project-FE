@@ -7,8 +7,8 @@ const Products = (props) => {
     return (
         <div className="wrapper">
             {/* <!--course  --> */}
-            <div class="course">
-                <div class="body">
+            <div className={cx('course')}>
+                <div className={cx('body')}>
                     {/* <!-- course-top --> */}
                     <div className={cx('course-top')}>
                         <p className={cx('title')}>P R O D U C T S</p>

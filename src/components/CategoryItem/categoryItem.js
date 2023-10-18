@@ -7,7 +7,7 @@ const CategoryItem = (props) => {
         <div className={cx('wrapper')}>
             <div className={cx('title')}>{props.title}</div>
             <span className={cx('icon')}>
-                <i class="fa fa-arrow-right"></i>
+                <i className="fa fa-arrow-right"></i>
             </span>
         </div>
     );

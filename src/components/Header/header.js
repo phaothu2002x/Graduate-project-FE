@@ -19,31 +19,31 @@ const Header = (props) => {
                 <div className={cx('nav', 'nav-scss')}>
                     <ul className={cx('list')}>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/" activeClassName="custom-active" className="border-container">
+                            <NavLink to="/" exact={true} className="border-container">
                                 Home
                                 <div className="border-inner"></div>
                             </NavLink>
                         </li>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/cart" activeClassName="custom-active" className="border-container">
+                            <NavLink to="/cart" className="border-container">
                                 Feature
                                 <div className="border-inner"></div>
                             </NavLink>
                         </li>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/product" activeClassName="custom-active" className="border-container">
+                            <NavLink to="/product" className="border-container">
                                 Products
                                 <div className="border-inner"></div>
                             </NavLink>
                         </li>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/productDetail" activeClassName="custom-active" className="border-container">
+                            <NavLink to="/productDetail" className="border-container">
                                 About
                                 <div className="border-inner"></div>
                             </NavLink>
                         </li>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/cart" activeClassName="custom-active" className="border-container">
+                            <NavLink to="/cart" className="border-container">
                                 Cart
                                 <div className="border-inner"></div>
                             </NavLink>

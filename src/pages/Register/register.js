@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 const Register = (props) => {
@@ -21,7 +22,7 @@ const Register = (props) => {
                 <div className={cx('col-md-7 col-12 p-4', 'content-right')}>
                     <h1 className={cx('heading')}>REGISTER FORM</h1>
                     <div className={cx('col-md-6 col-12 mb-3')}>
-                        <label for="formGroupExampleInput" className={cx('form-label', 'name')}>
+                        <label htmlFor="formGroupExampleInput" className={cx('form-label', 'name')}>
                             Username
                         </label>
                         <input
@@ -32,7 +33,7 @@ const Register = (props) => {
                         />
                     </div>
                     <div className={cx('col-md-6 col-12 mb-3')}>
-                        <label for="formGroupExampleInput" className={cx('form-label', 'email')}>
+                        <label htmlFor="formGroupExampleInput" className={cx('form-label', 'email')}>
                             Email
                         </label>
                         <input
@@ -44,7 +45,7 @@ const Register = (props) => {
                     </div>
                     <div className={cx('row')}>
                         <div className={cx('col-md-6 col-12 mb-3')}>
-                            <label for="formGroupExampleInput" className={cx('form-label', 'password')}>
+                            <label htmlFor="formGroupExampleInput" className={cx('form-label', 'password')}>
                                 Password
                             </label>
                             <input
@@ -55,7 +56,7 @@ const Register = (props) => {
                             />
                         </div>
                         <div className={cx('col-md-6 col-12 mb-3')}>
-                            <label for="formGroupExampleInput" className={cx('form-label', 'confirmpass')}>
+                            <label htmlFor="formGroupExampleInput" className={cx('form-label', 'confirmpass')}>
                                 Confirm password
                             </label>
                             <input
