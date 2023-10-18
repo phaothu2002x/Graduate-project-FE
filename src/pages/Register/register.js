@@ -3,9 +3,16 @@ import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
+
 const cx = classNames.bind(styles);
 
 const Register = (props) => {
+    useEffect(() => {
+        axios.get('http://localhost:8081/api/test').then((data) => {
+            console.log('>>>check data', data);
+        });
+    }, []);
+
     return (
         <div className={cx('login-container')}>
             <div className={cx('container d-flex p-0')}>
