@@ -24,7 +24,7 @@
     margin-bottom: 30px;
 }
 
-.content-right {
+.content-left {
     width: 50%;
 
     .product-item {
@@ -45,6 +45,7 @@
     }
     .product-slider {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         width: 100%;
         margin-top: 20px;
@@ -62,7 +63,7 @@
     }
 }
 
-.content-left {
+.content-right {
     flex: 1;
 
     .heading {

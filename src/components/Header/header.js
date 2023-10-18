@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import images from '~/assets/images';
+import './Header.scss';
 // import { Route } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
@@ -14,22 +15,38 @@ const Header = (props) => {
                         <img src={images.logo} alt="logo" />
                     </Link>
                 </div>
-                <div className={cx('nav')}>
+
+                <div className={cx('nav', 'nav-scss')}>
                     <ul className={cx('list')}>
-                        <li className={cx('item', 'active')}>
-                            <Link to="/">Home</Link>
+                        <li className={cx('item', 'item-scss')}>
+                            <NavLink to="/" activeClassName="custom-active" className="border-container">
+                                Home
+                                <div className="border-inner"></div>
+                            </NavLink>
                         </li>
-                        <li className={cx('item')}>
-                            <Link to="/cart">Feature</Link>
+                        <li className={cx('item', 'item-scss')}>
+                            <NavLink to="/cart" activeClassName="custom-active" className="border-container">
+                                Feature
+                                <div className="border-inner"></div>
+                            </NavLink>
                         </li>
-                        <li className={cx('item')}>
-                            <Link to="/product">Products</Link>
+                        <li className={cx('item', 'item-scss')}>
+                            <NavLink to="/product" activeClassName="custom-active" className="border-container">
+                                Products
+                                <div className="border-inner"></div>
+                            </NavLink>
                         </li>
-                        <li className={cx('item')}>
-                            <Link to="/productDetail">About</Link>
+                        <li className={cx('item', 'item-scss')}>
+                            <NavLink to="/productDetail" activeClassName="custom-active" className="border-container">
+                                About
+                                <div className="border-inner"></div>
+                            </NavLink>
                         </li>
-                        <li className={cx('item')}>
-                            <Link to="/cart">Cart</Link>
+                        <li className={cx('item', 'item-scss')}>
+                            <NavLink to="/cart" activeClassName="custom-active" className="border-container">
+                                Cart
+                                <div className="border-inner"></div>
+                            </NavLink>
                         </li>
                     </ul>
                 </div>

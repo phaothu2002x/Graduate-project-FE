@@ -15,7 +15,7 @@ const ProductDetail = (props) => {
             <div className={cx('inner')}>
                 <div className={cx('banner')}>Breadcrumbs</div>
                 <div className={cx('product-container')}>
-                    <div className={cx('content-right')}>
+                    <div className={cx('content-left')}>
                         <div className={cx('product-item')}>
                             <Carousel>
                                 <Carousel.Item>
@@ -37,7 +37,7 @@ const ProductDetail = (props) => {
                             <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
                         </div>
                     </div>
-                    <div className={cx('content-left')}>
+                    <div className={cx('content-right')}>
                         <h1 className={cx('heading')}>Coffee Beans - Espresso Arabica and Robusta Beans</h1>
                         <div className={cx('rating')}>
                             <span className={cx('star-icon')}>

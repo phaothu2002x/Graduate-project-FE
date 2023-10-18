@@ -18,6 +18,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .active {
+        border-bottom: 3px solid var(--primary-color);
+    }
 }
 
 .logo {
@@ -40,10 +44,10 @@
             &:hover {
                 text-shadow: 0px 0 1px currentColor;
             }
-        }
 
-        &.active {
-            border-bottom: 3px solid var(--primary-color);
+            // &.active {
+            //     border-bottom: 3px solid var(--primary-color);
+            // }
         }
     }
 }
