@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
@@ -12,51 +12,69 @@ const Register = (props) => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+    const defaultValidInput = {
+        isValidUserName: true,
+        isValidEmail: true,
+        isValidPhone: true,
+        isValidPassword: true,
+        isValidConfirmPass: true,
+    };
+    const [objCheckInput, setObjCheckInput] = useState(defaultValidInput);
 
     useEffect(() => {
-        //     axios.get('http://localhost:8081/api/test').then((data) => {
-        //         console.log('>>>check data', data);
-        //     });
+        axios.get('http://localhost:8081/api/test-api').then((data) => {
+            console.log('>>>check data', data);
+        });
     }, []);
 
     //validate
-    const isValidate = ({ username, email, phone, password, confirmPass }) => {
-        let regx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
-        if (!username) {
+    const isValidate = () => {
+        setObjCheckInput(defaultValidInput);
+
+        if (username == false) {
             toast.error(<h3>Username is invalid</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidUserName: false });
             return false;
         }
         if (!email) {
             toast.error(<h3>Email is empty</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidEmail: false });
             return false;
         }
+        let regx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         if (!regx.test(email)) {
             toast.error(<h3>Email is invalid</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidEmail: false });
             return false;
         }
         if (!phone) {
             toast.error(<h3>Phome is invalid</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidPhone: false });
             return false;
         }
         if (!password) {
             toast.error(<h3>Please enter password</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidPassword: false });
             return false;
         }
         if (password !== confirmPass) {
             toast.error(<h3>Password & Confirm password is different</h3>);
+            setObjCheckInput({ ...objCheckInput, isValidConfirmPass: false });
             return false;
         }
         return true;
     };
 
     const handleRegister = () => {
+        let check = isValidate();
         let userData = { email, phone, username, password, confirmPass };
-
-        if (isValidate(userData)) {
-            toast.success('Register successfully');
+        if (check === true) {
+            toast.success('pass data ok');
+            axios.post('http://localhost:8081/api/register', { userData });
         }
-        console.log('>>> check data', userData);
+
+        // console.log('>>> check data', userData);
     };
 
     return (
@@ -80,7 +98,11 @@ const Register = (props) => {
                         </label>
                         <input
                             type="text"
-                            className={cx('form-control', 'name-input')}
+                            className={
+                                objCheckInput.isValidUserName
+                                    ? cx('form-control', 'name-input')
+                                    : cx('form-control is-invalid', 'name-input')
+                            }
                             id="username"
                             placeholder="Enter your username"
                             value={username}
@@ -96,7 +118,11 @@ const Register = (props) => {
                             </label>
                             <input
                                 type="email"
-                                className={cx('form-control', 'email-input')}
+                                className={
+                                    objCheckInput.isValidEmail
+                                        ? cx('form-control', 'email-input')
+                                        : cx('form-control is-invalid', 'email-input')
+                                }
                                 id="email"
                                 placeholder="Enter your email"
                                 value={email}
@@ -105,13 +131,18 @@ const Register = (props) => {
                                 }}
                             />
                         </div>
+
                         <div className={cx('col-md-6 col-12 mb-3')}>
                             <label htmlFor="phone" className={cx('form-label', 'phone')}>
                                 Phone
                             </label>
                             <input
                                 type="text"
-                                className={cx('form-control', 'phone-input')}
+                                className={
+                                    objCheckInput.isValidPhone
+                                        ? cx('form-control', 'phone-input')
+                                        : cx('form-control is-invalid', 'phone-input')
+                                }
                                 id="phone"
                                 placeholder="Enter your Phone number"
                                 value={phone}
@@ -128,7 +159,11 @@ const Register = (props) => {
                             </label>
                             <input
                                 type="password"
-                                className={cx('form-control', 'pass-input')}
+                                className={
+                                    objCheckInput.isValidPassword
+                                        ? cx('form-control', 'pass-input')
+                                        : cx('form-control is-invalid', 'pass-input')
+                                }
                                 id="password"
                                 placeholder="Enter your password"
                                 value={password}
@@ -143,7 +178,11 @@ const Register = (props) => {
                             </label>
                             <input
                                 type="password"
-                                className={cx('form-control', 'confirm-input')}
+                                className={
+                                    objCheckInput.isValidConfirmPass
+                                        ? cx('form-control', 'confirm-input')
+                                        : cx('form-control is-invalid', 'confirm-input')
+                                }
                                 id="confirmPass"
                                 placeholder="Confirm password"
                                 value={confirmPass}
