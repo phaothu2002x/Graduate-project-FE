@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
+// import axios from 'axios';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const Register = (props) => {
@@ -20,6 +20,7 @@ const Register = (props) => {
     const [confirmPass, setConfirmPass] = useState('');
 
     const handleRegister = () => {
+        toast.success(<h3>Hi</h3>);
         let userData = { email, phone, username, password };
         console.log('>>> check data', userData);
     };
