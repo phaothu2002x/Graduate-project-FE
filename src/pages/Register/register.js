@@ -2,26 +2,60 @@ import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
 // import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const Register = (props) => {
-    // useEffect(() => {
-    //     axios.get('http://localhost:8081/api/test').then((data) => {
-    //         console.log('>>>check data', data);
-    //     });
-    // }, []);
-
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
 
+    useEffect(() => {
+        //     axios.get('http://localhost:8081/api/test').then((data) => {
+        //         console.log('>>>check data', data);
+        //     });
+    }, []);
+
+    //validate
+    const isValidate = ({ username, email, phone, password, confirmPass }) => {
+        let regx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
+        if (!username) {
+            toast.error(<h3>Username is invalid</h3>);
+            return false;
+        }
+        if (!email) {
+            toast.error(<h3>Email is empty</h3>);
+            return false;
+        }
+        if (!regx.test(email)) {
+            toast.error(<h3>Email is invalid</h3>);
+            return false;
+        }
+        if (!phone) {
+            toast.error(<h3>Phome is invalid</h3>);
+            return false;
+        }
+        if (!password) {
+            toast.error(<h3>Please enter password</h3>);
+            return false;
+        }
+        if (password !== confirmPass) {
+            toast.error(<h3>Password & Confirm password is different</h3>);
+            return false;
+        }
+        return true;
+    };
+
     const handleRegister = () => {
-        toast.success(<h3>Hi</h3>);
-        let userData = { email, phone, username, password };
+        let userData = { email, phone, username, password, confirmPass };
+
+        if (isValidate(userData)) {
+            toast.success('Register successfully');
+        }
         console.log('>>> check data', userData);
     };
 
