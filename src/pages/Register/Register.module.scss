@@ -45,13 +45,17 @@
 
     .name,
     .email,
+    .phone,
     .password,
     .confirmpass {
         font-size: 1.6rem;
+        color: #3795d7;
+        text-shadow: 1px 1px #3794d74c;
     }
 
     .name-input,
     .email-input,
+    .phone-input,
     .pass-input,
     .confirm-input {
         font-size: 1.6rem;
