@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { LoginUser } from '~/services/userService';
@@ -8,6 +8,7 @@ import { LoginUser } from '~/services/userService';
 const cx = classNames.bind(styles);
 
 const Login = (props) => {
+    const navigate = useNavigate();
     const [valueLogin, setValueLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -39,7 +40,17 @@ const Login = (props) => {
             toast.success(<h3>Check validate success</h3>);
         }
         //call api => truyen data xuong backend
-        await LoginUser(valueLogin, password);
+        let res = await LoginUser(valueLogin, password);
+
+        //hung cai backend tra ve qua bien response
+        if (res && res.data && +res.data.EC === 0) {
+            //success
+            navigate('/');
+        }
+        if (res && res.data && +res.data.EC !== 0) {
+            //failed
+            toast.error(<h3>{res.data.EM}</h3>);
+        }
     };
 
     return (
