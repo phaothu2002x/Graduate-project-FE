@@ -1,31 +1,88 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { LoginUser } from '~/services/userService';
 
 const cx = classNames.bind(styles);
 
 const Login = (props) => {
+    const [valueLogin, setValueLogin] = useState('');
+    const [password, setPassword] = useState('');
+
+    const defaultValidInput = {
+        valueLogin: true,
+        password: true,
+    };
+    const [objValidInput, setObjValidInput] = useState(defaultValidInput);
+
+    //validate
+    const isValidate = () => {
+        if (!valueLogin) {
+            toast.error(<h3>Email/Phone is required</h3>);
+            setObjValidInput({ ...defaultValidInput, valueLogin: false });
+            return false;
+        }
+        if (!password) {
+            toast.error(<h3>Password is required</h3>);
+            setObjValidInput({ ...defaultValidInput, password: false });
+            return false;
+        }
+        return true;
+    };
+
+    const handleLogin = async () => {
+        setObjValidInput(defaultValidInput);
+        let check = isValidate();
+        if (check) {
+            toast.success(<h3>Check validate success</h3>);
+        }
+        //call api => truyen data xuong backend
+        await LoginUser(valueLogin, password);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('content-right', 'col-4', 'p-4', 'd-flex', 'flex-column')}>
                     <h1 className={cx('heading')}>LOGIN</h1>
                     <div className={cx('col-12', 'mb-3')}>
-                        <label htmlFor="email" className={cx('form-label')}>
+                        <label htmlFor="email" className={cx('form-label', 'title')}>
                             Email/Password
                         </label>
-                        <input type="text" className={cx('form-control')} id="email" placeholder="Enter your username/Phone Number" />
+                        <input
+                            type="text"
+                            className={
+                                objValidInput.valueLogin ? cx('form-control', 'email-input') : cx('form-control is-invalid', 'email-input')
+                            }
+                            id="email"
+                            placeholder="Enter your Email/Phone Number"
+                            value={valueLogin}
+                            onChange={(e) => setValueLogin(e.target.value)}
+                        />
                     </div>
                     <div className={cx('col-12', 'mb-3')}>
-                        <label htmlFor="confirmPass" className={cx('form-label')}>
+                        <label htmlFor="confirmPass" className={cx('form-label', 'title')}>
                             Confirm password
                         </label>
-                        <input type="password" className={cx('form-control')} id="confirmPass" placeholder="Confirm password" />
+                        <input
+                            type="password"
+                            className={
+                                objValidInput.password
+                                    ? cx('form-control', 'password-input')
+                                    : cx('form-control is-invalid', 'password-input')
+                            }
+                            id="confirmPass"
+                            placeholder="Confirm password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </div>
                     <hr />
                     <div className="flex-grow-1"></div>
                     <div className={cx('action-btn')}>
-                        <Link to="/login" className={cx('btn', 'btn-primary')}>
+                        <Link to="/login" className={cx('btn', 'btn-primary')} onClick={() => handleLogin()}>
                             Login
                         </Link>
                         <Link to="/register" className={cx('btn', 'btn-primary')}>
