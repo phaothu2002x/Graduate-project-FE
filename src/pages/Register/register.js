@@ -32,37 +32,38 @@ const Register = (props) => {
     const isValidate = () => {
         setObjCheckInput(defaultValidInput);
 
-        if (username == false) {
+        if (!username) {
             toast.error(<h3>Username is invalid</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidUserName: false });
+            setObjCheckInput({ ...defaultValidInput, isValidUserName: false });
             return false;
         }
         if (!email) {
             toast.error(<h3>Email is empty</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidEmail: false });
+            setObjCheckInput({ ...defaultValidInput, isValidEmail: false });
             return false;
         }
         let regx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         if (!regx.test(email)) {
             toast.error(<h3>Email is invalid</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidEmail: false });
+            setObjCheckInput({ ...defaultValidInput, isValidEmail: false });
             return false;
         }
         if (!phone) {
             toast.error(<h3>Phome is invalid</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidPhone: false });
+            setObjCheckInput({ ...defaultValidInput, isValidPhone: false });
             return false;
         }
         if (!password) {
             toast.error(<h3>Please enter password</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidPassword: false });
+            setObjCheckInput({ ...defaultValidInput, isValidPassword: false });
             return false;
         }
         if (password !== confirmPass) {
             toast.error(<h3>Password & Confirm password is different</h3>);
-            setObjCheckInput({ ...objCheckInput, isValidConfirmPass: false });
+            setObjCheckInput({ ...defaultValidInput, isValidConfirmPass: false });
             return false;
         }
+
         return true;
     };
 
