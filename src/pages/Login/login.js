@@ -11,10 +11,10 @@ const Login = (props) => {
                 <div className={cx('content-right', 'col-4', 'p-4', 'd-flex', 'flex-column')}>
                     <h1 className={cx('heading')}>LOGIN</h1>
                     <div className={cx('col-12', 'mb-3')}>
-                        <label htmlFor="username" className={cx('form-label')}>
-                            Username
+                        <label htmlFor="email" className={cx('form-label')}>
+                            Email/Password
                         </label>
-                        <input type="text" className={cx('form-control')} id="username" placeholder="Enter your username" />
+                        <input type="text" className={cx('form-control')} id="email" placeholder="Enter your username/Phone Number" />
                     </div>
                     <div className={cx('col-12', 'mb-3')}>
                         <label htmlFor="confirmPass" className={cx('form-label')}>

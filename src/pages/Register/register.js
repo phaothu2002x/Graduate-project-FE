@@ -1,12 +1,16 @@
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { registerNewUser } from '~/services/userService';
+
 const cx = classNames.bind(styles);
 
 const Register = (props) => {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -67,12 +71,20 @@ const Register = (props) => {
         return true;
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         let check = isValidate();
-        let userData = { email, phone, username, password, confirmPass };
+
         if (check === true) {
             toast.success('pass data ok');
-            axios.post('http://localhost:8081/api/register', { userData });
+            let res = await registerNewUser(email, phone, username, password, confirmPass);
+            console.log(res);
+            let serverData = res.data;
+            if (+serverData.EC === 0) {
+                toast.success(serverData.EM);
+                navigate('/login');
+            } else {
+                toast.error(serverData.EM);
+            }
         }
 
         // console.log('>>> check data', userData);
