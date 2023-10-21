@@ -4,6 +4,7 @@ import Cart from '~/pages/Cart';
 import Login from '~/pages/Login/login';
 import Register from '~/pages/Register/register';
 import ProductDetail from '~/pages/ProductDetail/productDetail';
+import ManageUser from '~/pages/ManageUser/manageUser';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
@@ -12,6 +13,7 @@ const publicRoutes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/productDetail', component: ProductDetail },
+    { path: '/manage-user', component: ManageUser },
 ];
 
 // Private routes

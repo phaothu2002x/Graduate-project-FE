@@ -45,7 +45,12 @@ const Login = (props) => {
         //hung cai backend tra ve qua bien response
         if (res && res.data && +res.data.EC === 0) {
             //success
-            navigate('/');
+            let data = {
+                isAuthenticated: true,
+                token: 'fake token',
+            };
+            sessionStorage.setItem('account', JSON.stringify(data));
+            navigate('/manage-user');
         }
         if (res && res.data && +res.data.EC !== 0) {
             //failed
