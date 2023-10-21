@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { LoginUser } from '~/services/userService';
 
@@ -58,6 +58,13 @@ const Login = (props) => {
         }
     };
 
+    useEffect(() => {
+        let session = sessionStorage.getItem('account');
+        console.log(session);
+        if (session) {
+            navigate('/');
+        }
+    }, []);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>

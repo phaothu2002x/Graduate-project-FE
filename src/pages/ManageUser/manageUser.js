@@ -14,7 +14,7 @@ const ManageUser = (props) => {
         if (!session) {
             navigate('/');
         }
-    });
+    }, []);
 
     return (
         <>

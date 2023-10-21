@@ -5,6 +5,7 @@ import Login from '~/pages/Login/login';
 import Register from '~/pages/Register/register';
 import ProductDetail from '~/pages/ProductDetail/productDetail';
 import ManageUser from '~/pages/ManageUser/manageUser';
+
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
@@ -13,11 +14,14 @@ const publicRoutes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/productDetail', component: ProductDetail },
-    { path: '/manage-user', component: ManageUser },
 ];
 
 // Private routes
+// const CheckPrivateRoute = () => {
+//     return <>{result}</>;
+// };
 
-const privateRoutes = [];
+const privateRoutes = [{ path: '/manage-user', component: ManageUser }];
 
+// export default CheckRoute;
 export { publicRoutes, privateRoutes };
