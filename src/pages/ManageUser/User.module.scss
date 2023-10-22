@@ -1,0 +1,40 @@
+.wrapper {
+    height: 5000px;
+    background-color: #eeeeee;
+}
+
+.inner {
+    width: var(--content-width);
+    max-width: calc(100% - 48px);
+    margin-left: auto;
+    margin-right: auto;
+    height: 1000px;
+
+    .heading {
+        margin-top: 22px;
+        font-size: 2.6rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--heading-color);
+    }
+
+    .action-btn {
+        display: flex;
+        margin: 15px 0;
+        .refresh-btn,
+        .addNew-btn {
+            font-size: 1.6rem;
+        }
+
+        .refresh-btn {
+            margin-right: 10px;
+        }
+    }
+
+    .pagination {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
