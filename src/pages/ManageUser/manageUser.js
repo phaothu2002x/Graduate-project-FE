@@ -4,6 +4,7 @@ import Header from '~/components/Header/header';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchAllUsers } from '~/services/userService';
+import ReactPaginate from 'react-paginate';
 
 const cx = classNames.bind(styles);
 
@@ -19,20 +20,26 @@ const ManageUser = (props) => {
     }, []);
 
     //===*===
-    const [listUser, setlistUser] = useState([]);
-
+    const [listUser, setListUser] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentLimit, setCurrentLimit] = useState(3);
+    const [totalPage, setTotalPage] = useState(0);
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [currentPage]);
 
-    const fetchUsers = async () => {
-        let response = await fetchAllUsers();
+    const fetchUsers = async (page) => {
+        let response = await fetchAllUsers(currentPage, currentLimit);
 
         if (response && response.data && response.data.EC === 0) {
-            setlistUser(response.data.DT);
-            console.log(listUser);
-            console.log('>>>check response', response.data.DT);
+            console.log(response.data);
+            setTotalPage(response.data.DT.totalPages);
+            setListUser(response.data.DT.users);
         }
+    };
+
+    const handlePageClick = async (event) => {
+        setCurrentPage(+event.selected + 1);
     };
 
     return (
@@ -54,9 +61,10 @@ const ManageUser = (props) => {
                                 <th scope="col">UserName</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Role</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className={cx('t-body')}>
                             {listUser && listUser.length > 0 ? (
                                 <>
                                     {listUser.map((row, index) => {
@@ -67,20 +75,51 @@ const ManageUser = (props) => {
                                                 <td>{row.username}</td>
                                                 <td>{row.email}</td>
                                                 <td>{row.Role ? row.Role.name : ''}</td>
+                                                <td>
+                                                    <div className={cx('btn-wrap')}>
+                                                        <button className={cx('btn btn-warning', 'action-btn')}>edit</button>
+                                                        <button className={cx('btn btn-danger', 'action-btn')}>delete</button>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         );
                                     })}
                                 </>
                             ) : (
                                 <>
-                                    <h1>NOT FOUND USERS</h1>
+                                    <tr>
+                                        <td colSpan={5}>NOT FOUND USERS</td>
+                                    </tr>
                                 </>
                             )}
                         </tbody>
                     </table>
                 </div>
 
-                <div className={cx('pagination')}>Paginnation</div>
+                <div className={cx('pagination')}>
+                    {totalPage > 0 && (
+                        <ReactPaginate
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={2}
+                            pageCount={totalPage}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

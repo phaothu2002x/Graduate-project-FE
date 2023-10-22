@@ -31,10 +31,36 @@
         }
     }
 
+    .content {
+        .t-body {
+            td {
+                text-align: center;
+
+                .btn-wrap {
+                    display: flex;
+                    justify-content: space-around;
+                }
+                .action-btn {
+                    font-size: 1.6rem;
+                }
+            }
+        }
+    }
+
     .pagination {
         margin-top: 15px;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        ul {
+            li {
+                a {
+                    padding: 10px;
+
+                    font-size: 1.6rem;
+                }
+            }
+        }
     }
 }
