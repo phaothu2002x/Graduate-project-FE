@@ -4,7 +4,7 @@ import './ModalDelete.scss';
 const ModalDelete = (props) => {
     return (
         <>
-            <Modal show={props.show} onHide={props.handleClose}>
+            <Modal show={props.show} onHide={props.handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title className="heading">Confirm Delete User</Modal.Title>
                 </Modal.Header>

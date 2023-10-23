@@ -7,6 +7,7 @@ import { deleteUser, fetchAllUsers } from '~/services/userService';
 import ReactPaginate from 'react-paginate';
 import ModalDelete from './modalDelete';
 import { toast } from 'react-toastify';
+import ModalUser from './modalUser';
 
 const cx = classNames.bind(styles);
 
@@ -153,6 +154,7 @@ const ManageUser = (props) => {
                 </div>
             </div>
             <ModalDelete show={isShowModalDelete} handleClose={handleClose} confirmDelete={confirmDelete} dataModal={dataModal} />
+            <ModalUser title="Create user" />
         </div>
     );
 };
