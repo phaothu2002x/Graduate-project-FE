@@ -3,8 +3,10 @@ import styles from './User.module.scss';
 import Header from '~/components/Header/header';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchAllUsers } from '~/services/userService';
+import { deleteUser, fetchAllUsers } from '~/services/userService';
 import ReactPaginate from 'react-paginate';
+import ModalDelete from './modalDelete';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -24,15 +26,17 @@ const ManageUser = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentLimit, setCurrentLimit] = useState(3);
     const [totalPage, setTotalPage] = useState(0);
+
+    const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+    const [dataModal, setDataModal] = useState({});
     useEffect(() => {
         fetchUsers();
     }, [currentPage]);
 
-    const fetchUsers = async (page) => {
+    const fetchUsers = async () => {
         let response = await fetchAllUsers(currentPage, currentLimit);
 
         if (response && response.data && response.data.EC === 0) {
-            console.log(response.data);
             setTotalPage(response.data.DT.totalPages);
             setListUser(response.data.DT.users);
         }
@@ -40,6 +44,28 @@ const ManageUser = (props) => {
 
     const handlePageClick = async (event) => {
         setCurrentPage(+event.selected + 1);
+    };
+
+    const handleDeleteUser = async (user) => {
+        setDataModal(user);
+        setIsShowModalDelete(true);
+    };
+
+    //=======*======
+    //handle modale click
+    const handleClose = () => {
+        setIsShowModalDelete(false);
+        setDataModal({});
+    };
+    const confirmDelete = async () => {
+        let response = await deleteUser(dataModal);
+        if (response && response.data.EC === 0) {
+            toast.success(response.data.EM);
+            await fetchUsers();
+            setIsShowModalDelete(false);
+        } else {
+            toast.error(response.data.EM);
+        }
     };
 
     return (
@@ -78,7 +104,12 @@ const ManageUser = (props) => {
                                                 <td>
                                                     <div className={cx('btn-wrap')}>
                                                         <button className={cx('btn btn-warning', 'action-btn')}>edit</button>
-                                                        <button className={cx('btn btn-danger', 'action-btn')}>delete</button>
+                                                        <button
+                                                            className={cx('btn btn-danger', 'action-btn')}
+                                                            onClick={() => handleDeleteUser(row)}
+                                                        >
+                                                            delete
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -121,6 +152,7 @@ const ManageUser = (props) => {
                     )}
                 </div>
             </div>
+            <ModalDelete show={isShowModalDelete} handleClose={handleClose} confirmDelete={confirmDelete} dataModal={dataModal} />
         </div>
     );
 };

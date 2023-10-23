@@ -12,4 +12,8 @@ const fetchAllUsers = (page, limit) => {
     return axios.get(`http://localhost:8081/api/manage-user/read?page=${page}&limit=${limit}`);
 };
 
-export { registerNewUser, LoginUser, fetchAllUsers };
+const deleteUser = (user) => {
+    return axios.delete('http://localhost:8081/api/manage-user/delete', { data: { id: user.id } });
+};
+
+export { registerNewUser, LoginUser, fetchAllUsers, deleteUser };
