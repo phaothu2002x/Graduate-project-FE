@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import _ from 'lodash'; // dung trong viec ko merge dc state react
 const ModalUser = (props) => {
+    const { action, dataModalUser } = props;
     const defaultUserData = {
         email: '',
         username: '',
@@ -26,6 +27,22 @@ const ModalUser = (props) => {
     useEffect(() => {
         getRole();
     }, []);
+
+    useEffect(() => {
+        if (action === 'UPDATE') {
+            // console.log(dataModalUser);
+
+            setUserData({ ...dataModalUser, role: dataModalUser.role ? dataModalUser.role.id : '' });
+        }
+    }, [dataModalUser]);
+
+    useEffect(() => {
+        if (action === 'CREATE') {
+            if (userRole && userRole.length > 0) {
+                setUserData({ ...userData, role: userRole[0].id });
+            }
+        }
+    }, [action]);
 
     const getRole = async () => {
         let res = await fetchRole();
@@ -71,17 +88,28 @@ const ModalUser = (props) => {
             if (response.data.EC === 0) {
                 props.onHide();
                 setUserData({ ...defaultUserData, role: userRole[0].id });
-            } else {
-                toast.error('create user ERROR');
+            }
+            if (response.data && response.data.EC !== 0) {
+                toast.error(response.data.EM);
+                let _validInput = _.cloneDeep(defaultValidInput);
+                _validInput[response.data.DT] = false;
+                setValidInput(_validInput);
             }
         }
     };
 
+    ///handle modal close
+    const handleCloseModalUser = () => {
+        props.onHide();
+        setUserData(defaultUserData);
+        setValidInput(defaultValidInput);
+    };
+
     return (
         <>
-            <Modal show={props.show} size="lg" onHide={props.onHide} centered>
+            <Modal show={props.show} size="lg" onHide={() => handleCloseModalUser()} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title className="heading">{props.title}</Modal.Title>
+                    <Modal.Title className="heading">{props.action === 'CREATE' ? 'Create new user' : 'Update user'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="content-body">
@@ -91,6 +119,7 @@ const ModalUser = (props) => {
                                     Email: (<span className="red">*</span>)
                                 </label>
                                 <input
+                                    disabled={action === 'CREATE' ? false : true}
                                     value={userData.email}
                                     onChange={(e) => handleOnChangeInput(e.target.value, 'email')}
                                     id="email"
@@ -104,6 +133,7 @@ const ModalUser = (props) => {
                                     Phone number: (<span className="red">*</span>)
                                 </label>
                                 <input
+                                    disabled={action === 'CREATE' ? false : true}
                                     onChange={(e) => handleOnChangeInput(e.target.value, 'phone')}
                                     value={userData.phone}
                                     id="username"
@@ -125,19 +155,25 @@ const ModalUser = (props) => {
                                     placeholder="Enter Username"
                                 />
                             </div>
+
                             <div className="col-sm-6 col-12 form-group">
-                                <label htmlFor="password">
-                                    Password: (<span className="red">*</span>)
-                                </label>
-                                <input
-                                    onChange={(e) => handleOnChangeInput(e.target.value, 'password')}
-                                    value={userData.password}
-                                    id="password"
-                                    className={validInput.password ? 'form-control input' : 'form-control input is-invalid'}
-                                    type="password"
-                                    placeholder="Enter Password"
-                                />
+                                {action === 'CREATE' && (
+                                    <>
+                                        <label htmlFor="password">
+                                            Password: (<span className="red">*</span>)
+                                        </label>
+                                        <input
+                                            onChange={(e) => handleOnChangeInput(e.target.value, 'password')}
+                                            value={userData.password}
+                                            id="password"
+                                            className={validInput.password ? 'form-control input' : 'form-control input is-invalid'}
+                                            type="password"
+                                            placeholder="Enter Password"
+                                        />
+                                    </>
+                                )}
                             </div>
+
                             <div className="col-sm-6 col-12 form-group">
                                 <label>
                                     Role: (<span className="red">*</span>)
@@ -145,6 +181,7 @@ const ModalUser = (props) => {
                                 <select
                                     className={validInput.role ? 'form-select input' : 'form-select input is-invalid'}
                                     onChange={(e) => handleOnChangeInput(e.target.value, 'role')}
+                                    value={userData.role}
                                 >
                                     {userRole.length > 0 &&
                                         userRole.map((role, index) => {
@@ -160,7 +197,7 @@ const ModalUser = (props) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={props.onHide} className="action-btn">
+                    <Button variant="secondary" onClick={() => handleCloseModalUser()} className="action-btn">
                         Close
                     </Button>
                     <Button variant="primary" onClick={() => handleConfirmUser()} className="action-btn">

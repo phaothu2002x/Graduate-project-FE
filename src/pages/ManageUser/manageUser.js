@@ -28,10 +28,15 @@ const ManageUser = (props) => {
     const [currentLimit, setCurrentLimit] = useState(3);
     const [totalPage, setTotalPage] = useState(0);
 
+    /// modal delete
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
     const [dataModal, setDataModal] = useState({});
 
     const [isShowModalUser, setIsShowModalUser] = useState(false);
+    const [actionModalUser, setActionModalUser] = useState('CREATE');
+
+    /// modal update user
+    const [dataModalUser, setDataModalUser] = useState({});
 
     useEffect(() => {
         fetchUsers();
@@ -72,9 +77,19 @@ const ManageUser = (props) => {
         }
     };
 
-    const onHideModalUser = () => {
+    const onHideModalUser = async () => {
         setIsShowModalUser(false);
+        setDataModalUser({});
+        await fetchUsers();
     };
+
+    //handle edit button
+    const handleEditUser = (user) => {
+        setActionModalUser('UPDATE');
+        setDataModalUser(user);
+        setIsShowModalUser(true);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -85,6 +100,7 @@ const ManageUser = (props) => {
                     <button
                         onClick={() => {
                             setIsShowModalUser(true);
+                            setActionModalUser('CREATE');
                         }}
                         className={cx('btn btn-primary', 'addNew-btn')}
                     >
@@ -110,14 +126,19 @@ const ManageUser = (props) => {
                                     {listUser.map((row, index) => {
                                         return (
                                             <tr key={`row-${index}`}>
-                                                <td>{index + 1}</td>
+                                                <td>{(currentPage - 1) * currentLimit + index + 1}</td>
                                                 <td>{row.id}</td>
                                                 <td>{row.username}</td>
                                                 <td>{row.email}</td>
                                                 <td>{row.Role ? row.Role.name : ''}</td>
                                                 <td>
                                                     <div className={cx('btn-wrap')}>
-                                                        <button className={cx('btn btn-warning', 'action-btn')}>edit</button>
+                                                        <button
+                                                            className={cx('btn btn-warning', 'action-btn')}
+                                                            onClick={() => handleEditUser(row)}
+                                                        >
+                                                            edit
+                                                        </button>
                                                         <button
                                                             className={cx('btn btn-danger', 'action-btn')}
                                                             onClick={() => handleDeleteUser(row)}
@@ -167,7 +188,7 @@ const ManageUser = (props) => {
                 </div>
             </div>
             <ModalDelete show={isShowModalDelete} handleClose={handleClose} confirmDelete={confirmDelete} dataModal={dataModal} />
-            <ModalUser title="Create user" show={isShowModalUser} onHide={onHideModalUser} />
+            <ModalUser show={isShowModalUser} onHide={onHideModalUser} action={actionModalUser} dataModalUser={dataModalUser} />
         </div>
     );
 };
