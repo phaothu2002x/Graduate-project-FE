@@ -20,4 +20,8 @@ const fetchRole = (user) => {
     return axios.get('http://localhost:8081/api/role/read');
 };
 
-export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole };
+const createUser = (userData) => {
+    return axios.post('http://localhost:8081/api/manage-user/create', { ...userData });
+};
+
+export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser };

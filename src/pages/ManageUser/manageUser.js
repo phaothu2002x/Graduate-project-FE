@@ -30,6 +30,9 @@ const ManageUser = (props) => {
 
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
     const [dataModal, setDataModal] = useState({});
+
+    const [isShowModalUser, setIsShowModalUser] = useState(false);
+
     useEffect(() => {
         fetchUsers();
     }, [currentPage]);
@@ -69,6 +72,9 @@ const ManageUser = (props) => {
         }
     };
 
+    const onHideModalUser = () => {
+        setIsShowModalUser(false);
+    };
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -76,7 +82,14 @@ const ManageUser = (props) => {
                 <div className={cx('heading')}>Manage Users !!!</div>
                 <div className={cx('action-btn')}>
                     <button className={cx('btn btn-success', 'refresh-btn')}>Refresh</button>
-                    <button className={cx('btn btn-primary', 'addNew-btn')}>Add New</button>
+                    <button
+                        onClick={() => {
+                            setIsShowModalUser(true);
+                        }}
+                        className={cx('btn btn-primary', 'addNew-btn')}
+                    >
+                        Add New
+                    </button>
                 </div>
 
                 <div className={cx('content')}>
@@ -154,7 +167,7 @@ const ManageUser = (props) => {
                 </div>
             </div>
             <ModalDelete show={isShowModalDelete} handleClose={handleClose} confirmDelete={confirmDelete} dataModal={dataModal} />
-            <ModalUser title="Create user" />
+            <ModalUser title="Create user" show={isShowModalUser} onHide={onHideModalUser} />
         </div>
     );
 };
