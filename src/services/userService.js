@@ -1,31 +1,31 @@
-import axios from 'axios';
+import axios from '~/setup/axios';
 
 const registerNewUser = (email, phone, username, password, confirmPass) => {
-    return axios.post('http://localhost:8081/api/register', { email, phone, username, password, confirmPass });
+    return axios.post('/api/register', { email, phone, username, password, confirmPass });
 };
 
 const LoginUser = (valueLogin, password) => {
-    return axios.post('http://localhost:8081/api/login', { valueLogin, password });
+    return axios.post('/api/login', { valueLogin, password });
 };
 
 const fetchAllUsers = (page, limit) => {
-    return axios.get(`http://localhost:8081/api/manage-user/read?page=${page}&limit=${limit}`);
+    return axios.get(`/api/manage-user/read?page=${page}&limit=${limit}`);
 };
 
 const deleteUser = (user) => {
-    return axios.delete('http://localhost:8081/api/manage-user/delete', { data: { id: user.id } });
+    return axios.delete('/api/manage-user/delete', { data: { id: user.id } });
 };
 
 const fetchRole = (user) => {
-    return axios.get('http://localhost:8081/api/role/read');
+    return axios.get('/api/role/read');
 };
 
 const createUser = (userData) => {
-    return axios.post('http://localhost:8081/api/manage-user/create', { ...userData });
+    return axios.post('/api/manage-user/create', { ...userData });
 };
 
 const updateCurrentUser = (userData) => {
-    return axios.put('http://localhost:8081/api/manage-user/update', { ...userData });
+    return axios.put('/api/manage-user/update', { ...userData });
 };
 
 export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser, updateCurrentUser };

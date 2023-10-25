@@ -43,7 +43,7 @@ const Login = (props) => {
         let res = await LoginUser(valueLogin, password);
 
         //hung cai backend tra ve qua bien response
-        if (res && res.data && +res.data.EC === 0) {
+        if (res && +res.EC === 0) {
             //success
             let data = {
                 isAuthenticated: true,
@@ -52,9 +52,9 @@ const Login = (props) => {
             sessionStorage.setItem('account', JSON.stringify(data));
             navigate('/manage-user');
         }
-        if (res && res.data && +res.data.EC !== 0) {
+        if (res && +res.EC !== 0) {
             //failed
-            toast.error(<h3>{res.data.EM}</h3>);
+            toast.error(<h3>{res.EM}</h3>);
         }
     };
 

@@ -46,15 +46,15 @@ const ModalUser = (props) => {
 
     const getRole = async () => {
         let res = await fetchRole();
-        if (res && res.data && res.data.EC === 0) {
-            setUserRole(res.data.DT);
-            if (res.data.DT && res.data.DT.length > 0) {
-                let role = res.data.DT;
+        if (res && res.EC === 0) {
+            setUserRole(res.DT);
+            if (res.DT && res.DT.length > 0) {
+                let role = res.DT;
                 // console.log('>>> check role', role);
                 setUserData({ ...userData, role: role[0].id });
             }
         } else {
-            toast.error(res.data.EM);
+            toast.error(res.EM);
         }
     };
 
@@ -93,14 +93,14 @@ const ModalUser = (props) => {
                     ? await createUser({ ...userData, roleId: userData['role'] })
                     : await updateCurrentUser({ ...userData, roleId: userData['role'] });
 
-            if (response.data && response.data.EC === 0) {
+            if (response && response.EC === 0) {
                 props.onHide();
                 setUserData({ ...defaultUserData, role: userRole && userRole.length > 0 ? userRole[0].id : '' });
             }
-            if (response.data && response.data.EC !== 0) {
-                toast.error(response.data.EM);
+            if (response && response.EC !== 0) {
+                toast.error(response.EM);
                 let _validInput = _.cloneDeep(defaultValidInput);
-                _validInput[response.data.DT] = false;
+                _validInput[response.DT] = false;
                 setValidInput(_validInput);
             }
         }
