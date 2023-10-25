@@ -90,13 +90,21 @@ const ManageUser = (props) => {
         setIsShowModalUser(true);
     };
 
+    const handleRefresh = async () => {
+        await fetchUsers();
+    };
     return (
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Manage Users !!!</div>
                 <div className={cx('action-btn')}>
-                    <button className={cx('btn btn-success', 'refresh-btn')}>Refresh</button>
+                    <button className={cx('btn btn-success', 'refresh-btn')} onClick={() => handleRefresh()}>
+                        <span className={cx('refresh-icon')}>
+                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                        </span>
+                        Refresh
+                    </button>
                     <button
                         onClick={() => {
                             setIsShowModalUser(true);
@@ -104,6 +112,9 @@ const ManageUser = (props) => {
                         }}
                         className={cx('btn btn-primary', 'addNew-btn')}
                     >
+                        <span className={cx('addNew-icon')}>
+                            <i className="fa fa-plus-square"></i>
+                        </span>
                         Add New
                     </button>
                 </div>
@@ -137,13 +148,13 @@ const ManageUser = (props) => {
                                                             className={cx('btn btn-warning', 'action-btn')}
                                                             onClick={() => handleEditUser(row)}
                                                         >
-                                                            edit
+                                                            <i className="fa fa-pencil-square"></i>
                                                         </button>
                                                         <button
                                                             className={cx('btn btn-danger', 'action-btn')}
                                                             onClick={() => handleDeleteUser(row)}
                                                         >
-                                                            delete
+                                                            <i className="fa fa-trash"></i>
                                                         </button>
                                                     </div>
                                                 </td>

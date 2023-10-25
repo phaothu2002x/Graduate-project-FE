@@ -24,4 +24,8 @@ const createUser = (userData) => {
     return axios.post('http://localhost:8081/api/manage-user/create', { ...userData });
 };
 
-export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser };
+const updateCurrentUser = (userData) => {
+    return axios.put('http://localhost:8081/api/manage-user/update', { ...userData });
+};
+
+export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser, updateCurrentUser };

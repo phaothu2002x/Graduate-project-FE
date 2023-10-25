@@ -1,7 +1,7 @@
 import './ModalUser.scss';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { createUser, fetchRole } from '~/services/userService';
+import { createUser, fetchRole, updateCurrentUser } from '~/services/userService';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import _ from 'lodash'; // dung trong viec ko merge dc state react
@@ -32,7 +32,7 @@ const ModalUser = (props) => {
         if (action === 'UPDATE') {
             // console.log(dataModalUser);
 
-            setUserData({ ...dataModalUser, role: dataModalUser.role ? dataModalUser.role.id : '' });
+            setUserData({ ...dataModalUser, role: dataModalUser.Role ? dataModalUser.Role.id : '' });
         }
     }, [dataModalUser]);
 
@@ -63,6 +63,10 @@ const ModalUser = (props) => {
     const [validInput, setValidInput] = useState(defaultValidInput);
 
     const checkValidateInput = () => {
+        if (action === 'UPDATE') {
+            return true;
+        }
+
         setValidInput(defaultValidInput);
         let arr = ['email', 'phone', 'username', 'password', 'role'];
         let check = true;
@@ -84,10 +88,14 @@ const ModalUser = (props) => {
         //create user
         let check = checkValidateInput();
         if (check === true) {
-            let response = await createUser({ ...userData, roleId: userData['role'] });
-            if (response.data.EC === 0) {
+            let response =
+                action === 'CREATE'
+                    ? await createUser({ ...userData, roleId: userData['role'] })
+                    : await updateCurrentUser({ ...userData, roleId: userData['role'] });
+
+            if (response.data && response.data.EC === 0) {
                 props.onHide();
-                setUserData({ ...defaultUserData, role: userRole[0].id });
+                setUserData({ ...defaultUserData, role: userRole && userRole.length > 0 ? userRole[0].id : '' });
             }
             if (response.data && response.data.EC !== 0) {
                 toast.error(response.data.EM);

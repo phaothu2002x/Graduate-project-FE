@@ -28,6 +28,16 @@
 
         .refresh-btn {
             margin-right: 10px;
+            .refresh-icon {
+                margin-right: 10px;
+            }
+        }
+
+        .addNew-btn {
+            font-size: 1.6rem;
+            .addNew-icon {
+                margin-right: 10px;
+            }
         }
     }
 
@@ -41,6 +51,9 @@
                     justify-content: space-around;
                 }
                 .action-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     font-size: 1.6rem;
                 }
             }
