@@ -76,9 +76,8 @@ const Register = (props) => {
 
         if (check === true) {
             toast.success('pass data ok');
-            let res = await registerNewUser(email, phone, username, password, confirmPass);
-            console.log(res);
-            let serverData = res.data;
+            let serverData = await registerNewUser(email, phone, username, password, confirmPass);
+
             if (+serverData.EC === 0) {
                 toast.success(serverData.EM);
                 navigate('/login');
