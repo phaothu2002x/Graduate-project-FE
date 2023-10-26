@@ -60,7 +60,6 @@ const Login = (props) => {
 
     useEffect(() => {
         let session = sessionStorage.getItem('account');
-        console.log(session);
         if (session) {
             navigate('/');
         }

@@ -11,6 +11,16 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         border: 1px solid transparent;
     }
+
+    .action-btn {
+        display: flex;
+        justify-content: space-around;
+
+        .edit-btn,
+        .delete-btn {
+            font-size: 1.8rem;
+        }
+    }
 }
 
 .img-wrapper {
