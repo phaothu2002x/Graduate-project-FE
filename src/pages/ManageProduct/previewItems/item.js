@@ -64,6 +64,7 @@ const PreviewItem = (props) => {
                         </p>
                     </div>
                 </section>
+                {/* phan chinh sua */}
                 <div className={cx('action-btn')}>
                     <button className={cx('btn btn-warning', 'edit-btn')}>Edit</button>
                     <button className={cx('btn btn-danger', 'delete-btn')} onClick={() => handleDeleteItem()}>

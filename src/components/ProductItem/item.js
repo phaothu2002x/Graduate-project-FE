@@ -4,16 +4,17 @@ import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 const Items = (props) => {
+    const { id, thumbnail, name, Product_Price } = props.data;
     return (
         <article className={cx('product-item')}>
             <figure className={cx('img-wrapper')}>
                 <a href="#!">
-                    <img src={props.thumb || images.productImg} alt="product" className={cx('item-thumb')} />
+                    <img src={thumbnail || images.productImg} alt="product" className={cx('item-thumb')} />
                 </a>
             </figure>
             <section className={cx('body')}>
                 <h3 className={cx('heading')}>
-                    <a href="#!">{props.title || 'MONSGEEK M1W FULLY ASSEMBLED'}</a>
+                    <a href="#!">{name || 'MONSGEEK M1W FULLY ASSEMBLED'}</a>
                 </h3>
                 <div className={cx('category-tags')}>
                     <a href="#!" className={cx('brand-tag', 'tags')}>
@@ -27,7 +28,7 @@ const Items = (props) => {
                     </a>
                 </div>
                 <div className={cx('item-info')}>
-                    <p className={cx('price')}>$300</p>
+                    <p className={cx('price')}>${Product_Price ? Product_Price.price : '???'}</p>
                     <p className={cx('star-icon')}>
                         <span className={cx('icon')}>
                             <i className="fa fa-star"></i>
