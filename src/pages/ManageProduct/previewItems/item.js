@@ -1,10 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './Item.module.scss';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { deleteProduct, fetchAllProduct } from '~/services/productService';
+import { deleteProduct } from '~/services/productService';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import DeleteModal from '../Modals/deleteModal';
 const cx = classNames.bind(styles);
 
 const PreviewItem = (props) => {
@@ -72,7 +71,7 @@ const PreviewItem = (props) => {
                     </button>
                 </div>
             </article>
-            <Modal show={showDeleteModal} onHide={handleClose} centered className={cx('modal-box')}>
+            {/* <Modal show={showDeleteModal} onHide={handleClose} centered className={cx('modal-box')}>
                 <Modal.Header closeButton>
                     <Modal.Title className={cx('modal-heading')}>Modal heading</Modal.Title>
                 </Modal.Header>
@@ -85,7 +84,14 @@ const PreviewItem = (props) => {
                         Confirm
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
+            <DeleteModal
+                id={id}
+                showDeleteModal={showDeleteModal}
+                handleDeleteItem={handleDeleteItem}
+                handleConfirmDelete={handleConfirmDelete}
+                handleClose={handleClose}
+            />
         </>
     );
 };

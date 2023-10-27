@@ -19,7 +19,7 @@ const Header = (props) => {
                 <div className={cx('nav', 'nav-scss')}>
                     <ul className={cx('list')}>
                         <li className={cx('item', 'item-scss')}>
-                            <NavLink to="/" exact={true} className="border-container">
+                            <NavLink to="/" exact="true" className="border-container">
                                 Home
                                 <div className="border-inner"></div>
                             </NavLink>
