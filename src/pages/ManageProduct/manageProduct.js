@@ -5,9 +5,21 @@ import PreviewItem from './previewItems/item';
 import { useEffect, useState } from 'react';
 import { fetchAllProduct } from '../../services/productService';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+// import Button from 'react-bootstrap/Button';
+// import Modal from 'react-bootstrap/Modal';
 //=============
 const cx = classNames.bind(styles);
 const ManageProduct = (props) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        let session = sessionStorage.getItem('account');
+        // console.log(session);
+        if (!session) {
+            navigate('/login');
+        }
+    }, []);
+
     const [productData, setProductData] = useState([]);
     useEffect(() => {
         fetchProduct();
@@ -48,8 +60,8 @@ const ManageProduct = (props) => {
                 <div className={cx('content')}>
                     {productData.map((item, index) => {
                         return (
-                            <div key={`item-${index}`}>
-                                <PreviewItem data={item} />
+                            <div key={`item-${item.id}`}>
+                                <PreviewItem data={item} fetchProduct={fetchProduct} />
                             </div>
                         );
                     })}
