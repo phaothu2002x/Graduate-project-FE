@@ -6,8 +6,7 @@ import { useEffect, useState } from 'react';
 import { fetchAllProduct } from '../../services/productService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
+import ReactPaginate from 'react-paginate';
 //=============
 const cx = classNames.bind(styles);
 const ManageProduct = (props) => {
@@ -21,19 +20,36 @@ const ManageProduct = (props) => {
     }, []);
 
     const [productData, setProductData] = useState([]);
+
+    // pagination
+    const [totalPage, setTotalPage] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentLimit, setCurrentLimit] = useState(5);
+
     useEffect(() => {
         fetchProduct();
-    }, []);
+    }, [currentPage]);
 
     const fetchProduct = async () => {
-        let response = await fetchAllProduct();
+        let response = await fetchAllProduct(currentPage, currentLimit);
 
         if (response && response.EC === 0) {
             // toast.success(response.EM);
-            setProductData(response.DT);
+            setProductData(response.DT.product);
+            setTotalPage(response.DT.totalPages);
         } else if (response && response.EC !== 0) {
             toast.error(response.EM);
         }
+    };
+
+    // pagination
+
+    const handlePageClick = (e) => {
+        setCurrentPage(+e.selected + 1);
+    };
+
+    const handleRefresh = async () => {
+        await fetchProduct();
     };
 
     return (
@@ -43,7 +59,7 @@ const ManageProduct = (props) => {
                 <div className={cx('heading')}>Manage Products!!!</div>
 
                 <div className={cx('action-btn')}>
-                    <button className={cx('btn btn-success', 'refresh-btn')}>
+                    <button className={cx('btn btn-success', 'refresh-btn')} onClick={() => handleRefresh()}>
                         <span className={cx('refresh-icon')}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -65,6 +81,30 @@ const ManageProduct = (props) => {
                             </div>
                         );
                     })}
+                </div>
+                <div className={cx('pagination')}>
+                    {totalPage > 0 && (
+                        <ReactPaginate
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={2}
+                            pageCount={totalPage}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
+                    )}
                 </div>
             </div>
         </div>

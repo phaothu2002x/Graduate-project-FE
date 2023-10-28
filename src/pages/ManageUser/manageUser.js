@@ -45,7 +45,7 @@ const ManageUser = (props) => {
     const fetchUsers = async () => {
         let response = await fetchAllUsers(currentPage, currentLimit);
 
-        if (response && response && response.EC === 0) {
+        if (response && response.EC === 0) {
             setTotalPage(response.DT.totalPages);
             setListUser(response.DT.users);
         }

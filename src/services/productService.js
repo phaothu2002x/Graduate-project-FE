@@ -1,7 +1,7 @@
 import axios from '~/setup/axios';
 
-const fetchAllProduct = () => {
-    return axios.get(`/api/manage-products/read`);
+const fetchAllProduct = (currentPage, currentLimit) => {
+    return axios.get(`/api/manage-products/read?page=${currentPage}&limit=${currentLimit}`);
 };
 
 const deleteProduct = (product) => {
