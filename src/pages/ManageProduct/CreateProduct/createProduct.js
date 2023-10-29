@@ -16,19 +16,19 @@ const CreateProduct = (props) => {
                         <div className={cx('title')}>Product:</div>
                         <div className={cx('row', 'form-row')}>
                             <div className="mb-3 col-6">
-                                <label for="name" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="name" className={cx('form-label', 'input-label')}>
                                     Product name
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="name" placeholder="Enter product name" />
                             </div>
                             <div className="mb-3 col-3">
-                                <label for="price" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="price" className={cx('form-label', 'input-label')}>
                                     Product price
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="price" placeholder="Enter product price" />
                             </div>
                             <div className="mb-3 col-3">
-                                <label for="code" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="code" className={cx('form-label', 'input-label')}>
                                     Product code
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="code" placeholder="Enter product code" />
@@ -41,7 +41,7 @@ const CreateProduct = (props) => {
                                     placeholder="Enter product image here"
                                     id="thumbnail"
                                 ></textarea>
-                                <label for="thumbnail" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="thumbnail" className={cx('form-label', 'input-label')}>
                                     Enter product Thumbnail
                                 </label>
                             </div>
@@ -51,7 +51,7 @@ const CreateProduct = (props) => {
                                     placeholder="Enter Product Description"
                                     id="description"
                                 ></textarea>
-                                <label for="description" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="description" className={cx('form-label', 'input-label')}>
                                     Enter Product description
                                 </label>
                             </div>
@@ -59,118 +59,113 @@ const CreateProduct = (props) => {
                     </div>
                     <div className={cx('category')}>
                         <div className={cx('row')}>
-                            <div className={cx('title', 'col-6')}>Category:</div>
-                            <div className={cx('title', 'col-6')}>Type:</div>
+                            <div className={cx('title', 'col-6')}>Product Category:</div>
+                            <div className={cx('title', 'col-6')}>Product Type:</div>
                         </div>
                         <div className={cx('row', 'form-row')}>
                             <div className="mb-3 col-6">
-                                <label for="category" className={cx('form-label', 'input-label')}>
-                                    Product category
-                                </label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control', 'input')}
-                                    id="category"
-                                    placeholder="Enter product category"
-                                />
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="category" id="keyboards" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="keyboards">
+                                        Keyboards
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="category" id="keycaps" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="keycaps">
+                                        KeyCaps
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="category" id="switch" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="switch">
+                                        Switches
+                                    </label>
+                                </div>
                             </div>
+                            {/*  */}
                             <div className="mb-3 col-6">
-                                <label for="type" className={cx('form-label', 'input-label')}>
-                                    Product type
-                                </label>
-                                <input type="text" className={cx('form-control', 'input')} id="type" placeholder="Enter product type" />
-                            </div>
-                        </div>
-                        <div className={cx('row', 'form-row')}>
-                            <div className={cx('form-floating col-6', 'textarea-form')}>
-                                <textarea
-                                    className={cx('form-control', 'input')}
-                                    placeholder="Enter Category Description"
-                                    id="cate-description"
-                                ></textarea>
-                                <label for="cate-description" className={cx('form-label', 'input-label')}>
-                                    Enter Category description
-                                </label>
-                            </div>
-                            <div className={cx('form-floating col-6', 'textarea-form')}>
-                                <textarea
-                                    className={cx('form-control', 'input')}
-                                    placeholder="Enter Type Description"
-                                    id="type-description"
-                                ></textarea>
-                                <label for="type-description" className={cx('form-label', 'input-label')}>
-                                    Enter Type description
-                                </label>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="checkbox" value="" id="gaming" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="gaming">
+                                        Gamings
+                                    </label>
+                                </div>
+                                <div className="form-check ">
+                                    <input className={cx('form-check-input', 'check-input')} type="checkbox" value="" id="mechanical" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="mechanical">
+                                        Mechanical
+                                    </label>
+                                </div>
+                                <div className="form-check ">
+                                    <input className={cx('form-check-input', 'check-input')} type="checkbox" value="" id="wireless" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="wireless">
+                                        Wireless
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className={cx('category')}>
-                        <div className={cx('title', 'col-6')}>Supplier:</div>
+                        <div className={cx('row')}>
+                            <div className={cx('title', 'col-6')}>Product Supplier:</div>
+                            <div className={cx('title', 'col-6')}>Product Brand:</div>
+                        </div>
                         <div className={cx('row', 'form-row')}>
                             <div className="mb-3 col-6">
-                                <label for="supplier" className={cx('form-label', 'input-label')}>
-                                    Product supplier
-                                </label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control', 'input')}
-                                    id="supplier"
-                                    placeholder="Enter supplier name"
-                                />
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="supplier" id="vietnam" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="vietnam">
+                                        Viet Nam
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="supplier" id="USA" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="USA">
+                                        USA
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="supplier" id="German" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="German">
+                                        German
+                                    </label>
+                                </div>
                             </div>
-                            <div className="mb-3 col-3">
-                                <label for="country" className={cx('form-label', 'input-label')}>
-                                    County
-                                </label>
-                                <input type="text" className={cx('form-control', 'input')} id="country" placeholder="Enter country" />
-                            </div>
-                            <div className="mb-3 col-3">
-                                <label for="WholeSale" className={cx('form-label', 'input-label')}>
-                                    WholeSale
-                                </label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control', 'input')}
-                                    id="WholeSale"
-                                    placeholder="Enter Wholesale price"
-                                />
+                            {/*  */}
+                            <div className="mb-3 col-6">
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="brand" id="corsair" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="corsair">
+                                        Corsair
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="brand" id="akko" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="akko">
+                                        Akko
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className={cx('form-check-input', 'check-input')} type="radio" name="brand" id="logitech" />
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="logitech">
+                                        Logitech
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className={cx('category')}>
-                        <div className={cx('title', 'col-6')}>Brand:</div>
-                        <div className={cx('row', 'form-row')}>
-                            <div className="mb-3 col-6">
-                                <label for="brand" className={cx('form-label', 'input-label')}>
-                                    Product brand
-                                </label>
-                                <input type="text" className={cx('form-control', 'input')} id="brand" placeholder="Enter Brand name" />
-                            </div>
-                        </div>
-                        <div className={cx('row', 'form-row')}>
-                            <div className={cx('form-floating col-6', 'textarea-form')}>
-                                <textarea
-                                    className={cx('form-control', 'input')}
-                                    placeholder="Enter Product Description"
-                                    id="description"
-                                ></textarea>
-                                <label for="description" className={cx('form-label', 'input-label')}>
-                                    Enter Brand description
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx('category')}>
+                    <div className={cx('category')} style={{ display: 'none' }}>
                         <div className={cx('title', 'col-6')}>Promotion:</div>
                         <div className={cx('row', 'form-row')}>
                             <div className="mb-3 col-3">
-                                <label for="value" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="value" className={cx('form-label', 'input-label')}>
                                     Value (%)
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="value" placeholder="Enter Value (%)" />
                             </div>
                             <div className="mb-3 col-3">
-                                <label for="expire" className={cx('form-label', 'input-label')}>
+                                <label htmlFor="expire" className={cx('form-label', 'input-label')}>
                                     Expire At
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="expire" placeholder="Enter date" />
