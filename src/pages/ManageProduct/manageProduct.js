@@ -5,7 +5,7 @@ import PreviewItem from './previewItems/item';
 import { useEffect, useState } from 'react';
 import { fetchAllProduct } from '../../services/productService';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 //=============
 const cx = classNames.bind(styles);
@@ -48,6 +48,8 @@ const ManageProduct = (props) => {
         setCurrentPage(+e.selected + 1);
     };
 
+    //add new product
+
     const handleRefresh = async () => {
         await fetchProduct();
     };
@@ -65,12 +67,12 @@ const ManageProduct = (props) => {
                         </span>
                         Refresh
                     </button>
-                    <button className={cx('btn btn-primary', 'addNew-btn')}>
+                    <Link to="/manage-products/create" className={cx('btn btn-primary', 'addNew-btn')}>
                         <span className={cx('addNew-icon')}>
                             <i className="fa fa-plus-square"></i>
                         </span>
                         Add New
-                    </button>
+                    </Link>
                 </div>
 
                 <div className={cx('content')}>

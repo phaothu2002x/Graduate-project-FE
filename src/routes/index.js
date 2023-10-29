@@ -6,7 +6,7 @@ import Register from '~/pages/Register/register';
 import ProductDetail from '~/pages/ProductDetail/productDetail';
 import ManageUser from '~/pages/ManageUser/manageUser';
 import ManageProduct from '~/pages/ManageProduct/manageProduct';
-
+import CreateProduct from '~/pages/ManageProduct/CreateProduct/createProduct';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
@@ -25,6 +25,7 @@ const publicRoutes = [
 const privateRoutes = [
     { path: '/manage-user', component: ManageUser },
     { path: '/manage-products', component: ManageProduct },
+    { path: '/manage-products/create', component: CreateProduct },
 ];
 
 // export default CheckRoute;
