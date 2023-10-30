@@ -4,7 +4,7 @@ import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 const Items = (props) => {
-    const { id, thumbnail, name, Product_Price } = props.data;
+    const { thumbnail, name, price } = props.data;
     return (
         <article className={cx('product-item')}>
             <figure className={cx('img-wrapper')}>
@@ -28,7 +28,7 @@ const Items = (props) => {
                     </a>
                 </div>
                 <div className={cx('item-info')}>
-                    <p className={cx('price')}>${Product_Price ? Product_Price.price : '???'}</p>
+                    <p className={cx('price')}>${price}</p>
                     <p className={cx('star-icon')}>
                         <span className={cx('icon')}>
                             <i className="fa fa-star"></i>
