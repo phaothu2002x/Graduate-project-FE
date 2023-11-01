@@ -4,10 +4,15 @@ import Header from '~/components/Header/header';
 import { useState } from 'react';
 import { createNewProduct } from '~/services/productService';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 //=============
 const cx = classNames.bind(styles);
 
 const CreateProduct = (props) => {
+    const navigate = useNavigate();
+    const defaultRadioValue = 1;
+
     const defaultProductData = {
         name: '',
         thumbnail: '',
@@ -15,17 +20,29 @@ const CreateProduct = (props) => {
         code: '',
         description: '',
     };
-    const [productData, setProductData] = useState(defaultProductData);
+    // check validate input
+    const defaultValidInput = {
+        name: true,
+        price: true,
+        code: true,
+        thumbnail: true,
+        description: true,
+    };
 
-    const [cateChecked, setCateChecked] = useState();
-    const [supChecked, setSupChecked] = useState();
-    const [brandChecked, setBrandChecked] = useState();
+    const [productData, setProductData] = useState(defaultProductData);
+    const [validInput, setValidInput] = useState(defaultValidInput);
+
+    const [cateChecked, setCateChecked] = useState(defaultRadioValue);
+    const [supChecked, setSupChecked] = useState(defaultRadioValue);
+    const [brandChecked, setBrandChecked] = useState(defaultRadioValue);
     const [typeChecked, setTypeChecked] = useState([]);
+    const [isTypeChecked, setIsTypeChecked] = useState(true);
 
     const handleTypeCheck = (e) => {
         let isChecked = e.target.checked;
         if (isChecked) {
             setTypeChecked((prev) => [...prev, e.target.value]);
+            setIsTypeChecked(true);
         } else {
             setTypeChecked(typeChecked.filter((item) => item !== e.target.value));
         }
@@ -37,21 +54,67 @@ const CreateProduct = (props) => {
         setProductData(_productData);
     };
 
+    //validation input
+    const checkValidateInput = () => {
+        setValidInput(defaultValidInput);
+        let check = true;
+        //for input
+        let arr = ['name', 'price', 'code', 'thumbnail', 'description'];
+        for (let i = 0; i < arr.length; i++) {
+            if (!productData[arr[i]]) {
+                let _validInput = _.cloneDeep(defaultValidInput);
+                _validInput[arr[i]] = false;
+                setValidInput(_validInput);
+                toast.error(`empty input ${arr[i]}`);
+                check = false;
+                break;
+            }
+        }
+        //for selection
+        // if (typeChecked <= 0) {
+        //     toast.error(`empty input Type`);
+        //     check = false;
+        // }
+        return check;
+    };
+    // validate selection check
+    const checkValidSelection = () => {
+        setIsTypeChecked(false);
+        if (typeChecked.length > 0) {
+            setIsTypeChecked(true);
+            return true;
+        }
+        toast.error('empty Type');
+        return false;
+    };
+
     const handleSave = async () => {
-        let data = {
-            name: productData.name,
-            thumbnail: productData.thumbnail,
-            price: productData.price,
-            description: productData.description,
-            code: productData.code,
-            cateChecked,
-            supChecked,
-            brandChecked,
-            typeChecked,
-        };
-        //call api
-        await createNewProduct(data);
-        console.log('check checked input:', data);
+        let check = checkValidateInput();
+        let checkSelection = checkValidSelection();
+        if (check === true && checkSelection === true) {
+            let data = {
+                name: productData.name,
+                thumbnail: productData.thumbnail,
+                price: productData.price,
+                description: productData.description,
+                code: productData.code,
+                cateChecked,
+                supChecked,
+                brandChecked,
+                typeChecked,
+            };
+            //call api
+            let response = await createNewProduct(data);
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
+                setProductData(defaultProductData);
+                setTypeChecked([]);
+                setBrandChecked(defaultRadioValue);
+                setSupChecked(defaultRadioValue);
+                //navigate
+                navigate('/manage-products');
+            }
+        }
     };
 
     return (
@@ -69,7 +132,7 @@ const CreateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control', 'input')}
+                                    className={validInput.name ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="name"
                                     placeholder="Enter product name"
                                     value={productData.name}
@@ -82,7 +145,7 @@ const CreateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control', 'input')}
+                                    className={validInput.price ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="price"
                                     placeholder="Enter product price"
                                     value={productData.price}
@@ -95,7 +158,7 @@ const CreateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control', 'input')}
+                                    className={validInput.code ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="code"
                                     placeholder="Enter product code"
                                     value={productData.code}
@@ -106,7 +169,7 @@ const CreateProduct = (props) => {
                         <div className={cx('row', 'form-row')}>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
-                                    className={cx('form-control', 'input')}
+                                    className={validInput.thumbnail ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     placeholder="Enter product image here"
                                     id="thumbnail"
                                     value={productData.thumbnail}
@@ -118,7 +181,9 @@ const CreateProduct = (props) => {
                             </div>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
-                                    className={cx('form-control', 'input')}
+                                    className={
+                                        validInput.description ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')
+                                    }
                                     placeholder="Enter Product Description"
                                     id="description"
                                     value={productData.description}
@@ -144,6 +209,7 @@ const CreateProduct = (props) => {
                                         type="radio"
                                         name="category"
                                         id="keyboards"
+                                        defaultChecked
                                         value={1}
                                         onClick={(e) => setCateChecked(e.target.value)}
                                     />
@@ -182,7 +248,11 @@ const CreateProduct = (props) => {
                             <div className="mb-3 col-6">
                                 <div className="form-check">
                                     <input
-                                        className={cx('form-check-input', 'check-input')}
+                                        className={
+                                            !isTypeChecked
+                                                ? cx('form-check-input is-invalid', 'check-input')
+                                                : cx('form-check-input', 'check-input')
+                                        }
                                         type="checkbox"
                                         id="gaming"
                                         value={1}
@@ -194,7 +264,11 @@ const CreateProduct = (props) => {
                                 </div>
                                 <div className="form-check ">
                                     <input
-                                        className={cx('form-check-input', 'check-input')}
+                                        className={
+                                            !isTypeChecked
+                                                ? cx('form-check-input is-invalid', 'check-input')
+                                                : cx('form-check-input', 'check-input')
+                                        }
                                         type="checkbox"
                                         id="mechanical"
                                         value={2}
@@ -206,7 +280,11 @@ const CreateProduct = (props) => {
                                 </div>
                                 <div className="form-check ">
                                     <input
-                                        className={cx('form-check-input', 'check-input')}
+                                        className={
+                                            !isTypeChecked
+                                                ? cx('form-check-input is-invalid', 'check-input')
+                                                : cx('form-check-input', 'check-input')
+                                        }
                                         type="checkbox"
                                         id="wireless"
                                         value={3}
@@ -233,6 +311,7 @@ const CreateProduct = (props) => {
                                         type="radio"
                                         name="supplier"
                                         id="vietnam"
+                                        defaultChecked
                                         value={1}
                                         onClick={(e) => setSupChecked(e.target.value)}
                                     />
@@ -245,12 +324,12 @@ const CreateProduct = (props) => {
                                         className={cx('form-check-input', 'check-input')}
                                         type="radio"
                                         name="supplier"
-                                        id="USA"
+                                        id="German"
                                         value={2}
                                         onClick={(e) => setSupChecked(e.target.value)}
                                     />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="USA">
-                                        USA
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="German">
+                                        German
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -258,12 +337,12 @@ const CreateProduct = (props) => {
                                         className={cx('form-check-input', 'check-input')}
                                         type="radio"
                                         name="supplier"
-                                        id="German"
+                                        id="USA"
                                         value={3}
                                         onClick={(e) => setSupChecked(e.target.value)}
                                     />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="German">
-                                        German
+                                    <label className={cx('form-check-label', 'input-name')} htmlFor="USA">
+                                        USA
                                     </label>
                                 </div>
                             </div>
@@ -275,6 +354,7 @@ const CreateProduct = (props) => {
                                         type="radio"
                                         name="brand"
                                         id="corsair"
+                                        defaultChecked
                                         value={1}
                                         onClick={(e) => setBrandChecked(e.target.value)}
                                     />

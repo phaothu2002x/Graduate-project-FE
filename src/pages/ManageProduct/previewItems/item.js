@@ -8,7 +8,6 @@ const cx = classNames.bind(styles);
 
 const PreviewItem = (props) => {
     const { id, thumbnail, name, price } = props.data;
-    console.log('check data : ', props.data);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const handleDeleteItem = () => {
