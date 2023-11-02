@@ -25,6 +25,11 @@ const UpdateProduct = (props) => {
     const [selectList, setSelectList] = useState({});
     const { brand, category, supplier } = selectList;
 
+    //2 way binding radio
+    const [brandChecked, setBrandChecked] = useState();
+    const [categoryChecked, setCategoryChecked] = useState();
+    const [supplierChecked, setSupplierChecked] = useState();
+
     //fetch product select, fetchallselection from db to render
     useEffect(() => {
         fetchProductItem();
@@ -37,6 +42,16 @@ const UpdateProduct = (props) => {
         if (response && response.EC === 0) {
             // toast.success(response.EM);
             setProductData(response.DT);
+            //=>> set default radio
+            if (response.DT.Suppliers && response.DT.Suppliers.length > 0) {
+                setSupplierChecked(response.DT.Suppliers[0].id);
+            }
+            if (response.DT.Brand) {
+                setBrandChecked(response.DT.Brand.id);
+            }
+            if (response.DT.Category) {
+                setCategoryChecked(response.DT.Category.id);
+            }
         } else {
             toast.error(response.EM);
             navigate('/manage-products');
@@ -59,6 +74,12 @@ const UpdateProduct = (props) => {
         setProductData(_productData);
     };
 
+    let dataChecked = {
+        brand: brandChecked,
+        category: categoryChecked,
+        supplier: supplierChecked,
+    };
+    console.log('id:', dataChecked);
     // console.log('check data', productData); ok
     // console.log('check select list ', selectList); ok
     const handleSave = () => {};
@@ -146,45 +167,22 @@ const UpdateProduct = (props) => {
                         <div className={cx('row', 'form-row')}>
                             {/* category input*/}
                             <div className="mb-3 col-6">
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="category"
-                                        id="keyboards"
-                                        value={1}
-                                        // onClick={(e) => setCateChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="keyboards">
-                                        Keyboards
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="category"
-                                        id="keycaps"
-                                        value={2}
-                                        // onClick={(e) => setCateChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="keycaps">
-                                        KeyCaps
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="category"
-                                        id="switch"
-                                        value={3}
-                                        // onClick={(e) => setCateChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="switch">
-                                        Switches
-                                    </label>
-                                </div>
+                                {selectList.category &&
+                                    category.map((item) => (
+                                        <div className="form-check" key={item.id}>
+                                            <input
+                                                className={cx('form-check-input', 'check-input')}
+                                                type="radio"
+                                                name="category"
+                                                id={item.name}
+                                                checked={categoryChecked === item.id}
+                                                onChange={() => setCategoryChecked(item.id)}
+                                            />
+                                            <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
+                                                {item.name}
+                                            </label>
+                                        </div>
+                                    ))}
                             </div>
                             {/* type input */}
                             <div className="mb-3 col-6">
@@ -235,58 +233,40 @@ const UpdateProduct = (props) => {
                         <div className={cx('row', 'form-row')}>
                             {/* supplier input */}
                             <div className="mb-3 col-6">
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="supplier"
-                                        id="vietnam"
-                                        value={1}
-                                        // onClick={(e) => setSupChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="vietnam">
-                                        Viet Nam
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="supplier"
-                                        id="German"
-                                        value={2}
-                                        // onClick={(e) => setSupChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="German">
-                                        German
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="supplier"
-                                        id="USA"
-                                        value={3}
-                                        // onClick={(e) => setSupChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="USA">
-                                        USA
-                                    </label>
-                                </div>
+                                {selectList.supplier ? (
+                                    supplier.map((item) => (
+                                        <div className="form-check" key={item.id}>
+                                            <input
+                                                className={cx('form-check-input', 'check-input')}
+                                                type="radio"
+                                                name="supplier"
+                                                id={item.country}
+                                                checked={supplierChecked === item.id}
+                                                onChange={() => setSupplierChecked(item.id)}
+                                            />
+                                            <label className={cx('form-check-label', 'input-name')} htmlFor={item.country}>
+                                                {item.country}
+                                            </label>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <></>
+                                )}
                             </div>
                             {/* brand checked */}
                             <div className="mb-3 col-6">
                                 {selectList.brand ? (
-                                    brand.map((item, index) => (
-                                        <div className="form-check" key={index}>
+                                    brand.map((item) => (
+                                        <div className="form-check" key={item.id}>
                                             <input
                                                 className={cx('form-check-input', 'check-input')}
                                                 type="radio"
                                                 name="brand"
                                                 id={item.name}
-                                                value={item.id}
-                                                // onClick={(e) => setBrandChecked(e.target.value)}
+                                                // defaultChecked={productData.Brand.id}
+                                                // value={item.id}
+                                                checked={brandChecked === item.id}
+                                                onChange={() => setBrandChecked(item.id)}
                                             />
                                             <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
                                                 {item.name}
@@ -296,45 +276,6 @@ const UpdateProduct = (props) => {
                                 ) : (
                                     <></>
                                 )}
-                                {/* <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="brand"
-                                        id="corsair"
-                                        value={1}
-                                        // onClick={(e) => setBrandChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="corsair">
-                                        Corsair
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="brand"
-                                        id="akko"
-                                        value={2}
-                                        // onClick={(e) => setBrandChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="akko">
-                                        Akko
-                                    </label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="radio"
-                                        name="brand"
-                                        id="logitech"
-                                        value={3}
-                                        // onClick={(e) => setBrandChecked(e.target.value)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="logitech">
-                                        Logitech
-                                    </label>
-                                </div> */}
                             </div>
                         </div>
                     </div>
