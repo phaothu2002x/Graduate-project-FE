@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { findProductById, findAllSelection } from '~/services/productService';
+import { findProductById, findAllSelection, findType } from '~/services/productService';
 //=============
 const cx = classNames.bind(styles);
 
@@ -29,6 +29,7 @@ const UpdateProduct = (props) => {
     const [brandChecked, setBrandChecked] = useState();
     const [categoryChecked, setCategoryChecked] = useState();
     const [supplierChecked, setSupplierChecked] = useState();
+    const [typeCheck, setTypeCheck] = useState([]);
 
     //fetch product select, fetchallselection from db to render
     useEffect(() => {
@@ -36,6 +37,12 @@ const UpdateProduct = (props) => {
         fetchAllSelection();
     }, []);
 
+    //handle render type
+    useEffect(() => {
+        fetchType();
+    }, [categoryChecked]);
+
+    //
     const fetchProductItem = async () => {
         let response = await findProductById(id);
         // console.log(response);
@@ -62,8 +69,18 @@ const UpdateProduct = (props) => {
         let response = await findAllSelection();
 
         if (response && response.EC === 0) {
-            toast(response.EM);
+            // toast(response.EM);
             setSelectList(response.DT);
+        }
+    };
+
+    const fetchType = async () => {
+        //call api
+        let response = await findType(categoryChecked);
+        if (response && response.EC === 0) {
+            setTypeCheck(response.DT);
+        } else {
+            toast.error(response.EM);
         }
     };
 
@@ -79,9 +96,15 @@ const UpdateProduct = (props) => {
         category: categoryChecked,
         supplier: supplierChecked,
     };
-    console.log('id:', dataChecked);
+
+    const handleCateCheck = (id) => {
+        setCategoryChecked(id);
+    };
+
+    // console.log('id:', dataChecked); ok
     // console.log('check data', productData); ok
     // console.log('check select list ', selectList); ok
+    console.log('check type list ', typeCheck);
     const handleSave = () => {};
     return (
         <div className={cx('wrapper')}>
@@ -176,7 +199,7 @@ const UpdateProduct = (props) => {
                                                 name="category"
                                                 id={item.name}
                                                 checked={categoryChecked === item.id}
-                                                onChange={() => setCategoryChecked(item.id)}
+                                                onChange={() => handleCateCheck(item.id)}
                                             />
                                             <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
                                                 {item.name}
@@ -186,42 +209,21 @@ const UpdateProduct = (props) => {
                             </div>
                             {/* type input */}
                             <div className="mb-3 col-6">
-                                <div className="form-check">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="checkbox"
-                                        id="gaming"
-                                        value={1}
-                                        // onClick={(e) => handleTypeCheck(e)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="gaming">
-                                        Gamings
-                                    </label>
-                                </div>
-                                <div className="form-check ">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="checkbox"
-                                        id="mechanical"
-                                        value={2}
-                                        // onClick={(e) => handleTypeCheck(e)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="mechanical">
-                                        Mechanical
-                                    </label>
-                                </div>
-                                <div className="form-check ">
-                                    <input
-                                        className={cx('form-check-input', 'check-input')}
-                                        type="checkbox"
-                                        id="wireless"
-                                        value={3}
-                                        // onClick={(e) => handleTypeCheck(e)}
-                                    />
-                                    <label className={cx('form-check-label', 'input-name')} htmlFor="wireless">
-                                        Wireless
-                                    </label>
-                                </div>
+                                {typeCheck.length > 0 &&
+                                    typeCheck.map((item, index) => (
+                                        <div className="form-check" key={item.id}>
+                                            <input
+                                                className={cx('form-check-input', 'check-input')}
+                                                type="checkbox"
+                                                id={item.name}
+                                                value={1}
+                                                // onClick={(e) => handleTypeCheck(e)}
+                                            />
+                                            <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
+                                                {item.name}
+                                            </label>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>

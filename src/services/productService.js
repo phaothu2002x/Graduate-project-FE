@@ -22,5 +22,8 @@ const deleteProduct = (product) => {
 const findAllSelection = () => {
     return axios.get(`/api/manage-products/findAllSelection`);
 };
+const findType = (id) => {
+    return axios.get(`/api/manage-products/findType/${id}`);
+};
 
-export { fetchAllProduct, deleteProduct, createNewProduct, updateProduct, findProductById, findAllSelection };
+export { fetchAllProduct, deleteProduct, createNewProduct, updateProduct, findProductById, findAllSelection, findType };
