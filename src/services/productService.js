@@ -7,9 +7,20 @@ const fetchAllProduct = (currentPage, currentLimit) => {
 const createNewProduct = (productData) => {
     return axios.post(`/api/manage-products/create`, { ...productData });
 };
+// find product before update
+const findProductById = (id) => {
+    return axios.get(`/api/manage-products/findProduct/${id}`);
+};
+const updateProduct = (id) => {
+    return axios.put(`/api/manage-products/update/${id}/item`);
+};
 
 const deleteProduct = (product) => {
     return axios.delete(`/api/manage-products/delete`, { data: { id: product.id } });
 };
 
-export { fetchAllProduct, deleteProduct, createNewProduct };
+const findAllSelection = () => {
+    return axios.get(`/api/manage-products/findAllSelection`);
+};
+
+export { fetchAllProduct, deleteProduct, createNewProduct, updateProduct, findProductById, findAllSelection };

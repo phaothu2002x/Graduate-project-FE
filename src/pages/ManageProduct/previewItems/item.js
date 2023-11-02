@@ -4,9 +4,12 @@ import { deleteProduct } from '~/services/productService';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import DeleteModal from '../Modals/deleteModal';
+import { useNavigate } from 'react-router-dom';
+
 const cx = classNames.bind(styles);
 
 const PreviewItem = (props) => {
+    const navigate = useNavigate();
     const { id, thumbnail, name, price } = props.data;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -29,6 +32,12 @@ const PreviewItem = (props) => {
     const handleClose = () => {
         setShowDeleteModal(false);
     };
+
+    // handleUpdate
+    const handleUpdateItem = async () => {
+        navigate(`/manage-products/update/${id}`);
+    };
+
     return (
         <>
             <article className={cx('product-item')}>
@@ -64,7 +73,9 @@ const PreviewItem = (props) => {
                 </section>
                 {/* phan chinh sua */}
                 <div className={cx('action-btn')}>
-                    <button className={cx('btn btn-warning', 'edit-btn')}>Edit</button>
+                    <button className={cx('btn btn-warning', 'edit-btn')} onClick={() => handleUpdateItem()}>
+                        Edit
+                    </button>
                     <button className={cx('btn btn-danger', 'delete-btn')} onClick={() => handleDeleteItem()}>
                         Delete
                     </button>
