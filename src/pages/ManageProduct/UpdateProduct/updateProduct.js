@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { findProductById, findAllSelection, findType } from '~/services/productService';
+import { findProductById, findAllSelection, findType, updateProduct } from '~/services/productService';
 //=============
 const cx = classNames.bind(styles);
 
@@ -20,7 +20,16 @@ const UpdateProduct = (props) => {
         code: '',
         description: '',
     };
+    const defaultValidInput = {
+        name: true,
+        price: true,
+        code: true,
+        thumbnail: true,
+        description: true,
+    };
+
     const [productData, setProductData] = useState(defaultProductData);
+    const [validInput, setValidInput] = useState(defaultValidInput);
 
     const [selectList, setSelectList] = useState({});
     const { brand, category, supplier } = selectList;
@@ -29,9 +38,12 @@ const UpdateProduct = (props) => {
     const [brandChecked, setBrandChecked] = useState();
     const [categoryChecked, setCategoryChecked] = useState();
     const [supplierChecked, setSupplierChecked] = useState();
-    const [typeList, setTypeList] = useState([]);
     const [typeChecked, setTypeChecked] = useState([]);
 
+    const [isTypeChecked, setIsTypeChecked] = useState(true);
+
+    // render from db
+    const [typeList, setTypeList] = useState([]);
     //fetch product select, fetchallselection from db to render
     useEffect(() => {
         fetchProductItem();
@@ -87,9 +99,10 @@ const UpdateProduct = (props) => {
         let response = await findType(categoryChecked);
         if (response && response.EC === 0) {
             setTypeList(response.DT);
-        } else {
-            toast.error(response.EM);
         }
+        // } else {
+        //     toast.error(response.EM);
+        // }
     };
 
     //2 way binding input with obj
@@ -97,28 +110,87 @@ const UpdateProduct = (props) => {
         let _productData = _.cloneDeep(productData);
         _productData[name] = value;
         setProductData(_productData);
+        // khi warning nhap=> tat warning
+        if (productData[name]) {
+            let _validInput = _.cloneDeep(defaultValidInput);
+            _validInput[name] = true;
+            setValidInput(_validInput);
+        }
     };
     const handleTypeCheck = (id) => {
         setTypeChecked((prev) => {
             if (typeChecked.includes(id)) {
                 return typeChecked.filter((item) => item !== id);
             } else {
+                setIsTypeChecked(true);
                 return [...prev, id];
             }
         });
     };
 
-    let dataChecked = {
-        brand: brandChecked,
-        category: categoryChecked,
-        supplier: supplierChecked,
+    const checkValidateInput = () => {
+        setValidInput(defaultValidInput);
+        let check = true;
+        //for input
+        let arr = ['name', 'price', 'code', 'thumbnail', 'description'];
+        for (let i = 0; i < arr.length; i++) {
+            if (!productData[arr[i]]) {
+                let _validInput = _.cloneDeep(defaultValidInput);
+                _validInput[arr[i]] = false;
+                setValidInput(_validInput);
+                toast.error(`empty input ${arr[i]}`);
+                check = false;
+                break;
+            }
+        }
+        return check;
+    };
+
+    const checkValidSelection = () => {
+        setIsTypeChecked(false);
+        if (typeChecked.length > 0) {
+            setIsTypeChecked(true);
+            return true;
+        }
+        toast.error('empty Type');
+        return false;
     };
 
     // console.log('id:', dataChecked); ok
     // console.log('check data', productData); ok
     // console.log('check select list ', selectList); ok
     // console.log('type check ', typeChecked);: ok
-    const handleSave = () => {};
+    const handleSave = async () => {
+        let check = checkValidateInput();
+        let checkSelection = checkValidSelection();
+        if (check && checkSelection) {
+            let dataUpdate = {
+                id: id,
+                name: productData.name,
+                thumbnail: productData.thumbnail,
+                price: productData.price,
+                description: productData.description,
+                code: productData.code,
+                categoryChecked,
+                supplierChecked,
+                brandChecked,
+                typeChecked,
+            };
+            // call api
+            let response = await updateProduct(dataUpdate);
+            // console.log('check response', response);
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
+                setProductData(defaultProductData);
+                setTypeChecked([]);
+                setBrandChecked();
+                setCategoryChecked();
+                setSupplierChecked();
+                //navigate
+                navigate('/manage-products');
+            }
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -134,7 +206,7 @@ const UpdateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control is-invalid', 'input')}
+                                    className={validInput.name ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="name"
                                     placeholder="Enter product name"
                                     value={productData.name}
@@ -147,7 +219,7 @@ const UpdateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control is-invalid', 'input')}
+                                    className={validInput.price ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="price"
                                     placeholder="Enter product price"
                                     value={productData.price}
@@ -160,7 +232,7 @@ const UpdateProduct = (props) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className={cx('form-control is-invalid', 'input')}
+                                    className={validInput.code ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     id="code"
                                     placeholder="Enter product code"
                                     value={productData.code}
@@ -171,7 +243,7 @@ const UpdateProduct = (props) => {
                         <div className={cx('row', 'form-row')}>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
-                                    className={cx('form-control is-invalid', 'input')}
+                                    className={validInput.thumbnail ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     placeholder="Enter product image here"
                                     id="thumbnail"
                                     value={productData.thumbnail}
@@ -183,7 +255,9 @@ const UpdateProduct = (props) => {
                             </div>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
-                                    className={cx('form-control is-invalid', 'input')}
+                                    className={
+                                        validInput.description ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')
+                                    }
                                     placeholder="Enter Product Description"
                                     id="description"
                                     value={productData.description}
@@ -226,7 +300,11 @@ const UpdateProduct = (props) => {
                                     typeList.map((item, index) => (
                                         <div className="form-check" key={item.id}>
                                             <input
-                                                className={cx('form-check-input', 'check-input')}
+                                                className={
+                                                    !isTypeChecked
+                                                        ? cx('form-check-input is-invalid', 'check-input')
+                                                        : cx('form-check-input', 'check-input')
+                                                }
                                                 type="checkbox"
                                                 id={item.name}
                                                 checked={typeChecked.includes(item.id)}

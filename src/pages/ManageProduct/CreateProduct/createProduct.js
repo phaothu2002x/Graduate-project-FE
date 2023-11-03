@@ -147,7 +147,7 @@ const CreateProduct = (props) => {
                 setBrandChecked(defaultRadioValue);
                 setSupChecked(defaultRadioValue);
                 //navigate
-                // navigate('/manage-products');
+                navigate('/manage-products');
             }
         }
     };

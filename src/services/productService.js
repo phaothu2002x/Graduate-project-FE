@@ -11,8 +11,8 @@ const createNewProduct = (productData) => {
 const findProductById = (id) => {
     return axios.get(`/api/manage-products/findProduct/${id}`);
 };
-const updateProduct = (id) => {
-    return axios.put(`/api/manage-products/update/${id}/item`);
+const updateProduct = (productData) => {
+    return axios.put(`/api/manage-products/update`, { ...productData });
 };
 
 const deleteProduct = (product) => {
