@@ -29,7 +29,8 @@ const UpdateProduct = (props) => {
     const [brandChecked, setBrandChecked] = useState();
     const [categoryChecked, setCategoryChecked] = useState();
     const [supplierChecked, setSupplierChecked] = useState();
-    const [typeCheck, setTypeCheck] = useState([]);
+    const [typeList, setTypeList] = useState([]);
+    const [typeChecked, setTypeChecked] = useState([]);
 
     //fetch product select, fetchallselection from db to render
     useEffect(() => {
@@ -40,6 +41,7 @@ const UpdateProduct = (props) => {
     //handle render type
     useEffect(() => {
         fetchType();
+        setTypeChecked([]);
     }, [categoryChecked]);
 
     //
@@ -58,6 +60,12 @@ const UpdateProduct = (props) => {
             }
             if (response.DT.Category) {
                 setCategoryChecked(response.DT.Category.id);
+            }
+            //=>> set default checkbox
+            if (response.DT.Types && response.DT.Types.length > 0) {
+                let defaultTypeChecked = [];
+                response.DT.Types.map((item) => defaultTypeChecked.push(item.id));
+                setTypeChecked(defaultTypeChecked);
             }
         } else {
             toast.error(response.EM);
@@ -78,7 +86,7 @@ const UpdateProduct = (props) => {
         //call api
         let response = await findType(categoryChecked);
         if (response && response.EC === 0) {
-            setTypeCheck(response.DT);
+            setTypeList(response.DT);
         } else {
             toast.error(response.EM);
         }
@@ -90,6 +98,15 @@ const UpdateProduct = (props) => {
         _productData[name] = value;
         setProductData(_productData);
     };
+    const handleTypeCheck = (id) => {
+        setTypeChecked((prev) => {
+            if (typeChecked.includes(id)) {
+                return typeChecked.filter((item) => item !== id);
+            } else {
+                return [...prev, id];
+            }
+        });
+    };
 
     let dataChecked = {
         brand: brandChecked,
@@ -97,14 +114,10 @@ const UpdateProduct = (props) => {
         supplier: supplierChecked,
     };
 
-    const handleCateCheck = (id) => {
-        setCategoryChecked(id);
-    };
-
     // console.log('id:', dataChecked); ok
     // console.log('check data', productData); ok
     // console.log('check select list ', selectList); ok
-    console.log('check type list ', typeCheck);
+    // console.log('type check ', typeChecked);: ok
     const handleSave = () => {};
     return (
         <div className={cx('wrapper')}>
@@ -199,7 +212,7 @@ const UpdateProduct = (props) => {
                                                 name="category"
                                                 id={item.name}
                                                 checked={categoryChecked === item.id}
-                                                onChange={() => handleCateCheck(item.id)}
+                                                onChange={() => setCategoryChecked(item.id)}
                                             />
                                             <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
                                                 {item.name}
@@ -209,15 +222,15 @@ const UpdateProduct = (props) => {
                             </div>
                             {/* type input */}
                             <div className="mb-3 col-6">
-                                {typeCheck.length > 0 &&
-                                    typeCheck.map((item, index) => (
+                                {typeList.length > 0 &&
+                                    typeList.map((item, index) => (
                                         <div className="form-check" key={item.id}>
                                             <input
                                                 className={cx('form-check-input', 'check-input')}
                                                 type="checkbox"
                                                 id={item.name}
-                                                value={1}
-                                                // onClick={(e) => handleTypeCheck(e)}
+                                                checked={typeChecked.includes(item.id)}
+                                                onChange={() => handleTypeCheck(item.id)}
                                             />
                                             <label className={cx('form-check-label', 'input-name')} htmlFor={item.name}>
                                                 {item.name}
