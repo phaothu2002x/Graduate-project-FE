@@ -1,0 +1,67 @@
+.wrapper {
+    height: 3000px;
+    background-color: #eeeeee;
+}
+
+.inner {
+    width: var(--content-width);
+    max-width: calc(100% - 48px);
+    margin-left: auto;
+    margin-right: auto;
+    height: 5000px;
+
+    .heading {
+        margin-top: 22px;
+        font-size: 2.6rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--heading-color);
+    }
+
+    .addNew-form {
+        margin-top: 60px;
+        .title {
+            margin-top: 30px;
+            color: var(--heading-color);
+            font-size: 2.4rem;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .form-row {
+            margin-top: 15px;
+            .textarea-form {
+                .input-label {
+                    font-weight: 500;
+                    font-size: 1.6rem;
+                    margin-left: 5px;
+                    color: var(--heading-color);
+                }
+                .input {
+                    padding: 32px 12px 12px;
+                    height: 115px;
+                    resize: none;
+                }
+            }
+
+            .input {
+                font-size: 1.6rem;
+                padding: 12px;
+            }
+            .input-label {
+                font-weight: 500;
+                color: #803bdb;
+            }
+
+            // check box form
+            .check-input,
+            .input-name {
+                font-size: 2rem;
+            }
+        }
+    }
+    .save-btn {
+        margin-top: 15px;
+        font-size: 1.6rem;
+    }
+}

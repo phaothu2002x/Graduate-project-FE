@@ -3,12 +3,36 @@ import styles from './ProductDetail.module.scss';
 import Header from '~/components/Header/header';
 import images from '~/assets/images';
 import Carousel from 'react-bootstrap/Carousel';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { findProductById } from '~/services/productService';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
+
 const ProductDetail = (props) => {
+    const { id } = useParams();
+
     const tabs = ['Description', 'feature', 'reviews'];
     const [type, setType] = useState('Description');
+
+    const [productData, setProductData] = useState({});
+
+    const { thumbnail, name, description, price, code } = productData;
+
+    useEffect(() => {
+        fetchProductDetail();
+    }, []);
+
+    const fetchProductDetail = async () => {
+        let response = await findProductById(id);
+        if (response && response.EC === 0) {
+            setProductData(response.DT);
+        } else {
+            toast.error(response.EM);
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -19,7 +43,7 @@ const ProductDetail = (props) => {
                         <div className={cx('product-item')}>
                             <Carousel>
                                 <Carousel.Item>
-                                    <img src={images.productImg6} alt="thumbnail" className={cx('thumb')} />
+                                    <img src={thumbnail || images.productImg1} alt="thumbnail" className={cx('thumb')} />
                                 </Carousel.Item>
                                 <Carousel.Item>
                                     <img src={images.productImg3} alt="thumbnail" className={cx('thumb')} />
@@ -31,14 +55,14 @@ const ProductDetail = (props) => {
                         </div>
                         <div className={cx('product-slider')}>
                             {/* dùng map để render */}
-                            <img src={images.productImg5} alt="slider" className={cx('slider-items', 'active')} />
+                            <img src={thumbnail} alt="slider" className={cx('slider-items', 'active')} />
                             <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
                             <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
                             <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
                         </div>
                     </div>
                     <div className={cx('content-right')}>
-                        <h1 className={cx('heading')}>Coffee Beans - Espresso Arabica and Robusta Beans</h1>
+                        <h1 className={cx('heading')}>{name}</h1>
                         <div className={cx('rating')}>
                             <span className={cx('star-icon')}>
                                 <i className={cx('fa fa-star')}></i>
@@ -50,6 +74,7 @@ const ProductDetail = (props) => {
                             It comes with extra teflon pads (in case you want to perform the Force Break mod) and tape (in case you want to
                             perform a Tape mod). The M3 offers flexibility for you to modify it and make it truly yours while also offering
                             a great out-of-the-box
+                            {description}
                         </p>
                         <div className={cx('category')}>
                             <section className={cx('product-category')}>
@@ -86,7 +111,7 @@ const ProductDetail = (props) => {
                                 $500.00
                                 <span className={cx('discount')}>10%</span>
                             </p>
-                            <div className={cx('price')}>$540.00</div>
+                            <div className={cx('price')}>${price}</div>
                             <div className={cx('purchase-action')}>
                                 <button type="button" className={cx('btn btn-warning', 'add-cart-btn')}>
                                     Add to cart

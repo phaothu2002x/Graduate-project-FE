@@ -1,19 +1,27 @@
 import classNames from 'classnames/bind';
 import styles from './Item.module.scss';
 import images from '~/assets/images';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const Items = (props) => {
+    const navigate = useNavigate();
+
+    const { id, thumbnail, name, price } = props.data;
+
+    const handleItemClick = (id) => {
+        navigate(`/product/${id}`);
+    };
     return (
-        <article className={cx('product-item')}>
+        <article className={cx('product-item')} onClick={() => handleItemClick(id)}>
             <figure className={cx('img-wrapper')}>
-                <a href="#!">
-                    <img src={props.thumb || images.productImg} alt="product" className={cx('item-thumb')} />
-                </a>
+                <div>
+                    <img src={thumbnail || images.productImg} alt="product" className={cx('item-thumb')} />
+                </div>
             </figure>
             <section className={cx('body')}>
                 <h3 className={cx('heading')}>
-                    <a href="#!">{props.title || 'MONSGEEK M1W FULLY ASSEMBLED'}</a>
+                    <p>{name || 'MONSGEEK M1W FULLY ASSEMBLED'}</p>
                 </h3>
                 <div className={cx('category-tags')}>
                     <a href="#!" className={cx('brand-tag', 'tags')}>
@@ -27,7 +35,7 @@ const Items = (props) => {
                     </a>
                 </div>
                 <div className={cx('item-info')}>
-                    <p className={cx('price')}>$300</p>
+                    <p className={cx('price')}>${price}</p>
                     <p className={cx('star-icon')}>
                         <span className={cx('icon')}>
                             <i className="fa fa-star"></i>
