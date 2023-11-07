@@ -10,10 +10,12 @@ import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from 'react';
 import { fetchAllProduct } from '../../services/productService';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 // ===========
 const cx = classNames.bind(styles);
 const Product = (props) => {
+    const navigate = useNavigate();
     const [productData, setProductData] = useState([]);
 
     //pagination
