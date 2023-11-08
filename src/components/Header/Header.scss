@@ -27,6 +27,48 @@
     }
 }
 
+.dropdown {
+    .profile-avatar {
+        margin-left: 25px;
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border: 2px solid rgb(200, 0, 255);
+
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover ~ .dropdown-menu {
+            display: block;
+        }
+    }
+
+    .dropdown-menu {
+        right: 0;
+        top: 48px;
+        li {
+            font-size: 1.6rem;
+        }
+        &:hover {
+            display: block;
+        }
+
+        &::before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: -12px;
+            background-color: transparent;
+            width: 100%;
+            height: 16px;
+
+            &:hover {
+                display: block;
+            }
+        }
+    }
+}
+
 @keyframes activeAnim {
     from {
         width: 0;
