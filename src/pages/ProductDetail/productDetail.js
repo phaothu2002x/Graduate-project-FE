@@ -33,6 +33,20 @@ const ProductDetail = (props) => {
         }
     };
 
+    //increase & decrease function
+    const [quantity, setQuantity] = useState(1);
+
+    const handleAdd = () => {
+        setQuantity((prev) => prev + 1);
+    };
+    const handleMinus = () => {
+        if (quantity <= 1) {
+            setQuantity(1);
+        } else {
+            setQuantity((prev) => prev - 1);
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -119,6 +133,15 @@ const ProductDetail = (props) => {
                                 <button className={cx('like')}>
                                     <i className={cx('fa fa-heart-o', 'like-icon')}></i>
                                 </button>
+                                <div className={cx('quantity-box')}>
+                                    <button className={cx('btn', 'action-btn')} onClick={handleMinus}>
+                                        <i className="fa fa-minus"></i>
+                                    </button>
+                                    <span className={cx('quant-number')}>{quantity}</span>
+                                    <button className={cx('btn', 'action-btn')} onClick={handleAdd}>
+                                        <i className="fa fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
