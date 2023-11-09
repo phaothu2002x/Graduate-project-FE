@@ -35,7 +35,7 @@ const ProductDetail = (props) => {
 
     //increase & decrease function
     const [quantity, setQuantity] = useState(1);
-
+    const [finalQuant, setFinalQuant] = useState();
     const handleAdd = () => {
         setQuantity((prev) => prev + 1);
     };
@@ -47,9 +47,20 @@ const ProductDetail = (props) => {
         }
     };
 
+    //handle add to cart
+    const handleAddToCart = () => {
+        if (typeof finalQuant === 'number') {
+            setFinalQuant((prev) => prev + quantity);
+        } else {
+            setFinalQuant(quantity);
+        }
+
+        toast.success('add successfully');
+    };
+
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            <Header quantity={finalQuant} />
             <div className={cx('inner')}>
                 <div className={cx('banner')}>Breadcrumbs</div>
                 <div className={cx('product-container')}>
@@ -127,7 +138,13 @@ const ProductDetail = (props) => {
                             </p>
                             <div className={cx('price')}>${price}</div>
                             <div className={cx('purchase-action')}>
-                                <button type="button" className={cx('btn btn-warning', 'add-cart-btn')}>
+                                <button
+                                    type="button"
+                                    className={cx('btn btn-warning', 'add-cart-btn')}
+                                    onClick={() => {
+                                        handleAddToCart();
+                                    }}
+                                >
                                     Add to cart
                                 </button>
                                 <button className={cx('like')}>

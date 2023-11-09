@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import images from '~/assets/images';
 import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { Route } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
@@ -16,8 +16,13 @@ const Header = (props) => {
         sessionStorage.removeItem('account');
     };
 
-    //minicart
+    //badge number
+    // const [badgeNumb, setBadgeNumb] = useState(props.quantity);
+    // // if (badgeNumb !== props.quantity) {
+    // //     setBadgeNumb((prev) => prev + props.quantity);
+    // // }
 
+    //minicart
     const [cartShow, setCartShow] = useState(false);
 
     const handleCartClose = () => setCartShow(false);
@@ -74,7 +79,7 @@ const Header = (props) => {
                                 <div className={cx('position-relative', 'cart-btn')} onClick={() => handleCartClicked()}>
                                     <i className={cx('fa fa-shopping-cart', 'cart-icon')}></i>
                                     <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ">
-                                        8
+                                        {props.quantity}
                                     </span>
                                 </div>
 
@@ -126,7 +131,7 @@ const Header = (props) => {
                     </div>
                 </div>
             </header>
-            <MiniCart cartShow={cartShow} handleCartClose={handleCartClose} />
+            <MiniCart cartShow={cartShow} handleCartClose={handleCartClose} totalItem={props.quantity} />
         </>
     );
 };

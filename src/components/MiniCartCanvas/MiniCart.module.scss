@@ -4,8 +4,15 @@
     font-weight: 600;
 }
 
-.seeAllBtn {
-    font-size: 1.6rem;
-    width: 100%;
-    margin-top: auto;
+.content {
+    .desc {
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+            font-size: 1.6rem;
+            display: flex;
+            margin-bottom: 10px;
+        }
+    }
 }
