@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { findProductById } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { addProductToCart } from '~/services/cartService';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
@@ -48,14 +48,17 @@ const ProductDetail = (props) => {
     };
 
     //handle add to cart
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (typeof finalQuant === 'number') {
             setFinalQuant((prev) => prev + quantity);
         } else {
             setFinalQuant(quantity);
         }
-
         toast.success('add successfully');
+        //call api => add to cart
+
+        let response = await addProductToCart(id, quantity);
+        console.log('check response', response);
     };
 
     return (
