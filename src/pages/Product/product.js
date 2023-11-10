@@ -45,7 +45,7 @@ const Product = (props) => {
 
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('inner')}>
                 <Search />
                 <main className={cx('main-content')}>

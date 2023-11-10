@@ -5,11 +5,13 @@ import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './routes/privateRoute';
 import ManageUser from './pages/ManageUser/manageUser';
+import Header from './components/Header/header';
 
 function App() {
     return (
         <Router>
             <div className="App">
+                <Header />
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component;

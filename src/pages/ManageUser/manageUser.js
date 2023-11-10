@@ -95,7 +95,7 @@ const ManageUser = (props) => {
     };
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Manage Users !!!</div>
                 <div className={cx('action-btn')}>

@@ -5,7 +5,10 @@ import images from '~/assets/images';
 import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
 import { useEffect, useState } from 'react';
-// import { Route } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { fetchItemInCart } from '~/services/cartService';
+
 const cx = classNames.bind(styles);
 
 const Header = (props) => {
@@ -18,9 +21,24 @@ const Header = (props) => {
 
     //minicart
     const [cartShow, setCartShow] = useState(false);
+    const [cartList, setCartList] = useState([]);
+
+    useEffect(() => {
+        fetchItem();
+        console.log('call');
+    }, [cartShow]);
+    const fetchItem = async () => {
+        let response = await fetchItemInCart();
+        if (response && response.EC === 0) {
+            // toast.success(response.EM);
+            setCartList(response.DT);
+        }
+    };
 
     const handleCartClose = () => setCartShow(false);
-    const handleCartClicked = () => setCartShow(true);
+    const handleCartClicked = () => {
+        setCartShow(true);
+    };
 
     return (
         <>
@@ -125,7 +143,7 @@ const Header = (props) => {
                     </div>
                 </div>
             </header>
-            <MiniCart cartShow={cartShow} handleCartClose={handleCartClose} totalItem={props.quantity} />
+            <MiniCart cartShow={cartShow} handleCartClose={handleCartClose} totalItem={props.quantity} cartList={cartList} />
         </>
     );
 };

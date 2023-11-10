@@ -10,18 +10,19 @@ import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const MiniCart = (props) => {
-    const [cartList, setCartList] = useState([]);
-    useEffect(() => {
-        fetchItem();
-    }, []);
+    // const [cartList, setCartList] = useState([]);
+    // useEffect(() => {
+    //     fetchItem();
+    // }, []);
 
-    const fetchItem = async () => {
-        let response = await fetchItemInCart();
-        if (response && response.EC === 0) {
-            toast.success(response.EM);
-            setCartList(response.DT);
-        }
-    };
+    // const fetchItem = async () => {
+    //     let response = await fetchItemInCart();
+    //     if (response && response.EC === 0) {
+    //         toast.success(response.EM);
+    //         setCartList(response.DT);
+    //     }
+    // };
+    const { cartList } = props;
 
     return (
         <>

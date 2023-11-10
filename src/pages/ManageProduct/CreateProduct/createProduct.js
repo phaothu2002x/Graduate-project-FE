@@ -156,7 +156,7 @@ const CreateProduct = (props) => {
     // console.log('typeselection', typeSelect);ok
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Create Products</div>
                 <div className={cx('addNew-form')}>

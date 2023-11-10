@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 const Cart = (props) => {
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('container')}>
                 <div className={cx('row')}>
                     <div className={cx('col-7', 'content-left')}>

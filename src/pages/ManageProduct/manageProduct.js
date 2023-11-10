@@ -56,7 +56,7 @@ const ManageProduct = (props) => {
 
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Manage Products!!!</div>
 
