@@ -1,5 +1,5 @@
-.heading {
-    font-size: 3.2rem;
+.canvas-heading {
+    font-size: 3.2rem !important;
     color: var(--heading-color);
     font-weight: 600;
 }
@@ -14,5 +14,10 @@
             display: flex;
             margin-bottom: 10px;
         }
+    }
+
+    .cart-list {
+        padding: 0;
+        list-style: none;
     }
 }

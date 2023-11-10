@@ -54,11 +54,13 @@ const ProductDetail = (props) => {
         } else {
             setFinalQuant(quantity);
         }
-        toast.success('add successfully');
+
         //call api => add to cart
 
         let response = await addProductToCart(id, quantity);
-        console.log('check response', response);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+        }
     };
 
     return (

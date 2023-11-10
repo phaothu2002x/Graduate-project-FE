@@ -16,12 +16,6 @@ const Header = (props) => {
         sessionStorage.removeItem('account');
     };
 
-    //badge number
-    // const [badgeNumb, setBadgeNumb] = useState(props.quantity);
-    // // if (badgeNumb !== props.quantity) {
-    // //     setBadgeNumb((prev) => prev + props.quantity);
-    // // }
-
     //minicart
     const [cartShow, setCartShow] = useState(false);
 

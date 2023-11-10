@@ -25,11 +25,11 @@ const Register = (props) => {
     };
     const [objCheckInput, setObjCheckInput] = useState(defaultValidInput);
 
-    useEffect(() => {
-        axios.get('http://localhost:8081/api/test-api').then((data) => {
-            console.log('>>>check data', data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8081/api/test-api').then((data) => {
+    //         console.log('>>>check data', data);
+    //     });
+    // }, []);
 
     //validate
 

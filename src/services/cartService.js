@@ -1,11 +1,11 @@
 import axios from '~/setup/axios';
 
 const addProductToCart = (productId, quantity) => {
-    return axios.post(`/api/cart/create/`, { productId, quantity });
+    return axios.post(`/api/cart/create`, { productId, quantity });
 };
 
-const fetchAllProduct = () => {
+const fetchItemInCart = () => {
     return axios.get(`/api/cart/read`);
 };
 
-export { addProductToCart, fetchAllProduct };
+export { addProductToCart, fetchItemInCart };
