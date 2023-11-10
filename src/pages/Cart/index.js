@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Cart.module.scss';
 import Header from '~/components/Header/header';
+import Item from './ItemCart/item';
 
 const cx = classNames.bind(styles);
 const Cart = (props) => {
@@ -71,7 +72,49 @@ const Cart = (props) => {
                         </section>
                     </div>
                     {/* cart info  orderDetail info*/}
-                    <div className={cx('col-5', 'content-right')}>product in cart</div>
+                    <div className={cx('col-5', 'content-right')}>
+                        <h2 className={cx('heading')}>Giỏ hàng</h2>
+                        <div className={cx('desc', 'row')}>
+                            <p className={cx('title-desc', 'col-8')}>Product Desc</p>
+                            <p className={cx('quantity-desc', 'col-2')}>Quantity</p>
+                            <p className={cx('price-desc', 'col-2')}>Price</p>
+                        </div>
+
+                        {/* <div className={cx('product-item', 'row')}>
+                            <div className={cx('product-info', 'col-8')}>
+                                <img
+                                    src="https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/347604309_3696653077250521_7183040639651625007_n.jpg?stp=cp6_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=PCw16OENK1AAX_Lz0-q&_nc_ht=scontent.fsgn8-3.fna&cb_e2o_trans=q&oh=00_AfACflsHoQ0-qRyqB5kHOuh2rAVZUs0YsiVagArZaR2ivg&oe=65531BF8"
+                                    alt="product-img"
+                                    className={cx('product-img')}
+                                />
+                                <div className={cx('product-detail')}>
+                                    <p className={cx('title')}>Áo nỉ chui đầu essential</p>
+                                    <span className={cx('delete-icon')}>
+                                        <i className="fa fa-trash-o"></i>
+                                        <p>delete</p>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className={cx('product-quantity', 'col-2')}>
+                                <div className={cx('quantity-box')}>
+                                    <button className={cx('btn', 'action-btn')}>
+                                        <i className="fa fa-minus"></i>
+                                    </button>
+                                    <span className={cx('quant-number')}>10</span>
+                                    <button className={cx('btn', 'action-btn')}>
+                                        <i className="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className={cx('product-price', 'col-2')}>314$</div>
+                        </div> */}
+                        <div className={cx('product-list')}>
+                            <Item />
+                            <Item />
+                            <Item />
+                            <Item />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

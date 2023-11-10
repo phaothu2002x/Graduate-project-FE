@@ -17,7 +17,7 @@ const MiniCart = (props) => {
                     <div className={cx('content')}>
                         <div className={cx('desc')}>
                             <div className={cx('title')}>{props.totalItem || '0'} items</div>
-                            <Link to="/">See all Products...</Link>
+                            <Link to="/cart">See all Products...</Link>
                         </div>
                         <CartItem />
                         <CartItem />
