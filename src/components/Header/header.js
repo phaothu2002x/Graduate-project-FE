@@ -6,7 +6,6 @@ import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
-// import { fetchItemInCart } from '~/services/cartService';
 
 const cx = classNames.bind(styles);
 

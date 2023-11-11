@@ -5,8 +5,7 @@ const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
     const [cartShow, setCartShow] = useState(false);
-    const [cartList, setCartList] = useState([3]);
-
+    const [cartList, setCartList] = useState([]);
     const fetchItem = async () => {
         let response = await fetchItemInCart();
         if (response && response.EC === 0) {
@@ -14,6 +13,7 @@ const CartProvider = ({ children }) => {
             setCartList(response.DT);
         }
     };
+    //caculate total items
 
     const handleCartClose = () => setCartShow(false);
     const handleCartClicked = () => {

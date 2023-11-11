@@ -3,8 +3,16 @@ import styles from './Cart.module.scss';
 import Header from '~/components/Header/header';
 import Item from './ItemCart/item';
 
+import { useContext, useEffect } from 'react';
+import { CartContext } from '~/components/Header/CartContext';
 const cx = classNames.bind(styles);
+
 const Cart = (props) => {
+    const { cartList, fetchItem } = useContext(CartContext);
+    useEffect(() => {
+        fetchItem();
+    }, []);
+
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -80,12 +88,25 @@ const Cart = (props) => {
                             <p className={cx('price-desc', 'col-2')}>Price</p>
                         </div>
 
-                        <div className={cx('product-list')}>
+                        <ul className={cx('product-list')}>
+                            {cartList && cartList.length > 0 ? (
+                                cartList.map((item, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <Item data={item} />
+                                        </li>
+                                    );
+                                })
+                            ) : (
+                                <h1>Empty Items...</h1>
+                            )}
+                            {/* <li>
+                                <Item />
+                            </li>
                             <Item />
                             <Item />
-                            <Item />
-                            <Item />
-                        </div>
+                            <Item /> */}
+                        </ul>
                     </div>
                 </div>
             </div>

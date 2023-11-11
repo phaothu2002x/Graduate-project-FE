@@ -12,6 +12,10 @@ const MiniCart = (props) => {
     // const { fetchItem } = props;
 
     const { cartList, cartShow, handleCartClose } = useContext(CartContext);
+    //caculate total items
+    const totalItems = cartList.reduce((acc, currentVal) => {
+        return acc + currentVal.quantity;
+    }, 0);
 
     return (
         <>
@@ -22,7 +26,7 @@ const MiniCart = (props) => {
                 <Offcanvas.Body>
                     <div className={cx('content')}>
                         <div className={cx('desc')}>
-                            <div className={cx('title')}>{props.totalItem || '0'} items</div>
+                            <div className={cx('title')}>{totalItems || '0'} items</div>
                             <Link to="/cart">See all Products...</Link>
                         </div>
 
