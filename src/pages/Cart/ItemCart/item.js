@@ -1,24 +1,37 @@
 import classNames from 'classnames/bind';
 import styles from './ItemInCart.module.scss';
-import { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { CartContext } from '~/components/Header/CartContext';
+import { useState } from 'react';
+
+import { updateCart } from '~/services/cartService';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 const Item = (props) => {
     const { id, thumbnail, name, price, quantity } = props.data;
-    const [finalQuantity, setFinalQuantity] = useState(props.data.quantity);
+    const [finalQuantity, setFinalQuantity] = useState(quantity);
+
     // const { fetchItem } = useContext(CartContext);
 
-    const handleAdd = () => {
-        setFinalQuantity((prev) => prev + 1);
+    const handleMinusAddChange = async (index) => {
+        let response = await updateCart(id, finalQuantity + index);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+        }
     };
-    const handleMinus = () => {
+
+    const handleAdd = async () => {
+        setFinalQuantity((prev) => prev + 1);
+        //debounce technique
+        handleMinusAddChange(1);
+    };
+    const handleMinus = async () => {
         if (finalQuantity <= 1) {
             setFinalQuantity(1);
         } else {
             setFinalQuantity((prev) => prev - 1);
+            handleMinusAddChange(-1);
         }
     };
+
     return (
         <>
             <div className={cx('product-item', 'row')}>

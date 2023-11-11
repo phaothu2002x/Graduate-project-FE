@@ -56,7 +56,6 @@ const ProductDetail = (props) => {
         }
 
         //call api => add to cart
-
         let response = await addProductToCart(id, quantity);
         if (response && response.EC === 0) {
             toast.success(response.EM);
