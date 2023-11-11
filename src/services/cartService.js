@@ -8,4 +8,8 @@ const fetchItemInCart = () => {
     return axios.get(`/api/cart/read`);
 };
 
-export { addProductToCart, fetchItemInCart };
+const deleteItemInCart = (itemId) => {
+    return axios.delete(`/api/cart/delete`, { data: { id: itemId } });
+};
+
+export { addProductToCart, fetchItemInCart, deleteItemInCart };

@@ -1,9 +1,23 @@
 import classNames from 'classnames/bind';
 import styles from './CartItem.module.scss';
-
+import { deleteItemInCart } from '~/services/cartService';
+import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { CartContext } from '../Header/CartContext';
 const cx = classNames.bind(styles);
 const CartItem = (props) => {
-    const { thumbnail, name, price, quantity } = props.data;
+    const { id, thumbnail, name, price, quantity } = props.data;
+    const { fetchItem } = useContext(CartContext);
+    const handleDeleteItemInCart = async (itemId) => {
+        // call api
+        // console.log('check item id', itemId);
+        let response = await deleteItemInCart(itemId);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+            fetchItem();
+        }
+    };
+
     return (
         <>
             <section className={cx('cart-item')}>
@@ -16,7 +30,12 @@ const CartItem = (props) => {
                     </div>
                 </div>
                 <span>
-                    <i className={cx('fa fa-trash-o', 'delete-icon')}></i>
+                    <i
+                        className={cx('fa fa-trash-o', 'delete-icon')}
+                        onClick={() => {
+                            handleDeleteItemInCart(id);
+                        }}
+                    ></i>
                 </span>
             </section>
         </>

@@ -4,10 +4,9 @@ import { Link, NavLink } from 'react-router-dom';
 import images from '~/assets/images';
 import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-
-import { fetchItemInCart } from '~/services/cartService';
+import { useContext } from 'react';
+import { CartContext } from './CartContext';
+// import { fetchItemInCart } from '~/services/cartService';
 
 const cx = classNames.bind(styles);
 
@@ -18,27 +17,26 @@ const Header = (props) => {
     const handleLogout = () => {
         sessionStorage.removeItem('account');
     };
+    //context hook
+    const { handleCartClicked } = useContext(CartContext);
 
     //minicart
-    const [cartShow, setCartShow] = useState(false);
-    const [cartList, setCartList] = useState([]);
+    // const [cartShow, setCartShow] = useState(false);
+    // const [cartList, setCartList] = useState([]);
 
-    useEffect(() => {
-        fetchItem();
-        console.log('call');
-    }, [cartShow]);
-    const fetchItem = async () => {
-        let response = await fetchItemInCart();
-        if (response && response.EC === 0) {
-            // toast.success(response.EM);
-            setCartList(response.DT);
-        }
-    };
+    // const fetchItem = async () => {
+    //     let response = await fetchItemInCart();
+    //     if (response && response.EC === 0) {
+    //         // toast.success(response.EM);
+    //         setCartList(response.DT);
+    //     }
+    // };
 
-    const handleCartClose = () => setCartShow(false);
-    const handleCartClicked = () => {
-        setCartShow(true);
-    };
+    // const handleCartClose = () => setCartShow(false);
+    // const handleCartClicked = () => {
+    //     setCartShow(true);
+    //     // fetchItem();
+    // };
 
     return (
         <>
@@ -143,7 +141,13 @@ const Header = (props) => {
                     </div>
                 </div>
             </header>
-            <MiniCart cartShow={cartShow} handleCartClose={handleCartClose} totalItem={props.quantity} cartList={cartList} />
+            <MiniCart
+                // cartShow={cartShow}
+                // handleCartClose={handleCartClose}
+                totalItem={props.quantity}
+                // cartList={cartList}
+                // fetchItem={fetchItem}
+            />
         </>
     );
 };

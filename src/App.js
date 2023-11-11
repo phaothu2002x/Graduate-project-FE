@@ -6,39 +6,42 @@ import { ToastContainer } from 'react-toastify';
 import PrivateRoute from './routes/privateRoute';
 import ManageUser from './pages/ManageUser/manageUser';
 import Header from './components/Header/header';
+import { CartProvider } from './components/Header/CartContext';
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                <Header />
-                <Routes>
-                    {publicRoutes.map((route, index) => {
-                        const Page = route.component;
-                        return <Route key={index} path={route.path} element={<Page />} />;
-                    })}
+        <CartProvider>
+            <Router>
+                <div className="App">
+                    <Header />
+                    <Routes>
+                        {publicRoutes.map((route, index) => {
+                            const Page = route.component;
+                            return <Route key={index} path={route.path} element={<Page />} />;
+                        })}
 
-                    {/* private routes */}
-                    {privateRoutes.map((route, index) => {
-                        const PrivatePage = route.component;
-                        return <Route key={index} path={route.path} element={<PrivatePage />} />;
-                    })}
-                    {/* <PrivateRoute path="/manage-user" component={ManageUser} /> */}
-                </Routes>
-                <ToastContainer
-                    position="bottom-left"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss={false}
-                    draggable
-                    pauseOnHover={false}
-                    theme="light"
-                />
-            </div>
-        </Router>
+                        {/* private routes */}
+                        {privateRoutes.map((route, index) => {
+                            const PrivatePage = route.component;
+                            return <Route key={index} path={route.path} element={<PrivatePage />} />;
+                        })}
+                        {/* <PrivateRoute path="/manage-user" component={ManageUser} /> */}
+                    </Routes>
+                    <ToastContainer
+                        position="bottom-left"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss={false}
+                        draggable
+                        pauseOnHover={false}
+                        theme="light"
+                    />
+                </div>
+            </Router>
+        </CartProvider>
     );
 }
 

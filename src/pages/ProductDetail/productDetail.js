@@ -65,7 +65,7 @@ const ProductDetail = (props) => {
 
     return (
         <div className={cx('wrapper')}>
-            <Header quantity={finalQuant} />
+            {/* <Header quantity={finalQuant} /> */}
             <div className={cx('inner')}>
                 <div className={cx('banner')}>Breadcrumbs</div>
                 <div className={cx('product-container')}>

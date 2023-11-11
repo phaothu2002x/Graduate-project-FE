@@ -4,29 +4,18 @@ import styles from './MiniCart.module.scss';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import CartItem from '../CartItem/cartItem';
 import { Link } from 'react-router-dom';
-import { fetchItemInCart } from '~/services/cartService';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { CartContext } from '../Header/CartContext';
 const cx = classNames.bind(styles);
 
 const MiniCart = (props) => {
-    // const [cartList, setCartList] = useState([]);
-    // useEffect(() => {
-    //     fetchItem();
-    // }, []);
+    // const { fetchItem } = props;
 
-    // const fetchItem = async () => {
-    //     let response = await fetchItemInCart();
-    //     if (response && response.EC === 0) {
-    //         toast.success(response.EM);
-    //         setCartList(response.DT);
-    //     }
-    // };
-    const { cartList } = props;
+    const { cartList, cartShow, handleCartClose } = useContext(CartContext);
 
     return (
         <>
-            <Offcanvas show={props.cartShow} onHide={props.handleCartClose} placement="end">
+            <Offcanvas show={cartShow} onHide={handleCartClose} placement="end">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title className={cx('canvas-heading')}>Your Cart</Offcanvas.Title>
                 </Offcanvas.Header>
