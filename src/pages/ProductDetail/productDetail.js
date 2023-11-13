@@ -3,15 +3,17 @@ import styles from './ProductDetail.module.scss';
 import Header from '~/components/Header/header';
 import images from '~/assets/images';
 import Carousel from 'react-bootstrap/Carousel';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { findProductById } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '~/services/cartService';
+import { CartContext } from '~/components/Header/CartContext';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
     const { id } = useParams();
+    const { fetchItem } = useContext(CartContext);
 
     const tabs = ['Description', 'feature', 'reviews'];
     const [type, setType] = useState('Description');
@@ -51,15 +53,17 @@ const ProductDetail = (props) => {
     const handleAddToCart = async () => {
         if (typeof finalQuant === 'number') {
             setFinalQuant((prev) => prev + quantity);
+            // fetchQuantity();
         } else {
             setFinalQuant(quantity);
         }
-
         //call api => add to cart
-        let response = await addProductToCart(id, quantity);
+        let response = await addProductToCart(id, quantity, price);
         if (response && response.EC === 0) {
             toast.success(response.EM);
         }
+
+        fetchItem();
     };
 
     return (

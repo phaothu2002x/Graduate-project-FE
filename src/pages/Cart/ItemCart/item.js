@@ -11,37 +11,12 @@ const cx = classNames.bind(styles);
 
 const Item = (props) => {
     const navigate = useNavigate();
-    const { id, thumbnail, name, price, quantity } = props.data;
-    const [finalQuantity, setFinalQuantity] = useState(quantity);
+    const { id, thumbnail, name, quantity, totalPrice } = props.data;
+
     const { fetchItem } = useContext(CartContext);
-    const totalPrice = price * quantity;
-    const [totalItemPrice, setTotalItemPrice] = useState(totalPrice);
 
     const handleItemClick = (id) => {
         navigate(`/product/${id}`);
-    };
-
-    const handleMinusAddChange = async (index) => {
-        let response = await updateCart(id, finalQuantity + index);
-        if (response && response.EC === 0) {
-            toast.success(response.EM);
-        }
-    };
-
-    const handleAdd = async () => {
-        setFinalQuantity((prev) => prev + 1);
-        setTotalItemPrice(price * (finalQuantity + 1));
-        //debounce technique (not ok)
-        handleMinusAddChange(1);
-    };
-    const handleMinus = async () => {
-        if (finalQuantity <= 1) {
-            setFinalQuantity(1);
-        } else {
-            setFinalQuantity((prev) => prev - 1);
-            setTotalItemPrice(price * (finalQuantity - 1));
-            handleMinusAddChange(-1);
-        }
     };
 
     const handleDeleteItemInCart = async (itemId) => {
@@ -56,9 +31,9 @@ const Item = (props) => {
 
     return (
         <>
-            <div className={cx('product-item', 'row')} onClick={() => handleItemClick(id)}>
+            <div className={cx('product-item', 'row')}>
                 <div className={cx('product-info', 'col-8')}>
-                    <img src={thumbnail} alt="product-img" className={cx('product-img')} />
+                    <img src={thumbnail} alt="product-img" className={cx('product-img')} onClick={() => handleItemClick(id)} />
                     <div className={cx('product-detail')}>
                         <p className={cx('title')}>{name}</p>
                         <span className={cx('delete-icon')} onClick={() => handleDeleteItemInCart(id)}>
@@ -68,7 +43,7 @@ const Item = (props) => {
                     </div>
                 </div>
                 <div className={cx('product-quantity', 'col-2')}>
-                    <div className={cx('quantity-box')}>
+                    {/* <div className={cx('quantity-box')}>
                         <button className={cx('btn', 'action-btn')} onClick={handleMinus}>
                             <i className="fa fa-minus"></i>
                         </button>
@@ -76,9 +51,10 @@ const Item = (props) => {
                         <button className={cx('btn', 'action-btn')} onClick={handleAdd}>
                             <i className="fa fa-plus"></i>
                         </button>
-                    </div>
+                    </div> */}
+                    <span className={cx('quant-number')}>{quantity}</span>
                 </div>
-                <div className={cx('product-price', 'col-2')}>{totalItemPrice}$</div>
+                <div className={cx('product-price', 'col-2')}>{totalPrice}$</div>
             </div>
         </>
     );

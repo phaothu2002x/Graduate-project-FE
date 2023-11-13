@@ -13,30 +13,14 @@ const Header = (props) => {
     const getSession = sessionStorage.getItem('account');
     let sessionData = JSON.parse(getSession);
     // console.log('check', getSession);
+
+    //context hook
+    const { itemsInCart, handleCartClicked } = useContext(CartContext);
+
     const handleLogout = () => {
         sessionStorage.removeItem('account');
         window.location.reload();
     };
-    //context hook
-    const { handleCartClicked } = useContext(CartContext);
-
-    //minicart
-    // const [cartShow, setCartShow] = useState(false);
-    // const [cartList, setCartList] = useState([]);
-
-    // const fetchItem = async () => {
-    //     let response = await fetchItemInCart();
-    //     if (response && response.EC === 0) {
-    //         // toast.success(response.EM);
-    //         setCartList(response.DT);
-    //     }
-    // };
-
-    // const handleCartClose = () => setCartShow(false);
-    // const handleCartClicked = () => {
-    //     setCartShow(true);
-    //     // fetchItem();
-    // };
 
     return (
         <>
@@ -89,7 +73,7 @@ const Header = (props) => {
                                 <div className={cx('position-relative', 'cart-btn')} onClick={() => handleCartClicked()}>
                                     <i className={cx('fa fa-shopping-cart', 'cart-icon')}></i>
                                     <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ">
-                                        {props.quantity}
+                                        {itemsInCart}
                                     </span>
                                 </div>
 

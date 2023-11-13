@@ -1,10 +1,10 @@
 import axios from '~/setup/axios';
 
-const addProductToCart = (productId, quantity) => {
-    return axios.post(`/api/cart/create`, { productId, quantity });
+const addProductToCart = (productId, quantity, price) => {
+    return axios.post(`/api/cart/create`, { productId, quantity, price });
 };
-const updateCart = (itemId, quantity) => {
-    return axios.put(`/api/cart/update`, { itemId, quantity });
+const updateCart = (itemId, quantity, totalPrice) => {
+    return axios.put(`/api/cart/update`, { itemId, quantity, totalPrice });
 };
 
 const fetchItemInCart = () => {

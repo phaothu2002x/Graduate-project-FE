@@ -98,4 +98,23 @@
         padding: 0;
         list-style: none;
     }
+
+    .purchase-section {
+        .title {
+            font-size: 3rem;
+            color: var(--heading-color);
+            margin: 32px 0;
+            font-weight: 600;
+        }
+        .price {
+            font-size: 1.8rem;
+        }
+        .purchase-btn {
+            margin: 32px 0;
+            width: 100%;
+            height: 50px;
+            font-size: 1.8rem;
+            border-radius: 14px;
+        }
+    }
 }

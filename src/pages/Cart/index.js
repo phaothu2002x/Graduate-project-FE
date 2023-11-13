@@ -5,6 +5,7 @@ import Item from './ItemCart/item';
 
 import { useContext, useEffect } from 'react';
 import { CartContext } from '~/components/Header/CartContext';
+
 const cx = classNames.bind(styles);
 
 const Cart = (props) => {
@@ -12,6 +13,11 @@ const Cart = (props) => {
     useEffect(() => {
         fetchItem();
     }, []);
+
+    //caculate the totalPrice of items in cart
+    const totalPriceInCart = cartList.reduce((acc, currVal) => {
+        return acc + currVal.totalPrice;
+    }, 0);
 
     return (
         <div className={cx('wrapper')}>
@@ -102,7 +108,11 @@ const Cart = (props) => {
                             )}
                         </ul>
 
-                        <div className={cx('subtotal')}>Tong thiet hai</div>
+                        <div className={cx('purchase-section')}>
+                            <h2 className={cx('title')}>Tong thiet hai</h2>
+                            <p className={cx('price')}>{totalPriceInCart}$</p>
+                            <button className={cx('btn btn-primary', 'purchase-btn')}>Thanh Toan</button>
+                        </div>
                     </div>
                 </div>
             </div>
