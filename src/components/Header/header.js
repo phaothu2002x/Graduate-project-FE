@@ -12,9 +12,10 @@ const cx = classNames.bind(styles);
 const Header = (props) => {
     const getSession = sessionStorage.getItem('account');
     let sessionData = JSON.parse(getSession);
-
+    // console.log('check', getSession);
     const handleLogout = () => {
         sessionStorage.removeItem('account');
+        window.location.reload();
     };
     //context hook
     const { handleCartClicked } = useContext(CartContext);

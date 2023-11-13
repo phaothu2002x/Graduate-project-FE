@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Cart.module.scss';
-import Header from '~/components/Header/header';
+// import Header from '~/components/Header/header';
 import Item from './ItemCart/item';
 
 import { useContext, useEffect } from 'react';
@@ -100,13 +100,9 @@ const Cart = (props) => {
                             ) : (
                                 <h1>Empty Items...</h1>
                             )}
-                            {/* <li>
-                                <Item />
-                            </li>
-                            <Item />
-                            <Item />
-                            <Item /> */}
                         </ul>
+
+                        <div className={cx('subtotal')}>Tong thiet hai</div>
                     </div>
                 </div>
             </div>

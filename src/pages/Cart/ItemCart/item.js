@@ -1,15 +1,25 @@
 import classNames from 'classnames/bind';
 import styles from './ItemInCart.module.scss';
-import { useState } from 'react';
-
-import { updateCart } from '~/services/cartService';
+import { useState, useContext, useEffect } from 'react';
+import { updateCart, deleteItemInCart } from '~/services/cartService';
 import { toast } from 'react-toastify';
+
+import { CartContext } from '~/components/Header/CartContext';
+import { useNavigate } from 'react-router-dom';
+// import { debounce } from 'lodash';
 const cx = classNames.bind(styles);
+
 const Item = (props) => {
+    const navigate = useNavigate();
     const { id, thumbnail, name, price, quantity } = props.data;
     const [finalQuantity, setFinalQuantity] = useState(quantity);
+    const { fetchItem } = useContext(CartContext);
+    const totalPrice = price * quantity;
+    const [totalItemPrice, setTotalItemPrice] = useState(totalPrice);
 
-    // const { fetchItem } = useContext(CartContext);
+    const handleItemClick = (id) => {
+        navigate(`/product/${id}`);
+    };
 
     const handleMinusAddChange = async (index) => {
         let response = await updateCart(id, finalQuantity + index);
@@ -20,7 +30,8 @@ const Item = (props) => {
 
     const handleAdd = async () => {
         setFinalQuantity((prev) => prev + 1);
-        //debounce technique
+        setTotalItemPrice(price * (finalQuantity + 1));
+        //debounce technique (not ok)
         handleMinusAddChange(1);
     };
     const handleMinus = async () => {
@@ -28,18 +39,29 @@ const Item = (props) => {
             setFinalQuantity(1);
         } else {
             setFinalQuantity((prev) => prev - 1);
+            setTotalItemPrice(price * (finalQuantity - 1));
             handleMinusAddChange(-1);
+        }
+    };
+
+    const handleDeleteItemInCart = async (itemId) => {
+        // call api
+        // console.log('check item id', itemId);
+        let response = await deleteItemInCart(itemId);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+            fetchItem();
         }
     };
 
     return (
         <>
-            <div className={cx('product-item', 'row')}>
+            <div className={cx('product-item', 'row')} onClick={() => handleItemClick(id)}>
                 <div className={cx('product-info', 'col-8')}>
                     <img src={thumbnail} alt="product-img" className={cx('product-img')} />
                     <div className={cx('product-detail')}>
                         <p className={cx('title')}>{name}</p>
-                        <span className={cx('delete-icon')}>
+                        <span className={cx('delete-icon')} onClick={() => handleDeleteItemInCart(id)}>
                             <i className="fa fa-trash-o"></i>
                             <p>delete</p>
                         </span>
@@ -56,7 +78,7 @@ const Item = (props) => {
                         </button>
                     </div>
                 </div>
-                <div className={cx('product-price', 'col-2')}>{price}$</div>
+                <div className={cx('product-price', 'col-2')}>{totalItemPrice}$</div>
             </div>
         </>
     );

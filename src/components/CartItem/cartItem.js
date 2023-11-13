@@ -4,10 +4,18 @@ import { deleteItemInCart } from '~/services/cartService';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { CartContext } from '../Header/CartContext';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 const CartItem = (props) => {
+    const navigate = useNavigate();
     const { id, thumbnail, name, price, quantity } = props.data;
-    const { fetchItem } = useContext(CartContext);
+    const { fetchItem, handleCartClose } = useContext(CartContext);
+
+    const handleItemClick = (id) => {
+        navigate(`/product/${id}`);
+        handleCartClose();
+    };
+
     const handleDeleteItemInCart = async (itemId) => {
         // call api
         // console.log('check item id', itemId);
@@ -20,7 +28,12 @@ const CartItem = (props) => {
 
     return (
         <>
-            <section className={cx('cart-item')}>
+            <section
+                className={cx('cart-item')}
+                onClick={() => {
+                    handleItemClick(id);
+                }}
+            >
                 <img className={cx('img')} src={thumbnail} alt="product img" />
                 <div className={cx('content')}>
                     <div className={cx('title')}>{name}</div>
