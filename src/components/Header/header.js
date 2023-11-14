@@ -36,30 +36,35 @@ const Header = (props) => {
                         <ul className={cx('list')}>
                             <li className={cx('item', 'item-scss')}>
                                 <NavLink to="/" exact="true" className="border-container">
+                                    <i className="fa fa-home" aria-hidden="true"></i>
                                     Home
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
                                 <NavLink to="/cart" className="border-container">
+                                    <i className="fa fa-cubes" aria-hidden="true"></i>
                                     Feature
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
                                 <NavLink to="/product" className="border-container">
+                                    <i className="fa fa-keyboard-o" aria-hidden="true"></i>
                                     Products
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
                                 <NavLink to="/productDetail" className="border-container">
+                                    <i className="fa fa-user-secret" aria-hidden="true"></i>
                                     About
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
                                 <NavLink to="/cart" className="border-container">
+                                    <i className="fa fa-shopping-bag" aria-hidden="true"></i>
                                     Cart
                                     <div className="border-inner"></div>
                                 </NavLink>
@@ -87,11 +92,13 @@ const Header = (props) => {
                                     <ul className="dropdown-menu">
                                         <li>
                                             <Link className="dropdown-item" to="/manage-user">
-                                                Account
+                                                <i className="fa fa-user-circle" aria-hidden="true"></i>
+                                                Your Account
                                             </Link>
                                         </li>
                                         <li>
                                             <a className="dropdown-item" href="#!">
+                                                <i className="fa fa-archive" aria-hidden="true"></i>
                                                 Your Order
                                             </a>
                                         </li>
@@ -106,6 +113,7 @@ const Header = (props) => {
                                                     handleLogout();
                                                 }}
                                             >
+                                                <i className="fa fa-sign-out" aria-hidden="true"></i>
                                                 LogOut
                                             </Link>
                                         </li>

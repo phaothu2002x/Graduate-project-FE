@@ -12,7 +12,6 @@ const MiniCart = (props) => {
     // const { fetchItem } = props;
 
     const { cartList, cartShow, itemsInCart, handleCartClose } = useContext(CartContext);
-    // //caculate total items
 
     return (
         <>

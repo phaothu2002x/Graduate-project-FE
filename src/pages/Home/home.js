@@ -15,6 +15,7 @@ const Home = (props) => {
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
+
             <div className={cx('container')}>
                 {/* hero */}
                 <div className={cx('hero')}>

@@ -9,8 +9,15 @@
         //         border-bottom: 3px solid var(--primary-color);
         //     }
         // }
+
         .border-container {
             position: relative;
+            font-size: 1.8rem;
+            i {
+                margin-right: 6px;
+                font-size: 1.8rem;
+                color: #00a9ff;
+            }
 
             &.active {
                 .border-inner {
@@ -48,6 +55,11 @@
         top: 48px;
         li {
             font-size: 1.6rem;
+            padding: 4px 14px;
+            i {
+                color: #00a9ff;
+                margin-right: 6px;
+            }
         }
         &:hover {
             display: block;
