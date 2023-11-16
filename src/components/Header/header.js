@@ -56,16 +56,16 @@ const Header = (props) => {
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/productDetail" className="border-container">
-                                    <i className="fa fa-user-secret" aria-hidden="true"></i>
-                                    About
+                                <NavLink to="/cart" className="border-container">
+                                    <i className="fa fa-shopping-bag" aria-hidden="true"></i>
+                                    Cart
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/cart" className="border-container">
-                                    <i className="fa fa-shopping-bag" aria-hidden="true"></i>
-                                    Cart
+                                <NavLink to="/productDetail" className="border-container">
+                                    <i className="fa fa-user-secret" aria-hidden="true"></i>
+                                    About
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>

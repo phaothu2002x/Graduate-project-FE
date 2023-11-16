@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './CreateProduct.module.scss';
-import Header from '~/components/Header/header';
+// import Header from '~/components/Header/header';
 import { useEffect, useState } from 'react';
 import { createNewProduct, findType, findAllSelection } from '~/services/productService';
 import _ from 'lodash';

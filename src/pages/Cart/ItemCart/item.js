@@ -43,15 +43,6 @@ const Item = (props) => {
                     </div>
                 </div>
                 <div className={cx('product-quantity', 'col-2')}>
-                    {/* <div className={cx('quantity-box')}>
-                        <button className={cx('btn', 'action-btn')} onClick={handleMinus}>
-                            <i className="fa fa-minus"></i>
-                        </button>
-                        <span className={cx('quant-number')}>{finalQuantity}</span>
-                        <button className={cx('btn', 'action-btn')} onClick={handleAdd}>
-                            <i className="fa fa-plus"></i>
-                        </button>
-                    </div> */}
                     <span className={cx('quant-number')}>{quantity}</span>
                 </div>
                 <div className={cx('product-price', 'col-2')}>{totalPrice}$</div>

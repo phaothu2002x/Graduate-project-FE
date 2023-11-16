@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '~/components/Header/CartContext';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import { createOrder } from '~/services/orderService';
 const cx = classNames.bind(styles);
 
 const Cart = (props) => {
@@ -77,14 +78,19 @@ const Cart = (props) => {
         return check;
     };
 
-    const handlePurchase = () => {
+    const handlePurchase = async () => {
         let orderInfo = {};
         let check = checkValidInput();
         if (check) {
             // console.log('check user data', userValue);
-            orderInfo = { userValue, totalPriceInCart, productLis: cartList };
+            orderInfo = { userValue, totalPriceInCart, productList: cartList };
             // call api
             console.log(orderInfo);
+            let response = await createOrder(orderInfo);
+
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
+            }
         }
     };
 
