@@ -64,20 +64,19 @@
             }
         }
     }
+}
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .pagination {
-        margin-top: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    ul {
+        li {
+            a {
+                padding: 10px;
 
-        ul {
-            li {
-                a {
-                    padding: 10px;
-
-                    font-size: 1.6rem;
-                }
+                font-size: 1.6rem;
             }
         }
     }

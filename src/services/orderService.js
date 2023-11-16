@@ -6,5 +6,8 @@ const fetchAllOrder = () => {
 const createOrder = (orderInfo) => {
     return axios.post(`/api/order/create`, { ...orderInfo });
 };
+const updateOrderStatus = (orderId, statusValue) => {
+    return axios.put(`/api/order/update`, { orderId, statusValue });
+};
 
-export { createOrder, fetchAllOrder };
+export { createOrder, fetchAllOrder, updateOrderStatus };

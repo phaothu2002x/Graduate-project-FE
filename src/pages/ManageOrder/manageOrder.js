@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './ManageOrder.module.scss';
 import { useEffect, useState } from 'react';
 import { fetchAllOrder } from '~/services/orderService';
+import UpdateStatusModal from './Modals/updateModals';
+import ReactPaginate from 'react-paginate';
 
 const cx = classNames.bind(styles);
 const ManageProduct = (props) => {
@@ -18,11 +20,40 @@ const ManageProduct = (props) => {
         }
     };
 
-    const handleUpdateClick = () => {
-        alert('me');
+    //pagination
+    const [totalPage, setTotalPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentLimit, setCurrentLimit] = useState(10);
+
+    const handlePageClick = (e) => {
+        setCurrentPage(+e.selected + 1);
     };
+
+    //modal update:
+    const [orderData, setOrderData] = useState({});
+    const [updateStatusModal, setUpdateStatusModal] = useState(false);
+
+    const handleUpdateClick = (order) => {
+        setOrderData(order);
+        setUpdateStatusModal(true);
+    };
+
+    const handleCloseUpdateStatusModal = () => {
+        setOrderData({});
+        setUpdateStatusModal(false);
+    };
+
+    const onHideModal = async () => {
+        setUpdateStatusModal(false);
+        fetchOrders();
+    };
+
     const hanldeDeleteClick = () => {
         alert('delete ');
+    };
+
+    const handleRefresh = () => {
+        fetchOrders();
     };
 
     return (
@@ -31,7 +62,7 @@ const ManageProduct = (props) => {
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Manage Orders !!!</div>
                 <div className={cx('action-btn')}>
-                    <button className={cx('btn btn-success', 'refresh-btn')}>
+                    <button className={cx('btn btn-success', 'refresh-btn')} onClick={handleRefresh}>
                         <span className={cx('refresh-icon')}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -46,6 +77,7 @@ const ManageProduct = (props) => {
                                 <th scope="col">ID</th>
                                 <th scope="col">UserName</th>
                                 <th scope="col">Phone</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Note</th>
                                 <th scope="col">TotalPrice</th>
                                 <th scope="col">status</th>
@@ -60,6 +92,7 @@ const ManageProduct = (props) => {
                                             <td>{item.id}</td>
                                             <td>{item.name}</td>
                                             <td>{item.phone}</td>
+                                            <td>{item.email}</td>
                                             <td>{item.note}</td>
                                             <td>${item.amount}</td>
                                             <td>{item.status}</td>
@@ -68,10 +101,10 @@ const ManageProduct = (props) => {
                                                     <button
                                                         className={cx('btn btn-primary', 'action-btn')}
                                                         onClick={() => {
-                                                            handleUpdateClick();
+                                                            handleUpdateClick(item);
                                                         }}
                                                     >
-                                                        <i class="fa fa-cog"></i>
+                                                        <i className="fa fa-cog"></i>
                                                     </button>
                                                     <button
                                                         className={cx('btn btn-danger', 'action-btn')}
@@ -85,51 +118,15 @@ const ManageProduct = (props) => {
                                     );
                                 })
                             ) : (
-                                <h1>Not found Orders</h1>
+                                <tr>
+                                    <td>Not found Orders</td>
+                                </tr>
                             )}
                         </tbody>
-                        {/* <tbody className={cx('t-body')}>
-                            {listUser && listUser.length > 0 ? (
-                                <>
-                                    {listUser.map((row, index) => {
-                                        return (
-                                            <tr key={`row-${index}`}>
-                                                <td>{row.id}</td>
-                                                <td>{row.username}</td>
-                                                <td>{row.email}</td>
-                                                <td>{row.Role ? row.Role.name : ''}</td>
-                                                <td>
-                                                    <div className={cx('btn-wrap')}>
-                                                        <button
-                                                            className={cx('btn btn-warning', 'action-btn')}
-                                                            onClick={() => handleEditUser(row)}
-                                                        >
-                                                            <i className="fa fa-pencil-square"></i>
-                                                        </button>
-                                                        <button
-                                                            className={cx('btn btn-danger', 'action-btn')}
-                                                            onClick={() => handleDeleteUser(row)}
-                                                        >
-                                                            <i className="fa fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </>
-                            ) : (
-                                <>
-                                    <tr>
-                                        <td colSpan={5}>NOT FOUND USERS</td>
-                                    </tr>
-                                </>
-                            )}
-                        </tbody> */}
                     </table>
                 </div>
 
-                {/* <div className={cx('pagination')}>
+                <div className={cx('pagination')}>
                     {totalPage > 0 && (
                         <ReactPaginate
                             nextLabel="next >"
@@ -152,7 +149,13 @@ const ManageProduct = (props) => {
                             renderOnZeroPageCount={null}
                         />
                     )}
-                </div> */}
+                </div>
+                <UpdateStatusModal
+                    show={updateStatusModal}
+                    handleClose={handleCloseUpdateStatusModal}
+                    onHide={onHideModal}
+                    orderData={orderData}
+                />
             </div>
         </div>
     );
