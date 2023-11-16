@@ -7,9 +7,12 @@ import { CartContext } from '~/components/Header/CartContext';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { createOrder } from '~/services/orderService';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const Cart = (props) => {
+    const navigate = useNavigate();
+
     const { cartList, fetchItem } = useContext(CartContext);
     useEffect(() => {
         fetchItem();
@@ -90,6 +93,9 @@ const Cart = (props) => {
 
             if (response && response.EC === 0) {
                 toast.success(response.EM);
+                navigate('/manage-order');
+            } else {
+                toast.error(response.EM);
             }
         }
     };
