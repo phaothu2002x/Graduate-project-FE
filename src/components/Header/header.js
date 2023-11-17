@@ -91,7 +91,7 @@ const Header = (props) => {
 
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <Link className="dropdown-item" to="/manage-user">
+                                            <Link className="dropdown-item" to="/profile/@Phaothu2002x">
                                                 <i className="fa fa-user-circle" aria-hidden="true"></i>
                                                 Your Account
                                             </Link>

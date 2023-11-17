@@ -11,8 +11,10 @@ const cx = classNames.bind(styles);
 const MiniCart = (props) => {
     // const { fetchItem } = props;
 
-    const { cartList, cartShow, itemsInCart, handleCartClose } = useContext(CartContext);
-
+    const { cartList, cartShow, setCartShow, itemsInCart, handleCartClose } = useContext(CartContext);
+    const handleViewAll = () => {
+        setCartShow(false);
+    };
     return (
         <>
             <Offcanvas show={cartShow} onHide={handleCartClose} placement="end">
@@ -23,7 +25,9 @@ const MiniCart = (props) => {
                     <div className={cx('content')}>
                         <div className={cx('desc')}>
                             <div className={cx('title')}>{itemsInCart || '0'} items</div>
-                            <Link to="/cart">See all Products...</Link>
+                            <Link to="/cart" onClick={handleViewAll}>
+                                See all Products...
+                            </Link>
                         </div>
 
                         <ul className={cx('cart-list')}>

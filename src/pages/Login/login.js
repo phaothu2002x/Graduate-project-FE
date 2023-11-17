@@ -57,7 +57,10 @@ const Login = (props) => {
             //failed
             toast.error(<h3>{res.EM}</h3>);
         }
-        window.location.reload();
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     };
 
     useEffect(() => {

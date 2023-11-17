@@ -1,7 +1,7 @@
 import axios from '~/setup/axios';
 
-const fetchAllOrder = () => {
-    return axios.get(`/api/order/read`);
+const fetchAllOrder = (currentPage, currentLimit) => {
+    return axios.get(`/api/order/read?page=${currentPage}&limit=${currentLimit}`);
 };
 const createOrder = (orderInfo) => {
     return axios.post(`/api/order/create`, { ...orderInfo });
@@ -10,4 +10,8 @@ const updateOrderStatus = (orderId, statusValue) => {
     return axios.put(`/api/order/update`, { orderId, statusValue });
 };
 
-export { createOrder, fetchAllOrder, updateOrderStatus };
+const deleteOrder = (orderId) => {
+    return axios.delete(`/api/order/delete`, { data: { id: orderId } });
+};
+
+export { createOrder, fetchAllOrder, updateOrderStatus, deleteOrder };

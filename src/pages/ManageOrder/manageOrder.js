@@ -4,26 +4,31 @@ import { useEffect, useState } from 'react';
 import { fetchAllOrder } from '~/services/orderService';
 import UpdateStatusModal from './Modals/updateModals';
 import ReactPaginate from 'react-paginate';
-
+import DeleteOrderModal from './Modals/deleteOrderModal';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
+
 const ManageProduct = (props) => {
     const [orderList, setOrderList] = useState([]);
 
+    //pagination
+    const [totalPage, setTotalPage] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentLimit, setCurrentLimit] = useState(7);
+
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [currentPage]);
 
     const fetchOrders = async () => {
-        let response = await fetchAllOrder();
+        let response = await fetchAllOrder(currentPage, currentLimit);
         if (response && response.EC === 0) {
-            setOrderList(response.DT);
+            setOrderList(response.DT.orders);
+            setTotalPage(response.DT.totalPages);
+        } else if (response && response.EC !== 0) {
+            toast.error(response.EM);
         }
     };
-
-    //pagination
-    const [totalPage, setTotalPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(10);
 
     const handlePageClick = (e) => {
         setCurrentPage(+e.selected + 1);
@@ -33,8 +38,8 @@ const ManageProduct = (props) => {
     const [orderData, setOrderData] = useState({});
     const [updateStatusModal, setUpdateStatusModal] = useState(false);
 
-    const handleUpdateClick = (order) => {
-        setOrderData(order);
+    const handleUpdateClick = (orderItem) => {
+        setOrderData(orderItem);
         setUpdateStatusModal(true);
     };
 
@@ -48,10 +53,22 @@ const ManageProduct = (props) => {
         fetchOrders();
     };
 
-    const hanldeDeleteClick = () => {
-        alert('delete ');
+    //delete modal
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const handleDeleteClick = (orderItem) => {
+        setOrderData(orderItem);
+        setShowDeleteModal(true);
+    };
+    const handleCloseDeleteOrderModal = () => {
+        setShowDeleteModal(false);
     };
 
+    const onHideDeleteModal = () => {
+        setShowDeleteModal(false);
+        fetchOrders();
+    };
+    //refresh btn
     const handleRefresh = () => {
         fetchOrders();
     };
@@ -108,7 +125,7 @@ const ManageProduct = (props) => {
                                                     </button>
                                                     <button
                                                         className={cx('btn btn-danger', 'action-btn')}
-                                                        onClick={() => hanldeDeleteClick()}
+                                                        onClick={() => handleDeleteClick(item)}
                                                     >
                                                         <i className="fa fa-trash"></i>
                                                     </button>
@@ -154,6 +171,12 @@ const ManageProduct = (props) => {
                     show={updateStatusModal}
                     handleClose={handleCloseUpdateStatusModal}
                     onHide={onHideModal}
+                    orderData={orderData}
+                />
+                <DeleteOrderModal
+                    showDeleteModal={showDeleteModal}
+                    handleClose={handleCloseDeleteOrderModal}
+                    onHideDeleteModal={onHideDeleteModal}
                     orderData={orderData}
                 />
             </div>

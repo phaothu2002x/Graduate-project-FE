@@ -1,0 +1,22 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eeeeee;
+}
+
+.inner {
+    width: var(--content-width);
+    max-width: calc(100% - 48px);
+    margin-left: auto;
+    margin-right: auto;
+    height: 5000px;
+
+    .heading {
+        margin-top: 22px;
+        font-size: 2.6rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--heading-color);
+    }
+}

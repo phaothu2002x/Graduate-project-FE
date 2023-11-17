@@ -1,0 +1,17 @@
+.modal-box {
+    .modal-heading {
+        font-size: 2.6rem;
+        font-weight: 600;
+        color: var(--heading-color);
+    }
+
+    .modal-body {
+        font-size: 1.6rem;
+    }
+
+    .modal-footer {
+        .action-btn {
+            font-size: 1.6rem;
+        }
+    }
+}

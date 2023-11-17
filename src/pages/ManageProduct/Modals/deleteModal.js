@@ -11,7 +11,7 @@ const DeleteModal = (props) => {
         <>
             <Modal show={props.showDeleteModal} onHide={props.handleClose} centered className={cx('modal-box')}>
                 <Modal.Header closeButton>
-                    <Modal.Title className={cx('modal-heading')}>Modal heading</Modal.Title>
+                    <Modal.Title className={cx('modal-heading')}>Delete Product:</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={cx('modal-body')}>Are you sure to delete this product ID: {props.id}</Modal.Body>
                 <Modal.Footer className={cx('modal-footer')}>

@@ -9,6 +9,7 @@ import ManageProduct from '~/pages/ManageProduct/manageProduct';
 import CreateProduct from '~/pages/ManageProduct/CreateProduct/createProduct';
 import UpdateProduct from '~/pages/ManageProduct/UpdateProduct/updateProduct';
 import ManageOrder from '~/pages/ManageOrder/manageOrder';
+import Profile from '~/pages/Profile/profile';
 // Public routes
 const publicRoutes = [
     { path: '/', component: Home },
@@ -30,6 +31,7 @@ const privateRoutes = [
     { path: '/manage-products/create', component: CreateProduct },
     { path: `/manage-products/update/:id`, component: UpdateProduct },
     { path: `/manage-order`, component: ManageOrder },
+    { path: `/profile/:profile`, component: Profile },
 ];
 
 // export default CheckRoute;

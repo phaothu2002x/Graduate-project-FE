@@ -36,7 +36,7 @@ const CartProvider = ({ children }) => {
         fetchItem();
     };
 
-    const value = { cartShow, cartList, itemsInCart, fetchItem, handleCartClose, handleCartClicked };
+    const value = { cartShow, setCartShow, cartList, itemsInCart, fetchItem, handleCartClose, handleCartClicked };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
