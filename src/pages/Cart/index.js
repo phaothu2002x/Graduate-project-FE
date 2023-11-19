@@ -225,7 +225,11 @@ const Cart = (props) => {
                         <div className={cx('purchase-section')}>
                             <h2 className={cx('title')}>Tong thiet hai</h2>
                             <p className={cx('price')}>{totalPriceInCart}$</p>
-                            <button className={cx('btn btn-primary', 'purchase-btn')} onClick={() => handlePurchase()}>
+                            <button
+                                className={cx('btn btn-primary', 'purchase-btn')}
+                                onClick={() => handlePurchase()}
+                                disabled={cartList && cartList.length > 0 ? false : true}
+                            >
                                 Thanh Toan
                             </button>
                         </div>
