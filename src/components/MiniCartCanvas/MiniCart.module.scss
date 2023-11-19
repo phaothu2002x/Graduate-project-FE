@@ -1,0 +1,23 @@
+.canvas-heading {
+    font-size: 3.2rem !important;
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.content {
+    .desc {
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+            font-size: 1.6rem;
+            display: flex;
+            margin-bottom: 10px;
+        }
+    }
+
+    .cart-list {
+        padding: 0;
+        list-style: none;
+    }
+}

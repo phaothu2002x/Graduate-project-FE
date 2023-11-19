@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './CreateProduct.module.scss';
-import Header from '~/components/Header/header';
+// import Header from '~/components/Header/header';
 import { useEffect, useState } from 'react';
 import { createNewProduct, findType, findAllSelection } from '~/services/productService';
 import _ from 'lodash';
@@ -156,7 +156,7 @@ const CreateProduct = (props) => {
     // console.log('typeselection', typeSelect);ok
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
             <div className={cx('inner')}>
                 <div className={cx('heading')}>Create Products</div>
                 <div className={cx('addNew-form')}>

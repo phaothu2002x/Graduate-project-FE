@@ -1,0 +1,20 @@
+.heading {
+    font-size: 3rem;
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.status-form {
+    input {
+        font-size: 1.6rem;
+        padding: 8px;
+        border-radius: 8px;
+        margin: 8px 0;
+    }
+}
+
+.modal-footer {
+    .btn {
+        font-size: 1.6rem;
+    }
+}

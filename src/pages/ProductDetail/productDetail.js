@@ -3,15 +3,17 @@ import styles from './ProductDetail.module.scss';
 import Header from '~/components/Header/header';
 import images from '~/assets/images';
 import Carousel from 'react-bootstrap/Carousel';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { findProductById } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { addProductToCart } from '~/services/cartService';
+import { CartContext } from '~/components/Header/CartContext';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
     const { id } = useParams();
+    const { fetchItem } = useContext(CartContext);
 
     const tabs = ['Description', 'feature', 'reviews'];
     const [type, setType] = useState('Description');
@@ -33,9 +35,40 @@ const ProductDetail = (props) => {
         }
     };
 
+    //increase & decrease function
+    const [quantity, setQuantity] = useState(1);
+    const [finalQuant, setFinalQuant] = useState();
+    const handleAdd = () => {
+        setQuantity((prev) => prev + 1);
+    };
+    const handleMinus = () => {
+        if (quantity <= 1) {
+            setQuantity(1);
+        } else {
+            setQuantity((prev) => prev - 1);
+        }
+    };
+
+    //handle add to cart
+    const handleAddToCart = async () => {
+        if (typeof finalQuant === 'number') {
+            setFinalQuant((prev) => prev + quantity);
+            // fetchQuantity();
+        } else {
+            setFinalQuant(quantity);
+        }
+        //call api => add to cart
+        let response = await addProductToCart(id, quantity, price);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+        }
+
+        fetchItem();
+    };
+
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header quantity={finalQuant} /> */}
             <div className={cx('inner')}>
                 <div className={cx('banner')}>Breadcrumbs</div>
                 <div className={cx('product-container')}>
@@ -113,12 +146,27 @@ const ProductDetail = (props) => {
                             </p>
                             <div className={cx('price')}>${price}</div>
                             <div className={cx('purchase-action')}>
-                                <button type="button" className={cx('btn btn-warning', 'add-cart-btn')}>
+                                <button
+                                    type="button"
+                                    className={cx('btn btn-warning', 'add-cart-btn')}
+                                    onClick={() => {
+                                        handleAddToCart();
+                                    }}
+                                >
                                     Add to cart
                                 </button>
                                 <button className={cx('like')}>
                                     <i className={cx('fa fa-heart-o', 'like-icon')}></i>
                                 </button>
+                                <div className={cx('quantity-box')}>
+                                    <button className={cx('btn', 'action-btn')} onClick={handleMinus}>
+                                        <i className="fa fa-minus"></i>
+                                    </button>
+                                    <span className={cx('quant-number')}>{quantity}</span>
+                                    <button className={cx('btn', 'action-btn')} onClick={handleAdd}>
+                                        <i className="fa fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

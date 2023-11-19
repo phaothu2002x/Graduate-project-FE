@@ -1,0 +1,66 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eeeeee;
+    background: #654ea3;
+    background: linear-gradient(to right, #e96443, #904e95);
+}
+
+.inner {
+    width: var(--content-width);
+    max-width: calc(100% - 48px);
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    .cover {
+        background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        .profile-head {
+            transform: translateY(3rem);
+            // display: flex;
+            .profile {
+                display: flex;
+                align-items: end;
+                .avatar {
+                    width: 130px;
+                    height: 130px;
+                    object-fit: cover;
+                }
+                .edit-btn {
+                    background-color: #ccc;
+                    margin-left: 8px;
+                    font-size: 1.6rem;
+                    outline: var(--heading-color);
+                    color: #0e21a0;
+                    &:hover {
+                        background-color: #98eecc;
+                        color: black;
+                    }
+                }
+            }
+            .media-body {
+                .username {
+                    margin-top: 12px;
+                    font-size: 2rem;
+                    font-weight: 600;
+                }
+
+                .input-name {
+                    margin-top: 12px;
+                    font-size: 1.6rem;
+                }
+            }
+        }
+    }
+
+    .order-section {
+        .text-muted {
+            i {
+                margin-right: 6px;
+            }
+        }
+    }
+}

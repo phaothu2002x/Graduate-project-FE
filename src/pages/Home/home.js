@@ -14,7 +14,8 @@ const cx = classNames.bind(styles);
 const Home = (props) => {
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {/* <Header /> */}
+
             <div className={cx('container')}>
                 {/* hero */}
                 <div className={cx('hero')}>

@@ -140,7 +140,7 @@
     }
 
     .purchase {
-        width: 50%;
+        width: 70%;
         min-height: 186px;
         margin-top: 27px;
         padding: 20px;
@@ -184,6 +184,31 @@
 
                 .like-icon {
                     padding: 11px;
+                }
+            }
+
+            .quantity-box {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 20px;
+                border: 1px solid #353f40;
+                border-radius: 999px;
+
+                .quant-number,
+                .action-btn {
+                    color: #353f40;
+                    font-size: 1.6rem;
+                    font-weight: 500;
+                }
+                .quant-number {
+                    text-align: center;
+                    font-size: 1.8rem;
+                    width: 25px;
+                    margin: 0 4px;
+                }
+                .action-btn {
+                    box-shadow: none;
                 }
             }
         }
