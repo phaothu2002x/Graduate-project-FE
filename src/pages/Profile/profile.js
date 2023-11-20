@@ -41,6 +41,42 @@ const Profile = (props) => {
         setIsEdit(true);
     };
 
+    // handle change user info section
+    const [isEmailEdit, setIsEmailEdit] = useState(true);
+    const [isPhonelEdit, setIsPhoneEdit] = useState(true);
+    const [email, setEmail] = useState('truongthuan21342@gmail.com');
+    const [phone, setPhone] = useState('0931442221');
+    const handleInputDoubleClick = (name) => {
+        if (name === 'email') {
+            setIsEmailEdit(false);
+        }
+        if (name === 'phone') {
+            setIsPhoneEdit(false);
+        }
+    };
+
+    const handleOnblurInput = (name) => {
+        if (name === 'phone') {
+            setIsPhoneEdit(true);
+        }
+        if (name === 'email') {
+            setIsEmailEdit(true);
+        }
+    };
+
+    const handleInputKeyDown = (name, code) => {
+        if (name === 'email' && code === 'Enter') {
+            setIsEmailEdit(true);
+        }
+        if (name === 'phone' && code === 'Enter') {
+            setIsPhoneEdit(true);
+        }
+    };
+
+    const handleClick = () => {
+        console.log('tun');
+    };
+
     return (
         <>
             <div className={cx('wrapper')}>
@@ -102,12 +138,58 @@ const Profile = (props) => {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="px-4 py-3">
-                                    <h5 className="mb-0">About</h5>
-                                    <div className="p-4 rounded shadow-sm bg-light">
-                                        <p className="font-italic mb-0">Email</p>
-                                        <p className="font-italic mb-0">Password</p>
-                                        <p className="font-italic mb-0">Phone</p>
+                                <div className={cx('px-4 py-3', 'about-section')}>
+                                    <h5 className={cx('mb-0', 'title')}>About</h5>
+                                    <div className={cx('p-4 rounded shadow-sm bg-light', 'info-detail')}>
+                                        <div className={cx('input-group mb-4 d-flex align-items-center')}>
+                                            <span className={cx('input-title')}>Email:</span>
+                                            {isEmailEdit ? (
+                                                <span onDoubleClick={() => handleInputDoubleClick('email')}>
+                                                    {!email ? 'Please enter email' : email}
+                                                </span>
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    className={cx('form-control', 'input-text')}
+                                                    onBlur={() => {
+                                                        handleOnblurInput('email');
+                                                    }}
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    onKeyDown={(e) => {
+                                                        handleInputKeyDown('email', e.code);
+                                                    }}
+                                                    autoFocus
+                                                />
+                                            )}
+                                        </div>
+                                        <div className={cx('input-group mb-3 d-flex align-items-center')}>
+                                            <span className={cx('input-title')}>Phone:</span>
+                                            {isPhonelEdit ? (
+                                                <span onDoubleClick={() => handleInputDoubleClick('phone')}>
+                                                    {!phone ? 'Please enter phone' : phone}
+                                                </span>
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    className={cx('form-control', 'input-text')}
+                                                    onBlur={() => {
+                                                        handleOnblurInput('phone');
+                                                    }}
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    onKeyDown={(e) => {
+                                                        handleInputKeyDown('phone', e.code);
+                                                    }}
+                                                    autoFocus
+                                                    required
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className={cx('update-info-btn')}>
+                                        {/* <button className={cx('btn btn-primary')}>Update</button> */}
+                                        <button onClick={handleClick}>Update</button>
                                     </div>
                                 </div>
                                 <div className="py-4 px-4">
