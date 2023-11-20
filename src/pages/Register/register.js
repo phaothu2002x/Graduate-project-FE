@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { registerNewUser } from '~/services/userService';
 

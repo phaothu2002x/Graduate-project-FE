@@ -8,20 +8,38 @@ import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { createOrder } from '~/services/orderService';
 import { useNavigate } from 'react-router-dom';
+import { fetchPaymentMethod } from '~/services/cartService';
+
 const cx = classNames.bind(styles);
 
 const Cart = (props) => {
     const navigate = useNavigate();
 
     const { cartList, fetchItem } = useContext(CartContext);
-    useEffect(() => {
-        fetchItem();
-    }, []);
 
+    const [paymentChecked, setPaymentChecked] = useState(1);
+    const [paymentInfo, setPaymentInfo] = useState([]);
     //caculate the totalPrice of items in cart
     const totalPriceInCart = cartList.reduce((acc, currVal) => {
         return acc + currVal.totalPrice;
     }, 0);
+    useEffect(() => {
+        fetchItem();
+    }, []);
+
+    useEffect(() => {
+        fetchPayment();
+    }, [paymentChecked]);
+
+    //payment select section
+    const fetchPayment = async () => {
+        let response = await fetchPaymentMethod(paymentChecked);
+        if (response && response.EC === 0) {
+            setPaymentInfo(response.DT);
+        } else {
+            toast.error(response.EM);
+        }
+    };
 
     //input section
     const defaultValidInput = {
@@ -88,7 +106,7 @@ const Cart = (props) => {
             // console.log('check user data', userValue);
             orderInfo = { userValue, totalPriceInCart, productList: cartList };
             // call api
-            console.log(orderInfo);
+            // console.log(orderInfo);
             let response = await createOrder(orderInfo);
 
             if (response && response.EC === 0) {
@@ -99,7 +117,6 @@ const Cart = (props) => {
             }
         }
     };
-
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -164,11 +181,17 @@ const Cart = (props) => {
                             </div>
                         </div>
                         <h2 className={cx('heading')}>Phuong thuc thanh toan</h2>
-
                         <section className={cx('payment-method')}>
                             <div className={cx('col-12')}>
                                 <div className={cx('form-check', 'payment-select')}>
-                                    <input className={cx('form-check-input', 'check-input')} id="Momo" type="radio" name="payment" />
+                                    <input
+                                        className={cx('form-check-input', 'check-input')}
+                                        id="Momo"
+                                        type="radio"
+                                        name="payment"
+                                        checked={paymentChecked === 1}
+                                        onChange={() => setPaymentChecked(1)}
+                                    />
                                     <label className={cx('form-check-label', 'input-name')} htmlFor="Momo">
                                         <img
                                             src="https://th.bing.com/th/id/OIP.XpHYk_-zX8k6iWYBWw_UKwAAAA?pid=ImgDet&w=256&h=256&rs=1"
@@ -181,7 +204,14 @@ const Cart = (props) => {
                             </div>
                             <div className={cx('col-12')}>
                                 <div className={cx('form-check', 'payment-select')}>
-                                    <input className={cx('form-check-input', 'check-input')} id="cod" type="radio" name="payment" />
+                                    <input
+                                        className={cx('form-check-input', 'check-input')}
+                                        id="cod"
+                                        type="radio"
+                                        name="payment"
+                                        checked={paymentChecked === 2}
+                                        onChange={() => setPaymentChecked(2)}
+                                    />
                                     <label className={cx('form-check-label', 'input-name')} htmlFor="cod">
                                         <i className={cx('fa fa-truck', 'payment-icon')}></i>
                                         COD
@@ -190,7 +220,14 @@ const Cart = (props) => {
                             </div>
                             <div className={cx('col-12')}>
                                 <div className={cx('form-check', 'payment-select')}>
-                                    <input className={cx('form-check-input', 'check-input')} id="bank" type="radio" name="payment" />
+                                    <input
+                                        className={cx('form-check-input', 'check-input')}
+                                        id="bank"
+                                        type="radio"
+                                        name="payment"
+                                        checked={paymentChecked === 3}
+                                        onChange={() => setPaymentChecked(3)}
+                                    />
                                     <label className={cx('form-check-label', 'input-name')} htmlFor="bank">
                                         <i className={cx('fa fa-university', 'payment-icon')}></i>
                                         Banking
@@ -198,6 +235,23 @@ const Cart = (props) => {
                                 </div>
                             </div>
                         </section>
+
+                        <div className={cx('Payment-info')}>
+                            {paymentInfo && paymentInfo.length > 0 && (
+                                <>
+                                    <h2 className={cx('title')}>thong tin chuyen khoan</h2>
+                                    <div className={cx('payment-options')}>
+                                        <div className={cx('first-option')}>
+                                            <img src={paymentInfo[0].img} alt="payment img" />
+                                            <p>Scan QR code</p>
+                                        </div>
+                                        <div className={cx('second-option')}>
+                                            <h3 className={cx('desc')}>{paymentInfo[0].description}</h3>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
                     </div>
                     {/* cart info  orderDetail info*/}
                     <div className={cx('col-5', 'content-right')}>

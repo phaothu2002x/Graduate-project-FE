@@ -69,6 +69,46 @@
             }
         }
     }
+
+    .Payment-info {
+        border: 5px solid #8ec5fc;
+        background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+        .title {
+            color: var(--heading-color);
+            margin: 12px 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .payment-options {
+            display: flex;
+            align-items: center;
+
+            .first-option {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                img {
+                    width: 200px;
+                    height: 200px;
+                    object-fit: contain;
+                }
+                p {
+                    margin-top: 8px;
+                    font-size: 1.6rem;
+                }
+            }
+
+            .second-option {
+                flex: 2;
+                .desc {
+                    width: 70%;
+                    font-size: 1.7rem;
+                }
+            }
+        }
+    }
 }
 
 .content-right {
