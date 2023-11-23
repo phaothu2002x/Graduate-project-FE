@@ -7,6 +7,7 @@ const images = {
     productImg4: require('~/assets/images/jessica-lam-fq-Ks10WtWI-unsplash.jpg'),
     productImg5: require('~/assets/images/joey-r-XUdUrw4fJWU-unsplash.jpg'),
     productImg6: require('~/assets/images/paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg'),
+    defaultAvatar: require('~/assets/images/defaultAvatar.png'),
 };
 
 export default images;

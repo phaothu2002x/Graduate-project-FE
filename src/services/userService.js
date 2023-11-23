@@ -27,5 +27,8 @@ const createUser = (userData) => {
 const updateCurrentUser = (userData) => {
     return axios.put('/api/manage-user/update', { ...userData });
 };
+const updateProfileUser = (fromData) => {
+    return axios.put('/api/profile/update', fromData);
+};
 
-export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser, updateCurrentUser };
+export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser, updateCurrentUser, updateProfileUser };

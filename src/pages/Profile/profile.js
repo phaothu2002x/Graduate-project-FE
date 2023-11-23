@@ -1,12 +1,19 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 import { useEffect, useRef, useState } from 'react';
+import images from '~/assets/images';
+import { updateCurrentUser, updateProfileUser } from '~/services/userService';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const Profile = (props) => {
     //handle preview avatar
     const inputRef = useRef();
     const [avatar, setAvatar] = useState();
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('truongthuan21342@gmail.com');
+    const [phone, setPhone] = useState('0931442221');
 
     useEffect(() => {
         //cleanup func
@@ -28,7 +35,7 @@ const Profile = (props) => {
 
     //handle change name
     const [isEdit, setIsEdit] = useState(true);
-    const [name, setName] = useState('');
+
     const handleDoubleClick = () => {
         setIsEdit(false);
     };
@@ -44,8 +51,7 @@ const Profile = (props) => {
     // handle change user info section
     const [isEmailEdit, setIsEmailEdit] = useState(true);
     const [isPhonelEdit, setIsPhoneEdit] = useState(true);
-    const [email, setEmail] = useState('truongthuan21342@gmail.com');
-    const [phone, setPhone] = useState('0931442221');
+
     const handleInputDoubleClick = (name) => {
         if (name === 'email') {
             setIsEmailEdit(false);
@@ -73,8 +79,42 @@ const Profile = (props) => {
         }
     };
 
-    const handleClick = () => {
-        console.log('tun');
+    const checkEmptyInput = () => {
+        if (!email) {
+            toast.error('Email is required!');
+            return false;
+        }
+        if (!phone) {
+            toast.error('phone is required!');
+            return false;
+        }
+        if (!name) {
+            toast.error('name is required!');
+            return false;
+        }
+        return true;
+    };
+    const handleUpdateClick = async () => {
+        let check = checkEmptyInput();
+        let profileData = { username: name, email, phone };
+        const formData = new FormData();
+        console.log(check);
+        if (check) {
+            formData.append('avatar', avatar);
+            // console.log(profileData, avatar);
+            for (let key in profileData) {
+                if (profileData.hasOwnProperty(key)) {
+                    formData.append(key, profileData[key]);
+                }
+            }
+            //call api update profile
+            let response = await updateProfileUser(formData);
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
+            } else if (response && response.EC !== 0) {
+                toast.error(response.EM);
+            }
+        }
     };
 
     return (
@@ -90,9 +130,8 @@ const Profile = (props) => {
                                         <div className={cx('mr-3', 'profile')}>
                                             <img
                                                 src={
-                                                    avatar
-                                                        ? avatar.preview
-                                                        : 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE'
+                                                    avatar ? avatar.preview : images.defaultAvatar
+                                                    // https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE
                                                 }
                                                 alt="..."
                                                 className={cx('rounded img-thumbnail', 'avatar')}
@@ -188,8 +227,7 @@ const Profile = (props) => {
                                         </div>
                                     </div>
                                     <div className={cx('update-info-btn')}>
-                                        {/* <button className={cx('btn btn-primary')}>Update</button> */}
-                                        <button onClick={handleClick}>Update</button>
+                                        <button onClick={handleUpdateClick}>Update</button>
                                     </div>
                                 </div>
                                 <div className="py-4 px-4">
