@@ -92,7 +92,7 @@ const Home = (props) => {
             <Subscription />
 
             {/* footer */}
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };

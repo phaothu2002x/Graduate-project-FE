@@ -5,8 +5,9 @@ import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './routes/privateRoute';
 import ManageUser from './pages/ManageUser/manageUser';
-import Header from './components/Header/header';
 import { CartProvider } from './components/Header/CartContext';
+import Header from './components/Header/header';
+import Footer from './components/Footer/footer';
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                         })}
                         {/* <PrivateRoute path="/manage-user" component={ManageUser} /> */}
                     </Routes>
+                    <Footer />
                     <ToastContainer
                         position="bottom-left"
                         autoClose={5000}

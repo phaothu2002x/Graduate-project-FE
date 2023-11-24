@@ -97,10 +97,10 @@ const Header = (props) => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="#!">
+                                            <Link className="dropdown-item" to="/profile/orders">
                                                 <i className="fa fa-archive" aria-hidden="true"></i>
                                                 Your Order
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
                                             <hr className="dropdown-divider" />

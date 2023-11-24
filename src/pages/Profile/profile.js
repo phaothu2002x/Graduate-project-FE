@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import images from '~/assets/images';
-import { updateCurrentUser, updateProfileUser } from '~/services/userService';
+import { updateProfileUser } from '~/services/userService';
 import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
