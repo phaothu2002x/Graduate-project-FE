@@ -2,17 +2,21 @@ import classNames from 'classnames/bind';
 import styles from './User.module.scss';
 import Header from '~/components/Header/header';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { deleteUser, fetchAllUsers } from '~/services/userService';
 import ReactPaginate from 'react-paginate';
 import ModalDelete from './modalDelete';
 import { toast } from 'react-toastify';
 import ModalUser from './modalUser';
+import { UserContext } from '~/context/UserContext';
 
 const cx = classNames.bind(styles);
 
 const ManageUser = (props) => {
     const navigate = useNavigate();
+
+    const { user } = useContext(UserContext);
+    console.log(user);
     //check session
     useEffect(() => {
         let session = sessionStorage.getItem('account');

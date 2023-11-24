@@ -36,8 +36,12 @@ const Cart = (props) => {
         let response = await fetchPaymentMethod(paymentChecked);
         if (response && response.EC === 0) {
             setPaymentInfo(response.DT);
-        } else {
+        }
+        if (response && response.EC !== 0) {
             toast.error(response.EM);
+        }
+        if (!response) {
+            toast.error('fetch payment error');
         }
     };
 
@@ -112,7 +116,8 @@ const Cart = (props) => {
             if (response && response.EC === 0) {
                 toast.success(response.EM);
                 navigate('/manage-order');
-            } else {
+            }
+            if (response && response.EC !== 0) {
                 toast.error(response.EM);
             }
         }

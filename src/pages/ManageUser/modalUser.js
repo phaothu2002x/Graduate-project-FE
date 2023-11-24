@@ -54,7 +54,7 @@ const ModalUser = (props) => {
                 setUserData({ ...userData, role: role[0].id });
             }
         } else {
-            toast.error(res.EM);
+            toast.error('Get role failed');
         }
     };
 

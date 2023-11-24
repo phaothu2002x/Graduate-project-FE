@@ -2,14 +2,17 @@ import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { LoginUser } from '~/services/userService';
+import { UserContext } from '~/context/UserContext';
 
 const cx = classNames.bind(styles);
 
 const Login = (props) => {
     const navigate = useNavigate();
+    const { loginContext } = useContext(UserContext);
+
     const [valueLogin, setValueLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -46,11 +49,18 @@ const Login = (props) => {
         //hung cai backend tra ve qua bien response
         if (res && +res.EC === 0) {
             //success
+            let groupWithRole = res.DT.groupWithRole;
+            let email = res.DT.email;
+            let username = res.DT.username;
+            let token = res.DT.access_token;
             let data = {
                 isAuthenticated: true,
-                token: 'fake token',
+                token,
+                account: { groupWithRole, email, username },
             };
+
             sessionStorage.setItem('account', JSON.stringify(data));
+            loginContext(data);
             navigate('/manage-user');
         }
         if (res && +res.EC !== 0) {
@@ -58,9 +68,9 @@ const Login = (props) => {
             toast.error(<h3>{res.EM}</h3>);
         }
 
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 2000);
     };
 
     useEffect(() => {
