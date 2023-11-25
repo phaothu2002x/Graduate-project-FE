@@ -16,7 +16,6 @@ const ManageUser = (props) => {
     const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
-    // console.log(user);
 
     //===*===
     const [listUser, setListUser] = useState([]);

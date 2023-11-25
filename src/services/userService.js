@@ -31,4 +31,18 @@ const updateProfileUser = (fromData) => {
     return axios.put('/api/profile/update', fromData);
 };
 
-export { registerNewUser, LoginUser, fetchAllUsers, deleteUser, fetchRole, createUser, updateCurrentUser, updateProfileUser };
+const getUserAccount = () => {
+    return axios.get('/api/account');
+};
+
+export {
+    registerNewUser,
+    LoginUser,
+    fetchAllUsers,
+    deleteUser,
+    fetchRole,
+    createUser,
+    updateCurrentUser,
+    updateProfileUser,
+    getUserAccount,
+};

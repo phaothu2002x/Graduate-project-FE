@@ -59,7 +59,6 @@ const Login = (props) => {
                 account: { groupWithRole, email, username },
             };
 
-            sessionStorage.setItem('account', JSON.stringify(data));
             loginContext(data);
             navigate('/manage-user');
         }
@@ -67,18 +66,8 @@ const Login = (props) => {
             //failed
             toast.error(<h3>{res.EM}</h3>);
         }
-
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 2000);
     };
 
-    useEffect(() => {
-        let session = sessionStorage.getItem('account');
-        if (session) {
-            navigate('/');
-        }
-    }, []);
     return (
         <>
             <div className={cx('wrapper')}>

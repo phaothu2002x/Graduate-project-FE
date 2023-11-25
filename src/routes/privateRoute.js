@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { useContext } from 'react';
+import { UserContext } from '~/context/UserContext';
 const PrivateRoute = () => {
-    let session = sessionStorage.getItem('account');
+    const { user } = useContext(UserContext);
 
-    return session ? (
+    return user && user.isAuthenticated ? (
         <Outlet />
     ) : (
         <>

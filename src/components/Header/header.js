@@ -6,13 +6,15 @@ import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
+import { UserContext } from '~/context/UserContext';
 
 const cx = classNames.bind(styles);
 
 const Header = (props) => {
     const getSession = sessionStorage.getItem('account');
     let sessionData = JSON.parse(getSession);
-    // console.log('check', getSession);
+
+    // const { user } = useContext(UserContext);
 
     //context hook
     const { itemsInCart, handleCartClicked } = useContext(CartContext);
@@ -63,7 +65,7 @@ const Header = (props) => {
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/productDetail" className="border-container">
+                                <NavLink to="/manage-products" className="border-container">
                                     <i className="fa fa-user-secret" aria-hidden="true"></i>
                                     About
                                     <div className="border-inner"></div>

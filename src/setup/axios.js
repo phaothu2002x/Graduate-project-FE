@@ -37,9 +37,8 @@ instance.interceptors.response.use(
         switch (status) {
             // authentication (token related issues)
             case 401: {
-                toast.error('Unauthorized user. please login...');
-                // return Promise.reject(error);
-                break;
+                toast.error(error.response.data.EM);
+                return error.response.data;
             }
 
             // forbidden (permission related issues)
