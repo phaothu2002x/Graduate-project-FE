@@ -11,13 +11,6 @@ import ReactPaginate from 'react-paginate';
 const cx = classNames.bind(styles);
 const ManageProduct = (props) => {
     const navigate = useNavigate();
-    useEffect(() => {
-        let session = sessionStorage.getItem('account');
-        // console.log(session);
-        if (!session) {
-            navigate('/login');
-        }
-    }, []);
 
     const [productData, setProductData] = useState([]);
 

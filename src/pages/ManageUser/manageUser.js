@@ -16,15 +16,7 @@ const ManageUser = (props) => {
     const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
-    console.log(user);
-    //check session
-    useEffect(() => {
-        let session = sessionStorage.getItem('account');
-        // console.log(session);
-        if (!session) {
-            navigate('/');
-        }
-    }, []);
+    // console.log(user);
 
     //===*===
     const [listUser, setListUser] = useState([]);

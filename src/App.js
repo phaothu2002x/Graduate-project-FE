@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './routes/privateRoute';
-import ManageUser from './pages/ManageUser/manageUser';
 import { CartProvider } from './components/Header/CartContext';
 import Header from './components/Header/header';
 import Footer from './components/Footer/footer';
@@ -20,13 +19,13 @@ function App() {
                             const Page = route.component;
                             return <Route key={index} path={route.path} element={<Page />} />;
                         })}
-
-                        {/* private routes */}
-                        {privateRoutes.map((route, index) => {
-                            const PrivatePage = route.component;
-                            return <Route key={index} path={route.path} element={<PrivatePage />} />;
-                        })}
-                        {/* <PrivateRoute path="/manage-user" component={ManageUser} /> */}
+                        <Route element={<PrivateRoute />}>
+                            {privateRoutes.map((route, index) => {
+                                const PrivatePage = route.component;
+                                return <Route key={index} path={route.path} element={<PrivatePage />} />;
+                            })}
+                            {/* <Route path="/manage-user" element={<ManageUser />} /> */}
+                        </Route>
                     </Routes>
                     <Footer />
                     <ToastContainer

@@ -1,7 +1,17 @@
-import { Route } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const PrivateRoute = (props) => {
-    return <Route path={props.path} element={props.component} />;
+const PrivateRoute = () => {
+    let session = sessionStorage.getItem('account');
+
+    return session ? (
+        <Outlet />
+    ) : (
+        <>
+            {toast.warning('Please LogIn....')}
+            <Navigate to="/" />
+        </>
+    );
 };
 
 export default PrivateRoute;
