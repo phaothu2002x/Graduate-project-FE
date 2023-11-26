@@ -14,7 +14,7 @@ const Header = (props) => {
     const getSession = sessionStorage.getItem('account');
     let sessionData = JSON.parse(getSession);
 
-    // const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     //context hook
     const { itemsInCart, handleCartClicked } = useContext(CartContext);
@@ -75,7 +75,7 @@ const Header = (props) => {
                     </div>
 
                     <div className={cx('actions')}>
-                        {sessionData && sessionData.isAuthenticated === true ? (
+                        {user && user.isAuthenticated === true ? (
                             <>
                                 <div className={cx('position-relative', 'cart-btn')} onClick={() => handleCartClicked()}>
                                     <i className={cx('fa fa-shopping-cart', 'cart-icon')}></i>
