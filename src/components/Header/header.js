@@ -1,27 +1,33 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
 import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
 import { UserContext } from '~/context/UserContext';
-
+import { logoutUser } from '~/services/userService';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const Header = (props) => {
-    const getSession = sessionStorage.getItem('account');
-    let sessionData = JSON.parse(getSession);
-
-    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+    const { user, logoutContext } = useContext(UserContext);
 
     //context hook
     const { itemsInCart, handleCartClicked } = useContext(CartContext);
 
-    const handleLogout = () => {
-        sessionStorage.removeItem('account');
-        window.location.reload();
+    const handleLogout = async () => {
+        localStorage.removeItem('jwt'); //clear local storage
+        logoutContext(); //clear userContext
+        let response = await logoutUser(); //clear cookies
+        if (response && +response.EC === 0) {
+            toast.success(response.EM);
+            navigate('/');
+        } else {
+            toast.error('Logout error...');
+        }
     };
 
     return (
@@ -83,7 +89,7 @@ const Header = (props) => {
                                         {itemsInCart}
                                     </span>
                                 </div>
-
+                                <span className={cx('greeting')}>Hi! {user.account.username}</span>
                                 <div className="dropdown">
                                     <img
                                         className="profile-avatar"

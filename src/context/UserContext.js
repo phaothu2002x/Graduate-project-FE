@@ -14,15 +14,14 @@ const UserProvider = ({ children }) => {
 
     // Logout updates the user data to default
     const logoutContext = () => {
-        setUser((user) => ({
-            name: '',
-            auth: false,
-        }));
+        setUser({ ...defaultData, isLoading: false });
     };
 
     useEffect(() => {
-        if (window.location.pathname !== '/' || window.location.pathname !== '/login') {
+        if (window.location.pathname !== '/' && window.location.pathname !== '/login') {
             fetchUser();
+        } else {
+            setUser({ ...user, isLoading: false });
         }
     }, []);
 

@@ -25,12 +25,12 @@ const Login = (props) => {
     //validate
     const isValidate = () => {
         if (!valueLogin) {
-            toast.error(<h3>Email/Phone is required</h3>);
+            toast.error(<h4>Email/Phone is required</h4>);
             setObjValidInput({ ...defaultValidInput, valueLogin: false });
             return false;
         }
         if (!password) {
-            toast.error(<h3>Password is required</h3>);
+            toast.error(<h4>Password is required</h4>);
             setObjValidInput({ ...defaultValidInput, password: false });
             return false;
         }
@@ -41,31 +41,32 @@ const Login = (props) => {
         setObjValidInput(defaultValidInput);
         let check = isValidate();
         if (check) {
-            toast.success(<h3>Check validate success</h3>);
-        }
-        //call api => truyen data xuong backend
-        let res = await LoginUser(valueLogin, password);
+            //call api => truyen data xuong backend
+            let res = await LoginUser(valueLogin, password);
+            //hung cai backend tra ve qua bien response
+            if (res && +res.EC === 0) {
+                //success
+                let groupWithRole = res.DT.groupWithRole;
+                let email = res.DT.email;
+                let username = res.DT.username;
+                let token = res.DT.access_token;
+                let data = {
+                    isAuthenticated: true,
+                    token,
+                    account: { groupWithRole, email, username },
+                };
 
-        //hung cai backend tra ve qua bien response
-        if (res && +res.EC === 0) {
-            //success
-            let groupWithRole = res.DT.groupWithRole;
-            let email = res.DT.email;
-            let username = res.DT.username;
-            let token = res.DT.access_token;
-            let data = {
-                isAuthenticated: true,
-                token,
-                account: { groupWithRole, email, username },
-            };
-
-            localStorage.setItem('jwt', token);
-            loginContext(data);
-            navigate('/manage-user');
-        }
-        if (res && +res.EC !== 0) {
-            //failed
-            toast.error(<h3>{res.EM}</h3>);
+                localStorage.setItem('jwt', token);
+                loginContext(data);
+                toast.success('Login successfully');
+                navigate('/manage-user');
+            }
+            if (res && +res.EC !== 0) {
+                //failed
+                toast.error(<h3>{res.EM}</h3>);
+                setPassword('');
+                setValueLogin('');
+            }
         }
     };
 

@@ -8,6 +8,10 @@ const LoginUser = (valueLogin, password) => {
     return axios.post('/api/login', { valueLogin, password });
 };
 
+const logoutUser = () => {
+    return axios.post('/api/logout');
+};
+
 const fetchAllUsers = (page, limit) => {
     return axios.get(`/api/manage-user/read?page=${page}&limit=${limit}`);
 };
@@ -38,6 +42,7 @@ const getUserAccount = () => {
 export {
     registerNewUser,
     LoginUser,
+    logoutUser,
     fetchAllUsers,
     deleteUser,
     fetchRole,

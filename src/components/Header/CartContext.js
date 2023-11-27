@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 import { fetchItemInCart } from '~/services/cartService';
-
+import { useContext } from 'react';
+import { UserContext } from '~/context/UserContext';
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
+    const { user } = useContext(UserContext);
     const [cartShow, setCartShow] = useState(false);
     const [cartList, setCartList] = useState([]);
     const [itemsInCart, setItemInCart] = useState(0);
@@ -24,7 +26,9 @@ const CartProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchItem();
+        if (user && user.isAuthenticated === true) {
+            fetchItem();
+        }
     }, []);
 
     const handleCartClose = () => {
