@@ -32,10 +32,12 @@ const UserProvider = ({ children }) => {
             let email = response.DT.email;
             let username = response.DT.username;
             let token = response.DT.access_token;
+            let phone = response.DT.phone;
+            let avatar = response.DT.avatar;
             let userData = {
                 isAuthenticated: true,
                 token,
-                account: { groupWithRole, email, username },
+                account: { groupWithRole, email, username, phone, avatar },
                 isLoading: false,
             };
             setUser(userData);
@@ -44,7 +46,7 @@ const UserProvider = ({ children }) => {
         }
     };
 
-    return <UserContext.Provider value={{ user, loginContext, logoutContext }}>{children}</UserContext.Provider>;
+    return <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUser }}>{children}</UserContext.Provider>;
 };
 
 export { UserProvider, UserContext };

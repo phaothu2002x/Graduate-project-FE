@@ -1,19 +1,22 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
-import { useEffect, useRef, useState } from 'react';
-import images from '~/assets/images';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { updateProfileUser } from '~/services/userService';
 import { toast } from 'react-toastify';
+import { UserContext } from '~/context/UserContext';
 const cx = classNames.bind(styles);
 
 const Profile = (props) => {
+    const { user, fetchUser } = useContext(UserContext);
+    const account = user.account;
+    console.log('check', account);
     //handle preview avatar
     const inputRef = useRef();
-    const [avatar, setAvatar] = useState();
+    const [avatar, setAvatar] = useState(account.avatar);
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('truongthuan21342@gmail.com');
-    const [phone, setPhone] = useState('0931442221');
+    const [name, setName] = useState(account.username);
+    const [email, setEmail] = useState(account.email);
+    const [phone, setPhone] = useState(account.phone);
 
     useEffect(() => {
         //cleanup func
@@ -98,7 +101,6 @@ const Profile = (props) => {
         let check = checkEmptyInput();
         let profileData = { username: name, email, phone };
         const formData = new FormData();
-        console.log(check);
         if (check) {
             formData.append('avatar', avatar);
             // console.log(profileData, avatar);
@@ -111,6 +113,7 @@ const Profile = (props) => {
             let response = await updateProfileUser(formData);
             if (response && response.EC === 0) {
                 toast.success(response.EM);
+                await fetchUser();
             } else if (response && response.EC !== 0) {
                 toast.error(response.EM);
             }
@@ -130,7 +133,7 @@ const Profile = (props) => {
                                         <div className={cx('mr-3', 'profile')}>
                                             <img
                                                 src={
-                                                    avatar ? avatar.preview : images.defaultAvatar
+                                                    avatar && avatar.preview ? avatar.preview : avatar
                                                     // https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE
                                                 }
                                                 alt="..."
