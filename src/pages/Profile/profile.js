@@ -7,7 +7,7 @@ import { UserContext } from '~/context/UserContext';
 const cx = classNames.bind(styles);
 
 const Profile = (props) => {
-    const { user, fetchUser } = useContext(UserContext);
+    const { user, fetchUser, fetchUpdatedUser, logoutContext } = useContext(UserContext);
     const account = user.account;
     // console.log('check account', account);
     //handle preview avatar
@@ -97,6 +97,7 @@ const Profile = (props) => {
         }
         return true;
     };
+
     const handleUpdateClick = async () => {
         let check = checkEmptyInput();
         let profileData = { userId: account.userId, username: name, email, phone };
@@ -112,8 +113,12 @@ const Profile = (props) => {
             //call api update profile
             let response = await updateProfileUser(formData);
             if (response && response.EC === 0) {
-                toast.success(response.EM);
-                await fetchUser();
+                toast.info(`${response.EM}, please login again to see change...`);
+                let currUserData = await fetchUpdatedUser();
+                setName(currUserData.username);
+                setEmail(currUserData.email);
+                setPhone(currUserData.phone);
+                setAvatar(currUserData.avatar);
             } else if (response && response.EC !== 0) {
                 toast.error(response.EM);
             }
@@ -152,7 +157,7 @@ const Profile = (props) => {
                                         <div className={cx('mb-5 text-white', 'media-body')}>
                                             {isEdit ? (
                                                 <h4 className={cx('mb-0', 'username')} onDoubleClick={handleDoubleClick}>
-                                                    {!name ? 'Phaothu2002x' : name}
+                                                    {!name ? 'Name is required' : name}
                                                 </h4>
                                             ) : (
                                                 <input
@@ -187,7 +192,7 @@ const Profile = (props) => {
                                             <span className={cx('input-title')}>Email:</span>
                                             {isEmailEdit ? (
                                                 <span onDoubleClick={() => handleInputDoubleClick('email')}>
-                                                    {!email ? 'Please enter email' : email}
+                                                    {!email ? 'Email is required' : email}
                                                 </span>
                                             ) : (
                                                 <input
@@ -209,7 +214,7 @@ const Profile = (props) => {
                                             <span className={cx('input-title')}>Phone:</span>
                                             {isPhonelEdit ? (
                                                 <span onDoubleClick={() => handleInputDoubleClick('phone')}>
-                                                    {!phone ? 'Please enter phone' : phone}
+                                                    {!phone ? 'Phone is required' : phone}
                                                 </span>
                                             ) : (
                                                 <input

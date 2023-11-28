@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getUserAccount } from '~/services/userService';
+import { getUserAccount, fetchCurrentUser } from '~/services/userService';
+import { toast } from 'react-toastify';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
@@ -47,7 +48,18 @@ const UserProvider = ({ children }) => {
         }
     };
 
-    return <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUser }}>{children}</UserContext.Provider>;
+    const fetchUpdatedUser = async () => {
+        let response = await fetchCurrentUser(user.account.userId);
+        if (response && response.EC === 0) {
+            return response.DT;
+        } else {
+            toast.error('cannot get current user');
+        }
+    };
+
+    return (
+        <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUser, fetchUpdatedUser }}>{children}</UserContext.Provider>
+    );
 };
 
 export { UserProvider, UserContext };
