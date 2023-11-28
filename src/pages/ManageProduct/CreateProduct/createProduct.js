@@ -67,7 +67,7 @@ const CreateProduct = (props) => {
         if (response && response.EC === 0) {
             setTypeList(response.DT);
         } else {
-            toast.error(response.EM);
+            toast.error('fetch type error');
         }
     };
 

@@ -50,10 +50,13 @@ const Login = (props) => {
                 let email = res.DT.email;
                 let username = res.DT.username;
                 let token = res.DT.access_token;
+                let phone = res.DT.phone;
+                let avatar = res.DT.avatar;
+                let userId = res.DT.userId;
                 let data = {
                     isAuthenticated: true,
                     token,
-                    account: { groupWithRole, email, username },
+                    account: { userId, groupWithRole, email, username, phone, avatar },
                 };
 
                 localStorage.setItem('jwt', token);

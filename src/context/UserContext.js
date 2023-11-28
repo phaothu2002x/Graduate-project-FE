@@ -34,10 +34,11 @@ const UserProvider = ({ children }) => {
             let token = response.DT.access_token;
             let phone = response.DT.phone;
             let avatar = response.DT.avatar;
+            let userId = response.DT.userId;
             let userData = {
                 isAuthenticated: true,
                 token,
-                account: { groupWithRole, email, username, phone, avatar },
+                account: { userId, groupWithRole, email, username, phone, avatar },
                 isLoading: false,
             };
             setUser(userData);

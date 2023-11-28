@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 const Profile = (props) => {
     const { user, fetchUser } = useContext(UserContext);
     const account = user.account;
-    console.log('check', account);
+    // console.log('check account', account);
     //handle preview avatar
     const inputRef = useRef();
     const [avatar, setAvatar] = useState(account.avatar);
@@ -99,7 +99,7 @@ const Profile = (props) => {
     };
     const handleUpdateClick = async () => {
         let check = checkEmptyInput();
-        let profileData = { username: name, email, phone };
+        let profileData = { userId: account.userId, username: name, email, phone };
         const formData = new FormData();
         if (check) {
             formData.append('avatar', avatar);
