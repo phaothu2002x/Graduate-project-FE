@@ -7,7 +7,7 @@ const UserProvider = ({ children }) => {
     // User is the name of the "data" that gets stored in context
     const defaultData = { isAuthenticated: false, token: '', account: {}, isLoading: true };
     const [user, setUser] = useState(defaultData);
-
+    // console.log('check user ', user);
     // Login updates the user data with a name parameter
     const loginContext = (userData) => {
         setUser({ ...userData, isLoading: false });
@@ -28,38 +28,29 @@ const UserProvider = ({ children }) => {
 
     const fetchUser = async () => {
         let response = await getUserAccount();
+        // console.log(response);
         if (response && response.EC === 0) {
+            let token = response.DT.token;
+            let userId = response.DT.currentUser.id;
+            let username = response.DT.currentUser.username;
+            let avatar = response.DT.currentUser.avatar;
+            let email = response.DT.currentUser.email;
+            let phone = response.DT.currentUser.phone;
             let groupWithRole = response.DT.groupWithRole;
-            let email = response.DT.email;
-            let username = response.DT.username;
-            let token = response.DT.access_token;
-            let phone = response.DT.phone;
-            let avatar = response.DT.avatar;
-            let userId = response.DT.userId;
-            let userData = {
+            let updatedUserData = {
                 isAuthenticated: true,
                 token,
-                account: { userId, groupWithRole, email, username, phone, avatar },
+                account: { userId, email, username, phone, avatar, groupWithRole },
                 isLoading: false,
             };
-            setUser(userData);
+            setUser(updatedUserData);
         } else {
             setUser({ ...defaultData, isLoading: false });
-        }
-    };
-
-    const fetchUpdatedUser = async () => {
-        let response = await fetchCurrentUser(user.account.userId);
-        if (response && response.EC === 0) {
-            return response.DT;
-        } else {
             toast.error('cannot get current user');
         }
     };
 
-    return (
-        <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUser, fetchUpdatedUser }}>{children}</UserContext.Provider>
-    );
+    return <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUser }}>{children}</UserContext.Provider>;
 };
 
 export { UserProvider, UserContext };

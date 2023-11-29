@@ -39,20 +39,11 @@ const getUserAccount = () => {
     return axios.get('/api/account');
 };
 
-const fetchCurrentUser = (userId) => {
-    return axios.get(`/api/profile/read`, {
-        params: {
-            user: userId,
-        },
-    });
-};
-
 export {
     registerNewUser,
     LoginUser,
     logoutUser,
     fetchAllUsers,
-    fetchCurrentUser,
     deleteUser,
     fetchRole,
     createUser,

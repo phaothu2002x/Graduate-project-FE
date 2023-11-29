@@ -7,7 +7,7 @@ import { UserContext } from '~/context/UserContext';
 const cx = classNames.bind(styles);
 
 const Profile = (props) => {
-    const { user, fetchUser, fetchUpdatedUser, logoutContext } = useContext(UserContext);
+    const { user, fetchUser } = useContext(UserContext);
     const account = user.account;
     // console.log('check account', account);
     //handle preview avatar
@@ -113,12 +113,8 @@ const Profile = (props) => {
             //call api update profile
             let response = await updateProfileUser(formData);
             if (response && response.EC === 0) {
-                toast.info(`${response.EM}, please login again to see change...`);
-                let currUserData = await fetchUpdatedUser();
-                setName(currUserData.username);
-                setEmail(currUserData.email);
-                setPhone(currUserData.phone);
-                setAvatar(currUserData.avatar);
+                toast.success('update successfully');
+                await fetchUser();
             } else if (response && response.EC !== 0) {
                 toast.error(response.EM);
             }
