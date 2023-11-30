@@ -93,13 +93,17 @@ const Header = (props) => {
                                 <div className="dropdown">
                                     <img
                                         className="profile-avatar"
-                                        src="https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE"
+                                        src={
+                                            user.account && user.account.avatar
+                                                ? user.account.avatar
+                                                : 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE'
+                                        }
                                         alt="avatar"
                                     />
 
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <Link className="dropdown-item" to="/profile/@Phaothu2002x">
+                                            <Link className="dropdown-item" to="/profile/@me">
                                                 <i className="fa fa-user-circle" aria-hidden="true"></i>
                                                 Your Account
                                             </Link>

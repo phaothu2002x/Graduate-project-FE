@@ -1,7 +1,10 @@
 import axios from '~/setup/axios';
 
-const fetchAllProduct = (currentPage, currentLimit) => {
+const fetchAllManageProduct = (currentPage, currentLimit) => {
     return axios.get(`/api/manage-products/read?page=${currentPage}&limit=${currentLimit}`);
+};
+const fetchAllProduct = (currentPage, currentLimit) => {
+    return axios.get(`/api/products/read?page=${currentPage}&limit=${currentLimit}`);
 };
 
 const createNewProduct = (productData) => {
@@ -26,4 +29,13 @@ const findType = (id) => {
     return axios.get(`/api/manage-products/findType/${id}`);
 };
 
-export { fetchAllProduct, deleteProduct, createNewProduct, updateProduct, findProductById, findAllSelection, findType };
+export {
+    fetchAllProduct,
+    fetchAllManageProduct,
+    deleteProduct,
+    createNewProduct,
+    updateProduct,
+    findProductById,
+    findAllSelection,
+    findType,
+};

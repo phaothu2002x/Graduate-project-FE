@@ -3,7 +3,7 @@ import styles from './ManageProduct.module.scss';
 import Header from '~/components/Header/header';
 import PreviewItem from './previewItems/item';
 import { useEffect, useState } from 'react';
-import { fetchAllProduct } from '../../services/productService';
+import { fetchAllManageProduct } from '../../services/productService';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -24,7 +24,7 @@ const ManageProduct = (props) => {
     }, [currentPage]);
 
     const fetchProduct = async () => {
-        let response = await fetchAllProduct(currentPage, currentLimit);
+        let response = await fetchAllManageProduct(currentPage, currentLimit);
 
         if (response && response.EC === 0) {
             // toast.success(response.EM);
