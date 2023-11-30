@@ -31,7 +31,7 @@ const ProductDetail = (props) => {
         if (response && response.EC === 0) {
             setProductData(response.DT);
         } else {
-            toast.error(response.EM);
+            toast.error('cannot fetch product detail...');
         }
     };
 

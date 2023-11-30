@@ -12,7 +12,7 @@ const CartProvider = ({ children }) => {
 
     const fetchItem = async () => {
         let response = await fetchItemInCart();
-        // console.log(response);
+        console.log(response);
         if (response && response.EC === 0) {
             // toast.success(response.EM);
             let data = response.DT;

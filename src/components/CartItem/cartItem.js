@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './CartItem.module.scss';
 import { deleteItemInCart, updateCart } from '~/services/cartService';
 import { toast } from 'react-toastify';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CartContext } from '../Header/CartContext';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
@@ -40,6 +40,7 @@ const CartItem = (props) => {
         }
         if (response && response.EC === 0) {
             toast.success(response.EM);
+            fetchItem();
         }
     };
     let timeoutId = useRef();
@@ -47,25 +48,23 @@ const CartItem = (props) => {
         setFinalQuantity((prev) => prev + 1);
         setTotalItemPrice(price * (finalQuantity + 1));
         //debounce technique (not ok)
-        handleMinusAddChange(1);
-
         //debounce
         clearTimeout(timeoutId.current);
         timeoutId.current = setTimeout(() => {
-            fetchItem();
+            handleMinusAddChange(1);
         }, 1000);
     };
+
     const handleMinus = async () => {
         if (finalQuantity <= 1) {
             setFinalQuantity(1);
         } else {
             setFinalQuantity((prev) => prev - 1);
             setTotalItemPrice(price * (finalQuantity - 1));
-            handleMinusAddChange(-1);
 
             clearTimeout(timeoutId.current);
             timeoutId.current = setTimeout(() => {
-                fetchItem();
+                handleMinusAddChange(-1);
             }, 1000);
         }
     };
