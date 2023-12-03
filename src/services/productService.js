@@ -7,8 +7,8 @@ const fetchAllProduct = (currentPage, currentLimit) => {
     return axios.get(`/api/products/read?page=${currentPage}&limit=${currentLimit}`);
 };
 
-const createNewProduct = (productData) => {
-    return axios.post(`/api/manage-products/create`, { ...productData });
+const createNewProduct = (formData) => {
+    return axios.post(`/api/manage-products/create`, formData);
 };
 // find product before update
 const findProductById = (id) => {

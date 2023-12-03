@@ -1,21 +1,23 @@
 import classNames from 'classnames/bind';
 import styles from './CreateProduct.module.scss';
 // import Header from '~/components/Header/header';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createNewProduct, findType, findAllSelection } from '~/services/productService';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { none } from '@cloudinary/url-gen/qualifiers/fontHinting';
 //=============
 const cx = classNames.bind(styles);
 
 const CreateProduct = (props) => {
     const navigate = useNavigate();
+    const galleryRef = useRef();
+    const thumbRef = useRef();
     const defaultRadioValue = 1;
 
     const defaultProductData = {
         name: '',
-        thumbnail: '',
         price: '',
         code: '',
         description: '',
@@ -25,7 +27,6 @@ const CreateProduct = (props) => {
         name: true,
         price: true,
         code: true,
-        thumbnail: true,
         description: true,
     };
 
@@ -93,12 +94,44 @@ const CreateProduct = (props) => {
         setProductData(_productData);
     };
 
+    //choose file section
+    const [galleryList, setGalleryList] = useState([]);
+    const [thumbnail, setThumbnail] = useState();
+    const handleUploadClicked = () => {
+        galleryRef.current.click();
+    };
+    const handleThumbUpload = () => {
+        thumbRef.current.click();
+    };
+
+    const handleFileChange = (e) => {
+        const files = e.target.files;
+        let arr = Array.from(files);
+        if (files) {
+            setGalleryList(arr);
+        }
+    };
+    const handleThumbChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setThumbnail(file);
+        }
+    };
+    // const handleSave = async () => {
+    //     console.log('check thumb', galleryList);
+    //     // let data = { thumbnail, galleryList, name: 'test' };
+
+    //     // formData.append('gallery', galleryList);
+    //     // console.log('check', formData);
+    //     let response = await createNewProduct(formData);
+    // };
+
     //validation input
     const checkValidateInput = () => {
         setValidInput(defaultValidInput);
         let check = true;
         //for input
-        let arr = ['name', 'price', 'code', 'thumbnail', 'description'];
+        let arr = ['name', 'price', 'code', 'description'];
         for (let i = 0; i < arr.length; i++) {
             if (!productData[arr[i]]) {
                 let _validInput = _.cloneDeep(defaultValidInput);
@@ -122,13 +155,21 @@ const CreateProduct = (props) => {
         return false;
     };
 
+    const checkValidFile = () => {
+        if (!thumbnail || galleryList.length <= 0) {
+            toast.error('Missing images/ thumbnail');
+            return false;
+        }
+        return true;
+    };
     const handleSave = async () => {
+        const formData = new FormData();
         let check = checkValidateInput();
         let checkSelection = checkValidSelection();
-        if (check === true && checkSelection === true) {
+        let checkFile = checkValidFile();
+        if (check === true && checkSelection === true && checkFile === true) {
             let data = {
                 name: productData.name,
-                thumbnail: productData.thumbnail,
                 price: productData.price,
                 description: productData.description,
                 code: productData.code,
@@ -137,9 +178,19 @@ const CreateProduct = (props) => {
                 brandChecked,
                 typeSelect,
             };
+
+            formData.append('thumb', thumbnail);
+            for (const file of galleryList) {
+                formData.append('galleryList', file);
+            }
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    formData.append(key, data[key]);
+                }
+            }
             // console.log('check typecheck', data);
             // call api
-            let response = await createNewProduct(data);
+            let response = await createNewProduct(formData);
             if (response && response.EC === 0) {
                 toast.success(response.EM);
                 setProductData(defaultProductData);
@@ -151,6 +202,7 @@ const CreateProduct = (props) => {
             }
         }
     };
+
     // console.log('check typelist', typeList); .from db
     // console.log('check selectList', selectList); ok
     // console.log('typeselection', typeSelect);ok
@@ -205,7 +257,7 @@ const CreateProduct = (props) => {
                         </div>
                         <div className={cx('row', 'form-row')}>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
-                                <textarea
+                                {/* <textarea
                                     className={validInput.thumbnail ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
                                     placeholder="Enter product image here"
                                     id="thumbnail"
@@ -214,7 +266,42 @@ const CreateProduct = (props) => {
                                 ></textarea>
                                 <label htmlFor="thumbnail" className={cx('form-label', 'input-label')}>
                                     Enter product Thumbnail
-                                </label>
+                                </label> */}
+                                <div className={cx('choose-file')}>
+                                    <div className={cx('image-preview')}>
+                                        {thumbnail ? (
+                                            <img src={URL.createObjectURL(thumbnail)} alt="thumbnail" />
+                                        ) : (
+                                            <h3>No Thumbnail selected</h3>
+                                        )}
+                                    </div>
+                                    <button className={cx('btn btn-info', 'uploadThumb-btn')} onClick={handleThumbUpload}>
+                                        Upload Thumbnail
+                                    </button>
+                                    <input type="file" ref={thumbRef} onChange={handleThumbChange} style={{ display: 'none' }} />
+                                </div>
+                                <hr />
+                                <div className={cx('choose-file')}>
+                                    <div className={cx('image-preview-list')}>
+                                        {galleryList && galleryList.length > 0 ? (
+                                            galleryList.map((item, index) => {
+                                                return <img key={index} src={URL.createObjectURL(item)} alt="chosen img"></img>;
+                                            })
+                                        ) : (
+                                            <h3>No Images selected</h3>
+                                        )}
+                                    </div>
+                                    <button className={cx('btn btn-info', 'upload-btn')} onClick={handleUploadClicked}>
+                                        Upload images
+                                    </button>
+                                    <input
+                                        type="file"
+                                        multiple={true}
+                                        ref={galleryRef}
+                                        onChange={handleFileChange}
+                                        style={{ display: 'none' }}
+                                    />
+                                </div>
                             </div>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
