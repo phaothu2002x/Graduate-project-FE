@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './UpdateProduct.module.scss';
 import Header from '~/components/Header/header';
 import { useState, useEffect } from 'react';
-import _ from 'lodash';
+import _, { set } from 'lodash';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { findProductById, findAllSelection, findType, updateProduct } from '~/services/productService';
@@ -30,6 +30,8 @@ const UpdateProduct = (props) => {
 
     const [productData, setProductData] = useState(defaultProductData);
     const [validInput, setValidInput] = useState(defaultValidInput);
+    const [galleryValue, setGalleryValue] = useState([]);
+    const [invalidGallery, setInvalidGallery] = useState();
 
     const [selectList, setSelectList] = useState({});
     const { brand, category, supplier } = selectList;
@@ -79,9 +81,12 @@ const UpdateProduct = (props) => {
                 response.DT.Types.map((item) => defaultTypeChecked.push(item.id));
                 setTypeChecked(defaultTypeChecked);
             }
+            if (response.DT.Product_Galleries) {
+                setGalleryValue(response.DT.Product_Galleries);
+            }
         } else {
-            toast.error(response.EM);
-            navigate('/manage-products');
+            toast.error('Fetch Product Item Error');
+            // navigate('/manage-products');
         }
     };
 
@@ -104,7 +109,7 @@ const UpdateProduct = (props) => {
         //     toast.error(response.EM);
         // }
     };
-
+    // console.log(productData.Product_Galleries);
     //2 way binding input with obj
     const handleOnChangeInput = (value, name) => {
         let _productData = _.cloneDeep(productData);
@@ -116,6 +121,35 @@ const UpdateProduct = (props) => {
             _validInput[name] = true;
             setValidInput(_validInput);
         }
+    };
+
+    const handleChangeGallery = (value, index) => {
+        let _galleryValue = _.cloneDeep(galleryValue);
+        _galleryValue[index].url = value;
+        setGalleryValue(_galleryValue);
+        // khi warning nhap=> tat warning
+        if (galleryValue[index].url) {
+            setInvalidGallery();
+        }
+    };
+
+    const checkValidGallery = () => {
+        let check = true;
+        for (let i = 0; i < galleryValue.length; i++) {
+            if (galleryValue[i].url === '') {
+                setInvalidGallery(i);
+                toast.error(`empty images at ${i + 1} url `);
+                check = false;
+                break;
+            }
+        }
+        //     if (item.url === '') {
+        //         setInvalidGallery(index);
+        //         toast.error(`empty images at ${index + 1} url `);
+        //         check = false;
+        //     }
+        // });
+        return check;
     };
     const handleTypeCheck = (id) => {
         setTypeChecked((prev) => {
@@ -163,7 +197,8 @@ const UpdateProduct = (props) => {
     const handleSave = async () => {
         let check = checkValidateInput();
         let checkSelection = checkValidSelection();
-        if (check && checkSelection) {
+        let checkGallery = checkValidGallery();
+        if (check && checkSelection && checkGallery) {
             let dataUpdate = {
                 id: id,
                 name: productData.name,
@@ -175,6 +210,7 @@ const UpdateProduct = (props) => {
                 supplierChecked,
                 brandChecked,
                 typeChecked,
+                galleryValue,
             };
             // call api
             let response = await updateProduct(dataUpdate);
@@ -186,11 +222,13 @@ const UpdateProduct = (props) => {
                 setBrandChecked();
                 setCategoryChecked();
                 setSupplierChecked();
+                setGalleryValue([]);
                 //navigate
                 navigate('/manage-products');
             }
         }
     };
+
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -241,17 +279,24 @@ const UpdateProduct = (props) => {
                             </div>
                         </div>
                         <div className={cx('row', 'form-row')}>
-                            <div className={cx('form-floating col-6', 'textarea-form')}>
-                                <textarea
-                                    className={validInput.thumbnail ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')}
-                                    placeholder="Enter product image here"
-                                    id="thumbnail"
-                                    value={productData.thumbnail}
-                                    onChange={(e) => handleOnChangeInput(e.target.value, 'thumbnail')}
-                                ></textarea>
-                                <label htmlFor="thumbnail" className={cx('form-label', 'input-label')}>
-                                    Enter product Thumbnail
-                                </label>
+                            <div className={cx('row col-6')}>
+                                <div className={cx('form-floating col-9', 'textarea-form')}>
+                                    <textarea
+                                        className={
+                                            validInput.thumbnail ? cx('form-control', 'input') : cx('form-control is-invalid', 'input')
+                                        }
+                                        placeholder="Enter product image here"
+                                        id="thumbnail"
+                                        value={productData.thumbnail}
+                                        onChange={(e) => handleOnChangeInput(e.target.value, 'thumbnail')}
+                                    ></textarea>
+                                    <label htmlFor="thumbnail" className={cx('form-label', 'input-label')}>
+                                        Enter product Thumbnail
+                                    </label>
+                                </div>
+                                <div className="mb-3 col-3">
+                                    <img className={cx('preview-gallery')} src={productData.thumbnail} alt="preview gallery" />
+                                </div>
                             </div>
                             <div className={cx('form-floating col-6', 'textarea-form')}>
                                 <textarea
@@ -387,6 +432,59 @@ const UpdateProduct = (props) => {
                                 </label>
                                 <input type="text" className={cx('form-control', 'input')} id="expire" placeholder="Enter date" />
                             </div>
+                        </div>
+                    </div>
+
+                    <div className={cx('category')}>
+                        <div className={cx('row')}>
+                            <div className={cx('title', 'col-12')}>Your image Gallery:</div>
+                            {/* <div className={cx('form-row', 'row col-6')}>
+                                <div className={cx('form-floating col-9', 'textarea-form')}>
+                                    <textarea
+                                        className={cx('form-control', 'input')}
+                                        placeholder="change image link here"
+                                        id="previewImage"
+                                    ></textarea>
+                                    <label htmlFor="previewImage" className={cx('form-label', 'input-label')}>
+                                        Your Image link:
+                                    </label>
+                                </div>
+                                <div className="mb-3 col-3">
+                                    <img
+                                        className={cx('preview-gallery')}
+                                        src="https://images.unsplash.com/photo-1682687220499-d9c06b872eee?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="preview gallery"
+                                    />
+                                </div>
+                            </div> */}
+                            {galleryValue ? (
+                                galleryValue.map((item, index) => (
+                                    <div key={index} className={cx('form-row', 'row col-6')}>
+                                        <div className={cx('form-floating col-9', 'textarea-form')}>
+                                            <textarea
+                                                // {cx('form-control is-invalid', 'input')}
+                                                className={
+                                                    invalidGallery === index
+                                                        ? cx('form-control is-invalid', 'input')
+                                                        : cx('form-control', 'input')
+                                                }
+                                                placeholder="change image link here"
+                                                id={`previewImage ${index}`}
+                                                value={item.url}
+                                                onChange={(e) => handleChangeGallery(e.target.value, index)}
+                                            ></textarea>
+                                            <label htmlFor={`previewImage ${index}`} className={cx('form-label', 'input-label')}>
+                                                Your Image link:
+                                            </label>
+                                        </div>
+                                        <div className="mb-3 col-3">
+                                            <img className={cx('preview-gallery')} src={item.url} alt="preview gallery" />
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>
