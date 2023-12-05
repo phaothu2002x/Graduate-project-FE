@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
 import Header from '~/components/Header/header';
 import images from '~/assets/images';
-import Carousel from 'react-bootstrap/Carousel';
+
 import { useState, useEffect, useContext } from 'react';
 import { findProductById } from '~/services/productService';
 import { useParams } from 'react-router-dom';
@@ -12,25 +12,19 @@ import { CartContext } from '~/components/Header/CartContext';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
-    const imageGalleryArr = [images.productImg5, images.productImg3, images.productImg2];
-
-    const [imageGallery, setImageGallery] = useState(imageGalleryArr);
     const [imageSelected, setImageSelected] = useState(0);
-
-    const handleActiveImg = (index) => {
-        setImageSelected(index);
-    };
+    const [imageGallery, setImageGallery] = useState([]);
 
     //
     const { id } = useParams();
     const { fetchItem } = useContext(CartContext);
 
-    const tabs = ['Description', 'feature', 'reviews'];
+    const tabs = ['Related Products', 'reviews'];
     const [type, setType] = useState('Description');
 
     const [productData, setProductData] = useState({});
 
-    const { thumbnail, name, description, price, code } = productData;
+    const { name, description, price, code } = productData;
 
     useEffect(() => {
         fetchProductDetail();
@@ -40,10 +34,39 @@ const ProductDetail = (props) => {
         let response = await findProductById(id);
         if (response && response.EC === 0) {
             setProductData(response.DT);
+            if (response.DT.Product_Galleries) {
+                let data = buildGallery(response.DT.thumbnail, response.DT.Product_Galleries);
+                setImageGallery(data);
+            }
         } else {
             toast.error('cannot fetch product detail...');
         }
     };
+
+    const buildGallery = (thumb, galleryArr) => {
+        let key = 'url';
+        let galleryList = galleryArr.map((item) => item[key]);
+        galleryList.unshift(thumb);
+        return galleryList;
+    };
+
+    const handleActiveImg = (index) => {
+        setImageSelected(index);
+    };
+
+    //handle slider change interval
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            if (imageSelected === imageGallery.length - 1) {
+                setImageSelected(0);
+            } else {
+                setImageSelected((prev) => prev + 1);
+            }
+        }, 4000);
+
+        //clean up func
+        return () => clearInterval(timerId);
+    }, [imageSelected, imageGallery.length]);
 
     //increase & decrease function
     const [quantity, setQuantity] = useState(1);
@@ -72,9 +95,10 @@ const ProductDetail = (props) => {
         if (response && response.EC === 0) {
             toast.success(response.EM);
         }
-
         fetchItem();
     };
+
+    // console.log('gallery', imageGallery);
 
     return (
         <div className={cx('wrapper')}>
@@ -84,39 +108,28 @@ const ProductDetail = (props) => {
                 <div className={cx('product-container')}>
                     <div className={cx('content-left')}>
                         <div className={cx('product-item')}>
-                            {/* <Carousel>
-                                <Carousel.Item>
-                                    <img src={thumbnail || images.productImg1} alt="thumbnail" className={cx('thumb')} />
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img src={images.productImg3} alt="thumbnail" className={cx('thumb')} />
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img src={images.productImg2} alt="thumbnail" className={cx('thumb')} />
-                                </Carousel.Item>
-                            </Carousel> */}
-                            <img src={imageGalleryArr[imageSelected] || images.productImg1} alt="thumbnail" className={cx('thumb')} />
+                            <img src={imageGallery[imageSelected]} alt="thumbnail" className={cx('thumb')} />
                             {/* <img src={imageGalleryArr[imageSelected] || images.productImg1} alt="thumbnail" className={cx('thumb')} /> */}
                         </div>
                         <div className={cx('product-slider')}>
                             {/* dùng map để render */}
-                            <img src={thumbnail} alt="slider" className={cx('slider-items', 'active')} />
-                            {/* <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
-                            <img src={images.productImg5} alt="slider" className={cx('slider-items')} />
-                            <img src={images.productImg5} alt="slider" className={cx('slider-items')} /> */}
-                            {imageGalleryArr.map((item, index) => {
-                                return (
-                                    <img
-                                        src={item}
-                                        alt="slider"
-                                        className={imageSelected === index ? cx('slider-items', 'active') : cx('slider-items')}
-                                        key={index}
-                                        onClick={() => {
-                                            handleActiveImg(index);
-                                        }}
-                                    />
-                                );
-                            })}
+                            {imageGallery.length > 0 ? (
+                                imageGallery.map((item, index) => {
+                                    return (
+                                        <img
+                                            src={item}
+                                            alt="slider"
+                                            className={imageSelected === index ? cx('slider-items', 'active') : cx('slider-items')}
+                                            key={index}
+                                            onClick={() => {
+                                                handleActiveImg(index);
+                                            }}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                     <div className={cx('content-right')}>
