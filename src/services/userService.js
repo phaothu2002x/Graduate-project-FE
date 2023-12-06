@@ -35,10 +35,15 @@ const updateProfileUser = (fromData) => {
     return axios.put('/api/profile/update', fromData);
 };
 
+//user order
+const getUserOrder = () => {
+    return axios.get(`/api/profile/orders`);
+};
+
+// account through token
 const getUserAccount = () => {
     return axios.get('/api/account');
 };
-
 export {
     registerNewUser,
     LoginUser,
@@ -50,4 +55,5 @@ export {
     updateCurrentUser,
     updateProfileUser,
     getUserAccount,
+    getUserOrder,
 };

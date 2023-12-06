@@ -18,4 +18,7 @@ const fetchPaymentMethod = (id) => {
     return axios.get(`/api/cart/payment/${id}`);
 };
 
-export { addProductToCart, fetchItemInCart, deleteItemInCart, updateCart, fetchPaymentMethod };
+const clearCart = () => {
+    return axios.delete(`/api/cart/clear`);
+};
+export { addProductToCart, fetchItemInCart, deleteItemInCart, updateCart, fetchPaymentMethod, clearCart };

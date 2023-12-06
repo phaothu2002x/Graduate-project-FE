@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { fetchItemInCart } from '~/services/cartService';
+import { fetchItemInCart, clearCart } from '~/services/cartService';
 import { useContext } from 'react';
 import { UserContext } from '~/context/UserContext';
 const CartContext = createContext();
@@ -25,6 +25,11 @@ const CartProvider = ({ children }) => {
         }
     };
 
+    const clearCartList = async () => {
+        await clearCart();
+        fetchItem();
+    };
+
     useEffect(() => {
         if (user && user.isAuthenticated === true) {
             fetchItem();
@@ -40,7 +45,7 @@ const CartProvider = ({ children }) => {
         fetchItem();
     };
 
-    const value = { cartShow, setCartShow, cartList, itemsInCart, fetchItem, handleCartClose, handleCartClicked };
+    const value = { cartShow, setCartShow, cartList, clearCartList, itemsInCart, fetchItem, handleCartClose, handleCartClicked };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

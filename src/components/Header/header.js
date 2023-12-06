@@ -50,7 +50,7 @@ const Header = (props) => {
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/cart" className="border-container">
+                                <NavLink to="/manage-order" className="border-container">
                                     <i className="fa fa-cubes" aria-hidden="true"></i>
                                     Feature
                                     <div className="border-inner"></div>

@@ -9,13 +9,17 @@ import { toast } from 'react-toastify';
 import { createOrder } from '~/services/orderService';
 import { useNavigate } from 'react-router-dom';
 import { fetchPaymentMethod } from '~/services/cartService';
+import { UserContext } from '~/context/UserContext';
 
 const cx = classNames.bind(styles);
 
 const Cart = (props) => {
     const navigate = useNavigate();
 
-    const { cartList, fetchItem } = useContext(CartContext);
+    const { user } = useContext(UserContext);
+    const { cartList, clearCartList, fetchItem } = useContext(CartContext);
+
+    const account = user.account;
 
     const [paymentChecked, setPaymentChecked] = useState(1);
     const [paymentInfo, setPaymentInfo] = useState([]);
@@ -105,16 +109,18 @@ const Cart = (props) => {
 
     const handlePurchase = async () => {
         let orderInfo = {};
+        let userId = account.userId;
         let check = checkValidInput();
         if (check) {
             // console.log('check user data', userValue);
-            orderInfo = { userValue, totalPriceInCart, productList: cartList };
+            orderInfo = { userId, userValue, totalPriceInCart, productList: cartList };
             // call api
             // console.log(orderInfo);
             let response = await createOrder(orderInfo);
 
             if (response && response.EC === 0) {
                 toast.success(response.EM);
+                clearCartList();
                 navigate('/manage-order');
             }
             if (response && response.EC !== 0) {
