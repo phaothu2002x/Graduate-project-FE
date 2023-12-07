@@ -1,0 +1,73 @@
+.accordion-section {
+    .accordion-item {
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 12px;
+    }
+
+    button {
+        background-color: #56bdcd;
+    }
+    .order-item-header {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgb(13, 15, 125);
+
+        span {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+    }
+    .order-item-body {
+        .customer-info {
+            padding: 8px 8px;
+            background-color: antiquewhite;
+
+            .cus-note {
+                width: 40%;
+            }
+
+            .btn-wrap {
+                display: flex;
+                justify-content: center;
+
+                .btn-danger {
+                    background-color: red;
+                }
+                .action-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 4px 8px;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+        .separate-bar {
+            margin: 8px 0;
+            width: 100%;
+            // height: 13px;
+            border: 3px solid;
+            border-image: linear-gradient(135deg, #a0fe65 10%, #fa016d 100%) 1;
+            border-radius: 8px;
+        }
+
+        .tbody-content {
+            th {
+                display: flex;
+                align-items: center;
+
+                .pName {
+                    width: 300px;
+                }
+                img {
+                    width: 50px;
+                    height: 50px;
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+}

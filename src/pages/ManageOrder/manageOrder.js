@@ -1,11 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './ManageOrder.module.scss';
+import './ManageOrderAccordion.scss';
 import { useEffect, useState } from 'react';
 import { fetchAllOrder } from '~/services/orderService';
 import UpdateStatusModal from './Modals/updateModals';
 import ReactPaginate from 'react-paginate';
 import DeleteOrderModal from './Modals/deleteOrderModal';
 import { toast } from 'react-toastify';
+import Accordion from 'react-bootstrap/Accordion';
+
 const cx = classNames.bind(styles);
 
 const ManageProduct = (props) => {
@@ -68,6 +71,19 @@ const ManageProduct = (props) => {
         setShowDeleteModal(false);
         fetchOrders();
     };
+
+    //date function
+    const handleDate = (outputDate) => {
+        const dateString = outputDate;
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Months are zero-based, so add 1
+        const day = date.getDate();
+        const data = `${day}/${month}/${year} `;
+        return data;
+    };
+
     //refresh btn
     const handleRefresh = () => {
         fetchOrders();
@@ -87,62 +103,82 @@ const ManageProduct = (props) => {
                     </button>
                 </div>
                 {/* content */}
-                <div className={cx('content')}>
-                    <table className="table table-hover table-bordered table-striped ">
-                        <thead className={cx('t-head')}>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">UserName</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Note</th>
-                                <th scope="col">TotalPrice</th>
-                                <th scope="col">status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className={cx('t-body')}>
-                            {orderList && orderList.length > 0 ? (
-                                orderList.map((item, index) => {
-                                    return (
-                                        <tr key={`item-${index}`}>
-                                            <td>{item.id}</td>
-                                            <td>{item.name}</td>
-                                            <td>{item.phone}</td>
-                                            <td>{item.email}</td>
-                                            <td>{item.note}</td>
-                                            <td>${item.amount}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <div className={cx('btn-wrap')}>
-                                                    <button
-                                                        className={cx('btn btn-primary', 'action-btn')}
-                                                        onClick={() => {
-                                                            handleUpdateClick(item);
-                                                        }}
-                                                    >
-                                                        <i className="fa fa-cog"></i>
-                                                    </button>
-                                                    <button
-                                                        className={cx('btn btn-danger', 'action-btn')}
-                                                        onClick={() => handleDeleteClick(item)}
-                                                    >
-                                                        <i className="fa fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            ) : (
-                                <tr>
-                                    <td>Not found Orders</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
 
+                <div className="accordion-section">
+                    <Accordion defaultActiveKey="0">
+                        {orderList && orderList.length > 0 ? (
+                            orderList.map((item, index) => (
+                                <Accordion.Item eventKey={index} className="order-item" key={`Order-${index}`}>
+                                    <Accordion.Header>
+                                        <div className="order-item-header">
+                                            <span>Order ID: {item.id}</span>
+                                            <span>Order Date: {handleDate(item.createdAt)} </span>
+                                            <span>Total Amount: {item.amount}</span>
+                                            <span>Status: {item.status}</span>
+                                        </div>
+                                    </Accordion.Header>
+                                    <Accordion.Body className="order-item-body">
+                                        <div className="customer-info">
+                                            <h3>Username: {item.name}</h3>
+                                            <h3>Email: {item.email}</h3>
+                                            <h3>Phone: {item.phone}</h3>
+                                            <h3 className="cus-note">Note: {item.note}</h3>
+
+                                            <div className="btn-wrap">
+                                                <button
+                                                    className="btn btn-primary action-btn"
+                                                    onClick={() => {
+                                                        handleUpdateClick(item);
+                                                    }}
+                                                >
+                                                    <i className="fa fa-cog"></i>
+                                                </button>
+                                                <button className="btn btn-danger action-btn" onClick={() => handleDeleteClick(item)}>
+                                                    <i className="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="separate-bar"></div>
+                                        <table className="table table-hover table-bordered table-striped  table-info ">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Product Name:</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Amount($)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="tbody-content">
+                                                {item.Products ? (
+                                                    item.Products.map((pItem, index) => (
+                                                        <tr key={`product-${index}`}>
+                                                            <th scope="row">
+                                                                <span className="pName">{pItem.name}</span>
+                                                                <img alt="product item" src={pItem.thumbnail} />
+                                                            </th>
+                                                            <td>{pItem.price}$</td>
+                                                            <td>x{pItem.Order_Detail.quantity}</td>
+                                                            <td>{pItem.Order_Detail.totalPrice}$</td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan={4}>
+                                                            <h2>Order has no product</h2>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            ))
+                        ) : (
+                            <h2> Not found Orders</h2>
+                        )}
+                    </Accordion>
+                </div>
                 <div className={cx('pagination')}>
                     {totalPage > 0 && (
                         <ReactPaginate
