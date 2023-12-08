@@ -4,11 +4,12 @@ import Header from '~/components/Header/header';
 import images from '~/assets/images';
 
 import { useState, useEffect, useContext } from 'react';
-import { findProductById } from '~/services/productService';
+import { findProductById, findSuggestion } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '~/services/cartService';
 import { CartContext } from '~/components/Header/CartContext';
+import RecommendProduct from '~/components/Slider/recommendProduct';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
@@ -20,11 +21,11 @@ const ProductDetail = (props) => {
     const { fetchItem } = useContext(CartContext);
 
     const tabs = ['Related Products', 'reviews'];
-    const [type, setType] = useState('Description');
+    const [type, setType] = useState('Related Products');
 
     const [productData, setProductData] = useState({});
-
-    const { name, description, price, code } = productData;
+    const [suggestList, setSuggestList] = useState([]);
+    const { name, description, price, code, Category, Types, Brand } = productData;
 
     useEffect(() => {
         fetchProductDetail();
@@ -38,8 +39,19 @@ const ProductDetail = (props) => {
                 let data = buildGallery(response.DT.thumbnail, response.DT.Product_Galleries);
                 setImageGallery(data);
             }
+            fetchSuggestion(response.DT.CategoryId);
         } else {
             toast.error('cannot fetch product detail...');
+        }
+    };
+
+    //fetch recommend product by category:
+    const fetchSuggestion = async (CategoryId) => {
+        let response = await findSuggestion(CategoryId);
+        if (response && response.EC === 0) {
+            setSuggestList(response.DT);
+        } else {
+            toast.error('cannot find suggestion');
         }
     };
 
@@ -98,7 +110,17 @@ const ProductDetail = (props) => {
         fetchItem();
     };
 
-    // console.log('gallery', imageGallery);
+    const handleSlideShow = (length) => {
+        if (length >= 4) {
+            return 4;
+        } else if (length > 1) {
+            return length;
+        } else {
+            return 1;
+        }
+    };
+
+    // console.log('Category', Category);
 
     return (
         <div className={cx('wrapper')}>
@@ -152,28 +174,23 @@ const ProductDetail = (props) => {
                                 <h3 className={cx('desc-title')}>Category:</h3>
                                 <div className={cx('category-tags')}>
                                     <a href="#!" className={cx('brand-tag', 'tags')}>
-                                        {props.brandTag || 'Akko'}
-                                    </a>
-                                    <a href="#!" className={cx('type-tag', 'tags')}>
-                                        {props.typeTag || 'Custom'}
+                                        {Brand && Brand.name}
                                     </a>
                                     <a href="#!" className={cx('switch-tag', 'tags')}>
-                                        {props.switchTag || 'red switch'}
+                                        {Category && Category.name}
                                     </a>
                                 </div>
                             </section>
                             <section className={cx('product-type')}>
                                 <h3 className={cx('desc-title')}>Types:</h3>
                                 <div className={cx('type-tags')}>
-                                    <a href="#!" className={cx('brand-tag', 'tags')}>
-                                        {props.brandTag || 'Akko'}
-                                    </a>
-                                    <a href="#!" className={cx('type-tag', 'tags')}>
-                                        {props.typeTag || 'Custom'}
-                                    </a>
-                                    <a href="#!" className={cx('switch-tag', 'tags')}>
-                                        {props.switchTag || 'red switch'}
-                                    </a>
+                                    {Types &&
+                                        Types.length > 0 &&
+                                        Types.map((item, index) => (
+                                            <a href="#!" className={cx('type-tag', 'tags')} key={index}>
+                                                {item.name}
+                                            </a>
+                                        ))}
                                 </div>
                             </section>
                         </div>
@@ -209,7 +226,7 @@ const ProductDetail = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className={cx('product-detail')}>
+                <div className={cx('product-suggestion')}>
                     <ul className={cx('nav nav-tabs')}>
                         {tabs.map((tab, index) => {
                             return (
@@ -222,6 +239,12 @@ const ProductDetail = (props) => {
                         })}
                     </ul>
                 </div>
+
+                {type === 'Related Products' ? (
+                    <RecommendProduct data={suggestList} slideShow={handleSlideShow} />
+                ) : (
+                    <h2>Still developing</h2>
+                )}
             </div>
         </div>
     );

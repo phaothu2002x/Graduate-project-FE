@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 const Items = (props) => {
     const navigate = useNavigate();
 
-    const { id, thumbnail, name, price } = props.data;
+    const { id, thumbnail, name, price, Category, Types, Brand } = props.data;
 
     const handleItemClick = (id) => {
         navigate(`/product/${id}`);
@@ -25,14 +25,18 @@ const Items = (props) => {
                 </h3>
                 <div className={cx('category-tags')}>
                     <a href="#!" className={cx('brand-tag', 'tags')}>
-                        {props.brandTag || 'Akko'}
-                    </a>
-                    <a href="#!" className={cx('type-tag', 'tags')}>
-                        {props.typeTag || 'Custom'}
+                        {Brand && Brand.name}
                     </a>
                     <a href="#!" className={cx('switch-tag', 'tags')}>
-                        {props.switchTag || 'red switch'}
+                        {Category && Category.name}
                     </a>
+                    {Types &&
+                        Types.length > 0 &&
+                        Types.map((item, index) => (
+                            <a href="#!" className={cx('type-tag', 'tags')} key={index}>
+                                {item.name}
+                            </a>
+                        ))}
                 </div>
                 <div className={cx('item-info')}>
                     <p className={cx('price')}>${price}</p>

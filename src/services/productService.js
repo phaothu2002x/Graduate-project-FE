@@ -28,6 +28,9 @@ const findAllSelection = () => {
 const findType = (id) => {
     return axios.get(`/api/manage-products/findType/${id}`);
 };
+const findSuggestion = (CategoryId) => {
+    return axios.get(`/api/products/suggestion`, { params: { id: CategoryId } });
+};
 
 export {
     fetchAllProduct,
@@ -38,4 +41,5 @@ export {
     findProductById,
     findAllSelection,
     findType,
+    findSuggestion,
 };

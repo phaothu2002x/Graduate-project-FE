@@ -1,5 +1,4 @@
 .wrapper {
-    height: 5000px;
     background-color: #eeeeee;
 }
 
@@ -8,7 +7,7 @@
     max-width: calc(100% - 48px);
     margin-left: auto;
     margin-right: auto;
-    height: 1000px;
+    // height: 1000px;
     .banner {
         width: 90%;
         margin-left: auto;
@@ -45,8 +44,6 @@
             transition: 0.3s ease;
             animation: changeColor 2.5s infinite;
             border-image: linear-gradient(45deg, #fa8bff 0%, #2bd2ff 52%, #2bff88 90%) 10;
-            &:hover {
-            }
         }
     }
     .product-slider {
@@ -221,6 +218,10 @@
             }
         }
     }
+}
+
+.product-suggestion {
+    margin-bottom: 18px;
 }
 
 @keyframes changeColor {
