@@ -11,9 +11,10 @@ import { useContext } from 'react';
 import { UserContext } from './context/UserContext';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 import './App.scss';
+import AdminNavbar from './components/AdminNavbar/adminNav';
 function App() {
     const { user } = useContext(UserContext);
-
+    // console.log(user);
     return (
         <CartProvider>
             <Router>
@@ -24,7 +25,15 @@ function App() {
                     </div>
                 ) : (
                     <div className="App">
-                        <Header />
+                        {user.account.groupWithRole && user.account.groupWithRole.name === 'Admin' ? (
+                            <>
+                                <Header />
+                                <AdminNavbar />
+                            </>
+                        ) : (
+                            <Header />
+                        )}
+
                         <Routes>
                             {publicRoutes.map((route, index) => {
                                 const Page = route.component;

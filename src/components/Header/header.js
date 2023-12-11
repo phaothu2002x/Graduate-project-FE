@@ -9,12 +9,13 @@ import { CartContext } from './CartContext';
 import { UserContext } from '~/context/UserContext';
 import { logoutUser } from '~/services/userService';
 import { toast } from 'react-toastify';
+import { useScroll } from '~/context/scrollContext';
 const cx = classNames.bind(styles);
 
 const Header = (props) => {
     const navigate = useNavigate();
     const { user, logoutContext } = useContext(UserContext);
-
+    const { scrollToFeature, featureRef } = useScroll();
     //context hook
     const { itemsInCart, handleCartClicked } = useContext(CartContext);
 
@@ -50,7 +51,7 @@ const Header = (props) => {
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/manage-order" className="border-container">
+                                <NavLink to="/manage-user" className="border-container">
                                     <i className="fa fa-cubes" aria-hidden="true"></i>
                                     Feature
                                     <div className="border-inner"></div>
@@ -96,9 +97,9 @@ const Header = (props) => {
                                         src={
                                             user.account && user.account.avatar
                                                 ? user.account.avatar
-                                                : 'https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.18169-1/15621761_404189589917935_2697368818095501485_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=2b6aad&_nc_ohc=wyIBjQ41bUkAX-mitHb&_nc_ht=scontent.fsgn8-4.fna&cb_e2o_trans=q&oh=00_AfDBoaa1VAofXc9bNZMxCxeFgb-uUlkGk60udhV5lJO_1g&oe=6572B2EE'
+                                                : 'https://res.cloudinary.com/dxpisdy2r/image/upload/v1700608484/graduate-project/bkw1qqy6yqbhwskzw1t5.png'
                                         }
-                                        alt="avatar"
+                                        alt=""
                                     />
 
                                     <ul className="dropdown-menu">

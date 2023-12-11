@@ -1,12 +1,14 @@
 import icons from '~/assets/icons';
 import classNames from 'classnames/bind';
 import styles from './Feature.module.scss';
+import { useContext } from 'react';
+import { ScrollContext, useScroll } from '~/context/scrollContext';
 
 const cx = classNames.bind(styles);
 
 const feature = (props) => {
     return (
-        <div className="wrapper">
+        <div className="wrapper" ref={props.featureRef}>
             <div className={cx('feature')}>
                 <div className={cx('body')}>
                     {/* <!-- feature top --> */}

@@ -25,6 +25,9 @@ const deleteProduct = (product) => {
 const findAllSelection = () => {
     return axios.get(`/api/manage-products/findAllSelection`);
 };
+const findAllSelectionSidebar = () => {
+    return axios.get(`/api/products/findAllSelection`);
+};
 const findType = (id) => {
     return axios.get(`/api/manage-products/findType/${id}`);
 };
@@ -40,6 +43,7 @@ export {
     updateProduct,
     findProductById,
     findAllSelection,
+    findAllSelectionSidebar,
     findType,
     findSuggestion,
 };

@@ -17,7 +17,7 @@ const ManageProduct = (props) => {
     // pagination
     const [totalPage, setTotalPage] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(5);
+    const [currentLimit, setCurrentLimit] = useState(10);
 
     useEffect(() => {
         fetchProduct();

@@ -37,7 +37,8 @@ instance.interceptors.response.use(
         switch (status) {
             // authentication (token related issues)
             case 401: {
-                toast.error(error.response.data.EM);
+                // toast.info(error.response.data.EM);
+
                 return error.response.data;
             }
 

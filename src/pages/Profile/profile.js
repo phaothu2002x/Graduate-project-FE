@@ -237,7 +237,7 @@ const Profile = (props) => {
                                 <div className="py-4 px-4">
                                     <div className="d-flex align-items-center justify-content-between mb-3">
                                         <h5 className="mb-0">Recent Orders</h5>
-                                        <a href="#" className="btn btn-link text-muted">
+                                        <a href="/profile/orders" className="btn btn-link text-muted">
                                             Show all
                                         </a>
                                     </div>

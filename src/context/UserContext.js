@@ -46,7 +46,7 @@ const UserProvider = ({ children }) => {
             setUser(updatedUserData);
         } else {
             setUser({ ...defaultData, isLoading: false });
-            toast.error('cannot get current user');
+            // toast.error('cannot get current user');
         }
     };
 

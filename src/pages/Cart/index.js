@@ -45,7 +45,7 @@ const Cart = (props) => {
             toast.error(response.EM);
         }
         if (!response) {
-            toast.error('fetch payment error');
+            // toast.error('fetch payment error');
         }
     };
 

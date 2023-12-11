@@ -9,9 +9,12 @@ import Subscription from './subscription/subscription';
 import Statistic from './statistic/statistic';
 import icons from '~/assets/icons';
 import images from '~/assets/images';
+import { useScroll } from '~/context/scrollContext';
+
 const cx = classNames.bind(styles);
 
 const Home = (props) => {
+    const { featureRef } = useScroll();
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -77,7 +80,7 @@ const Home = (props) => {
                 </div>
 
                 {/* <!-- feature --> */}
-                <Feature />
+                <Feature featureRef={featureRef} />
 
                 {/* Products */}
                 <Products />

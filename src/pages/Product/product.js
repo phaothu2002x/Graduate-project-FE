@@ -47,18 +47,28 @@ const Product = (props) => {
         <div className={cx('wrapper')}>
             {/* <Header /> */}
             <div className={cx('inner')}>
-                <Search />
+                <Search setProductData={setProductData} currentPage={currentPage} currentLimit={currentLimit} setTotalPage={setTotalPage} />
                 <main className={cx('main-content')}>
-                    <Sidebar />
+                    <Sidebar
+                        setProductData={setProductData}
+                        currentPage={currentPage}
+                        currentLimit={currentLimit}
+                        setTotalPage={setTotalPage}
+                        fetchProduct={fetchProduct}
+                    />
                     <div className={cx('product-content')}>
                         <div className={cx('product-list')}>
-                            {productData.map((item, index) => {
-                                return (
-                                    <div key={`item-${item.id}`}>
-                                        <Item data={item} fetchProduct={fetchProduct} />
-                                    </div>
-                                );
-                            })}
+                            {productData && productData.length > 0 ? (
+                                productData.map((item, index) => {
+                                    return (
+                                        <div key={`item-${item.id}`}>
+                                            <Item data={item} fetchProduct={fetchProduct} />
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <h1 className={cx('product-list-empty')}>No Product Found...</h1>
+                            )}
                         </div>
                         <div className={cx('pagination')}>
                             {totalPage > 0 && (

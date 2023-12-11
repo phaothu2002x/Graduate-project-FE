@@ -1,30 +1,157 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import CategoryItem from '../CategoryItem/categoryItem';
-import FilterItem from '../FilterItem/filterItem';
+import { findAllSelectionSidebar } from '~/services/productService';
+import { useEffect, useState } from 'react';
+import { fetchFilter } from '~/services/searchService';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 const Sidebar = (props) => {
+    const { currentLimit, currentPage, setTotalPage, setProductData, fetchProduct } = props;
+
+    const [categoryData, setCategoryData] = useState([]);
+    const [brandData, setBrandData] = useState([]);
+    const [supplierData, setSupplierData] = useState([]);
+    //for 2way bindings
+    const defaultSelect = 0;
+    const [categoryCheck, setCategoryCheck] = useState([]);
+    const [brandSelect, setBrandSelect] = useState(defaultSelect);
+    const [supplierSelect, setSupplierSelect] = useState(defaultSelect);
+
+    useEffect(() => {
+        fetchAllSelection();
+    }, []);
+
+    const fetchAllSelection = async () => {
+        let response = await findAllSelectionSidebar();
+        if (response && response.EC === 0) {
+            setCategoryData(response.DT.category);
+            setBrandData(response.DT.brand);
+            setSupplierData(response.DT.supplier);
+        }
+    };
+
+    const handleCategoryChanged = (id) => {
+        setCategoryCheck((prev) => {
+            if (categoryCheck.includes(id)) {
+                return categoryCheck.filter((item) => item !== id);
+            } else {
+                return [...prev, id];
+            }
+        });
+    };
+
+    const handleSelectChanged = (e, name) => {
+        if (name === 'brand') {
+            setBrandSelect(e.target.value);
+        }
+        if (name === 'supplier') {
+            setSupplierSelect(e.target.value);
+        }
+    };
+
+    const buildData = {
+        category: categoryCheck,
+        brand: brandSelect,
+        supplier: supplierSelect,
+        page: currentPage,
+        limit: currentLimit,
+    };
+
+    const findFilter = async () => {
+        console.log('data:', buildData);
+        let response = await fetchFilter(buildData);
+        if (response && response.EC === 0) {
+            setProductData(response.DT.product);
+            setTotalPage(response.DT.totalPages);
+        }
+    };
+    const filterCheck = () => {
+        if (brandSelect === '0') {
+            return false;
+        }
+        if (categoryCheck.length <= 0 || !categoryCheck) {
+            return false;
+        }
+        return true;
+    };
+
+    const handleFilterClicked = () => {
+        let check = filterCheck();
+        if (check) {
+            findFilter();
+        } else {
+            toast.error('Filter is missing!');
+            fetchProduct();
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <h1 className={cx('title')}>See more Products...</h1>
 
             <div className={cx('category-list')}>
-                <h2>Category</h2>
-                <CategoryItem title="All" />
-                <CategoryItem title="keyboard" />
-                <CategoryItem title="Key caps" />
+                <h2 className={cx('category-title')}>Category</h2>
+                {categoryData &&
+                    categoryData.length > 0 &&
+                    categoryData.map((item, index) => (
+                        <div className={cx('category-item')} key={index}>
+                            <label className={cx('form-check-label')} htmlFor={item.name}>
+                                {item.name}
+                            </label>
+                            <div className={cx('form-check form-switch')}>
+                                <input
+                                    className={cx('form-check-input')}
+                                    type="checkbox"
+                                    id={item.name}
+                                    onChange={() => handleCategoryChanged(item.id)}
+                                />
+                            </div>
+                        </div>
+                    ))}
             </div>
 
             <div className={cx('filter-list')}>
                 <h2>Filter: </h2>
-                <FilterItem title="Category" />
-                <FilterItem title="Type" />
+                <div className={cx('filter-item')}>
+                    <div className={cx('filter-title')}>Brand:</div>
+                    <select
+                        className={cx('form-select', 'filter-choice')}
+                        value={brandSelect}
+                        onChange={(e) => handleSelectChanged(e, 'brand')}
+                    >
+                        <option value="0">--select--</option>
+                        {brandData &&
+                            brandData.length > 0 &&
+                            brandData.map((item, index) => (
+                                <option value={item.id} key={index}>
+                                    {item.name}
+                                </option>
+                            ))}
+                    </select>
+                </div>
+                <div className={cx('filter-item')}>
+                    <div className={cx('filter-title')}>Supplier:</div>
+                    <select
+                        className={cx('form-select', 'filter-choice')}
+                        value={supplierSelect}
+                        onChange={(e) => handleSelectChanged(e, 'supplier')}
+                    >
+                        <option value="0">--select--</option>
+                        {supplierData &&
+                            supplierData.length > 0 &&
+                            supplierData.map((item, index) => (
+                                <option value={item.id} key={index}>
+                                    {item.name}
+                                </option>
+                            ))}
+                    </select>
+                </div>
             </div>
 
             <div className={cx('filter-action')}>
-                <button type="button" className={cx('btn btn-primary', 'filter-btn')}>
-                    Find
+                <button type="button" className={cx('btn btn-primary', 'filter-btn')} onClick={handleFilterClicked}>
+                    Update
                 </button>
             </div>
         </div>

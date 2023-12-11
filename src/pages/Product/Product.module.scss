@@ -27,6 +27,15 @@
     .product-list {
         display: flex;
         flex-wrap: wrap;
+        width: 100%;
+
+        .product-list-empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }
 
