@@ -53,13 +53,12 @@ const Sidebar = (props) => {
     const buildData = {
         category: categoryCheck,
         brand: brandSelect,
-        supplier: supplierSelect,
         page: currentPage,
         limit: currentLimit,
     };
 
     const findFilter = async () => {
-        console.log('data:', buildData);
+        // console.log('data:', buildData);
         let response = await fetchFilter(buildData);
         if (response && response.EC === 0) {
             setProductData(response.DT.product);
@@ -81,7 +80,7 @@ const Sidebar = (props) => {
         if (check) {
             findFilter();
         } else {
-            toast.error('Filter is missing!');
+            toast.error('Filter is missing value!');
             fetchProduct();
         }
     };
@@ -130,7 +129,7 @@ const Sidebar = (props) => {
                             ))}
                     </select>
                 </div>
-                <div className={cx('filter-item')}>
+                <div className={cx('filter-item')} style={{ display: 'none' }}>
                     <div className={cx('filter-title')}>Supplier:</div>
                     <select
                         className={cx('form-select', 'filter-choice')}
