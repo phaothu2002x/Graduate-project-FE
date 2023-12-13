@@ -31,7 +31,7 @@ const AdminNavbar = (props) => {
             <nav className="admin-sidebar">
                 <div className="custom-menu">
                     <div className="admin-btn" onClick={handleShowAdmin}>
-                        <i class="fa fa-user-secret" aria-hidden="true"></i>
+                        <i className="fa fa-user-secret" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div className="background-admin">

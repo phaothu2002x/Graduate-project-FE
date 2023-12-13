@@ -8,8 +8,10 @@ import { findProductById, findSuggestion } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '~/services/cartService';
+import { fetchAllComments, createNewComment } from '~/services/commentService';
 import { CartContext } from '~/components/Header/CartContext';
 import RecommendProduct from '~/components/Slider/recommendProduct';
+import CommentSection from '~/components/Comment/comment';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
@@ -20,7 +22,7 @@ const ProductDetail = (props) => {
     const { id } = useParams();
     const { fetchItem } = useContext(CartContext);
 
-    const tabs = ['Related Products', 'reviews'];
+    const tabs = ['Related Products', 'Reviews'];
     const [type, setType] = useState('Related Products');
 
     const [productData, setProductData] = useState({});
@@ -121,6 +123,55 @@ const ProductDetail = (props) => {
     };
 
     // console.log('Category', Category);
+    //comment-section
+    const [commentValue, setCommentValue] = useState('');
+    const [commentList, setCommentList] = useState([]);
+
+    const handleCommentChanged = (e) => {
+        setCommentValue(e.target.value);
+    };
+
+    useEffect(() => {
+        fetchAllProductComment();
+    }, []);
+
+    const fetchAllProductComment = async () => {
+        let response = await fetchAllComments(id);
+        if (response && response.EC === 0) {
+            setCommentList(response.DT);
+        }
+    };
+
+    const submitComment = async () => {
+        const buildData = { comment: commentValue, productId: id };
+        let response = await createNewComment(buildData);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+            setCommentValue('');
+
+            fetchAllProductComment();
+        } else if (response && response.EC !== 0) {
+            toast.error(response.EM);
+        } else {
+            toast.error('Create Comment failed');
+        }
+    };
+    const checkEmptyComment = () => {
+        if (!commentValue || commentValue === '') {
+            toast.error('empty comment');
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmitComment = () => {
+        // check empty comment input
+        let check = checkEmptyComment();
+        //callApi add comment to db
+        if (check) {
+            submitComment();
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -242,8 +293,44 @@ const ProductDetail = (props) => {
 
                 {type === 'Related Products' ? (
                     <RecommendProduct data={suggestList} slideShow={handleSlideShow} />
+                ) : type === 'Reviews' ? (
+                    <>
+                        <div className={cx('product-comment')}>
+                            {commentList && commentList.length > 0 ? (
+                                commentList.map((item, index) => {
+                                    return <CommentSection value={item} key={index} fetchAllComments={fetchAllProductComment} />;
+                                })
+                            ) : (
+                                <h2>This product still not have comments yet...</h2>
+                            )}
+                        </div>
+                        <div className={cx('comment-sender')}>
+                            <div className={cx('form-floating', 'comment-text')}>
+                                <textarea
+                                    className={
+                                        commentValue === ''
+                                            ? cx('form-control is-invalid', 'comment-input')
+                                            : cx('form-control', 'comment-input')
+                                    }
+                                    placeholder="Leave a comment here"
+                                    id="floatingTextarea2"
+                                    value={commentValue}
+                                    onChange={(e) => {
+                                        handleCommentChanged(e);
+                                    }}
+                                ></textarea>
+                                <label htmlFor="floatingTextarea2">Comments</label>
+                            </div>
+                            <button
+                                className={commentValue === '' ? cx('comment-btn', 'btn disabled') : cx('comment-btn', 'btn')}
+                                onClick={handleSubmitComment}
+                            >
+                                Send
+                            </button>
+                        </div>
+                    </>
                 ) : (
-                    <h2>Still developing</h2>
+                    <h2>Nothing to show .....</h2>
                 )}
             </div>
         </div>

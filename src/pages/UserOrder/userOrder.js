@@ -51,7 +51,7 @@ const UserOrder = (props) => {
                                             </div>
                                         </Accordion.Header>
                                         <Accordion.Body className="order-item-body">
-                                            <table class="table table-info">
+                                            <table className="table table-info">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Product Name:</th>
