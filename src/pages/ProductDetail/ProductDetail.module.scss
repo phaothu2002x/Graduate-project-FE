@@ -76,8 +76,12 @@
     .heading {
         margin: 20px 0;
         font-size: 2.6rem;
-        font-weight: 600;
-        color: #0f52ba;
+        font-weight: 700;
+        // color: #0f52ba;
+        background-color: #1522d1;
+        background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     .rating {
         margin: 20px 0;
@@ -186,9 +190,25 @@
                 height: 46px;
                 border-radius: 6px;
                 border: 1px solid #d2d1d6;
+                transition: background-color 0.3s ease-out, transform 0.3s ease;
 
                 .like-icon {
                     padding: 11px;
+                    transition: color 0.3s ease-out;
+                }
+                &.active {
+                    background-color: #8bc6ec;
+                    background-image: radial-gradient(
+                        circle farthest-corner at 10% 20%,
+                        rgba(0, 221, 214, 1) 0%,
+                        rgba(51, 102, 255, 1) 90%
+                    );
+
+                    .like-icon {
+                        padding: 11px;
+                        color: #f8456f;
+                        transform: scale(1.2);
+                    }
                 }
             }
 

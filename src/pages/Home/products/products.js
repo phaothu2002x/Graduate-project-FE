@@ -1,25 +1,48 @@
 import classNames from 'classnames/bind';
 import styles from './Products.module.scss';
 import images from '~/assets/images';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const Products = (props) => {
     return (
-        <div className="wrapper">
+        <div
+            className={cx('product-wrapper')}
+            data-aos="zoom-in-down"
+            data-aos-offset="-250"
+            data-aos-duration="1000"
+            data-aos-anchor-placement="center-center"
+        >
             {/* <!--course  --> */}
             <div className={cx('course')}>
                 <div className={cx('body')}>
                     {/* <!-- course-top --> */}
                     <div className={cx('course-top')}>
                         <p className={cx('title')}>P R O D U C T S</p>
-                        <h1 className={cx('heading')}>Popular Keyboards</h1>
+                        <h1
+                            className={cx('heading')}
+                            data-aos="slide-right"
+                            data-aos-offset="-150"
+                            data-aos-delay="500"
+                            data-aos-duration="800"
+                            data-aos-anchor-placement="top-center"
+                        >
+                            Popular Keyboards
+                        </h1>
                         <div className={cx('course-desc')}>
-                            <p className={cx('desc')}>
+                            <p
+                                className={cx('desc')}
+                                data-aos="slide-up"
+                                data-aos-delay="1000"
+                                data-aos-offset="-150"
+                                data-aos-duration="700"
+                                data-aos-anchor-placement="top-center"
+                            >
                                 Check out our most popular keyboards that suit for you. Here you can find your favourite one.
                             </p>
-                            <a href="#!" className={cx('courses-view')}>
+                            <Link to="/product" className={cx('courses-view')}>
                                 View All Products
-                            </a>
+                            </Link>
                         </div>
                     </div>
 

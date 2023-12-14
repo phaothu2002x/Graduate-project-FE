@@ -2,10 +2,11 @@
     margin-bottom: 10px;
     padding: 16px;
     width: 285px;
-    min-height: 458px;
+    min-height: 620px;
     border: 1px solid transparent;
     border-radius: 12px;
     transition: all 0.3s ease-out;
+    border: 1px solid #ccc;
 
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

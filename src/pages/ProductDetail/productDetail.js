@@ -15,6 +15,7 @@ import CommentSection from '~/components/Comment/comment';
 const cx = classNames.bind(styles);
 
 const ProductDetail = (props) => {
+    const discountPercentage = 20;
     const [imageSelected, setImageSelected] = useState(0);
     const [imageGallery, setImageGallery] = useState([]);
 
@@ -172,6 +173,16 @@ const ProductDetail = (props) => {
             submitComment();
         }
     };
+    //caculate product original price
+    const calcOriginalPrice = (price, discountPercentage) => {
+        return (price / (1 - discountPercentage / 100)).toFixed(2);
+    };
+
+    //heart active
+    const [isHeartActive, setIsHeartActive] = useState(false);
+    const handleLikeClicked = () => {
+        setIsHeartActive(!isHeartActive);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -211,7 +222,8 @@ const ProductDetail = (props) => {
                             <span className={cx('star-icon')}>
                                 <i className={cx('fa fa-star')}></i>
                             </span>
-                            (<span className={cx('index')}>3.5</span>)<span className={cx('review-numb')}>1100 reviews</span>
+                            (<span className={cx('index')}>5.0</span>)
+                            <span className={cx('review-numb')}> {commentList.length} reviews</span>
                         </div>
                         <h3 className={cx('desc-title')}>Detail:</h3>
                         <p className={cx('desc')}>
@@ -222,7 +234,7 @@ const ProductDetail = (props) => {
                         </p>
                         <div className={cx('category')}>
                             <section className={cx('product-category')}>
-                                <h3 className={cx('desc-title')}>Category:</h3>
+                                <h3 className={cx('desc-title')}>Category & Brand:</h3>
                                 <div className={cx('category-tags')}>
                                     <a href="#!" className={cx('brand-tag', 'tags')}>
                                         {Brand && Brand.name}
@@ -247,10 +259,10 @@ const ProductDetail = (props) => {
                         </div>
                         <div className={cx('purchase')}>
                             <p className={cx('original-price')}>
-                                $500.00
-                                <span className={cx('discount')}>10%</span>
+                                ${calcOriginalPrice(price, discountPercentage)}
+                                <span className={cx('discount')}>{discountPercentage}%</span>
                             </p>
-                            <div className={cx('price')}>${price}</div>
+                            <div className={cx('price')}>${price?.toFixed(2)}</div>
                             <div className={cx('purchase-action')}>
                                 <button
                                     type="button"
@@ -261,8 +273,12 @@ const ProductDetail = (props) => {
                                 >
                                     Add to cart
                                 </button>
-                                <button className={cx('like')}>
-                                    <i className={cx('fa fa-heart-o', 'like-icon')}></i>
+                                <button className={isHeartActive ? cx('like', 'active') : cx('like')} onClick={handleLikeClicked}>
+                                    {isHeartActive ? (
+                                        <i className={cx('fa fa-heart', 'like-icon')}></i>
+                                    ) : (
+                                        <i className={cx('fa fa-heart-o', 'like-icon')}></i>
+                                    )}
                                 </button>
                                 <div className={cx('quantity-box')}>
                                     <button className={cx('btn', 'action-btn')} onClick={handleMinus}>

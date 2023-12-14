@@ -5,7 +5,13 @@ const cx = classNames.bind(styles);
 
 const Feedback = (props) => {
     return (
-        <div className={cx('wrapper')}>
+        <div
+            className={cx('wrapper')}
+            data-aos="flip-up"
+            data-aos-anchor-placement="bottom-bottom"
+            data-aos-easing="ease-out-cubic"
+            data-aos-duration="1000"
+        >
             <div className={cx('feedback')}>
                 <div className={cx('body')}>
                     {/* <!-- feedback left --> */}

@@ -45,7 +45,7 @@ const Item = (props) => {
                 <div className={cx('product-quantity', 'col-2')}>
                     <span className={cx('quant-number')}>{quantity}</span>
                 </div>
-                <div className={cx('product-price', 'col-2')}>{totalPrice}$</div>
+                <div className={cx('product-price', 'col-2')}>${totalPrice?.toFixed(2)}</div>
             </div>
         </>
     );

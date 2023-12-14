@@ -1,21 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
 import './Header.scss';
 import MiniCart from '../MiniCartCanvas/miniCart';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from './CartContext';
 import { UserContext } from '~/context/UserContext';
 import { logoutUser } from '~/services/userService';
 import { toast } from 'react-toastify';
-import { useScroll } from '~/context/scrollContext';
+
 const cx = classNames.bind(styles);
 
 const Header = (props) => {
     const navigate = useNavigate();
     const { user, logoutContext } = useContext(UserContext);
-    const { scrollToFeature, featureRef } = useScroll();
+
     //context hook
     const { itemsInCart, handleCartClicked } = useContext(CartContext);
 
@@ -31,6 +31,23 @@ const Header = (props) => {
         }
     };
 
+    // home & feature
+    const [activeLink, setActiveLink] = useState('');
+    const location = useLocation();
+    useEffect(() => {
+        // Update the active link based on the current location
+        setActiveLink(location.pathname + location.hash);
+        // console.log('check user', user);
+    }, [location]);
+
+    //scroll to top by default
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <>
             <header className={cx('wrapper', 'fixed')}>
@@ -44,35 +61,35 @@ const Header = (props) => {
                     <div className={cx('nav', 'nav-scss')}>
                         <ul className={cx('list')}>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/" exact="true" className="border-container">
+                                <Link to="/" exact="true" className={`border-container ${activeLink === '/' ? 'active' : ''}`}>
                                     <i className="fa fa-home" aria-hidden="true"></i>
                                     Home
                                     <div className="border-inner"></div>
-                                </NavLink>
+                                </Link>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/manage-user" className="border-container">
+                                <Link to="/#feature" className={`border-container ${activeLink === '/#feature' ? 'active' : ''}`}>
                                     <i className="fa fa-cubes" aria-hidden="true"></i>
                                     Feature
                                     <div className="border-inner"></div>
-                                </NavLink>
+                                </Link>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/product" className="border-container">
+                                <NavLink to="/product" className="border-container" onClick={scrollToTop}>
                                     <i className="fa fa-keyboard-o" aria-hidden="true"></i>
                                     Products
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/cart" className="border-container">
+                                <NavLink to="/cart" className="border-container" onClick={scrollToTop}>
                                     <i className="fa fa-shopping-bag" aria-hidden="true"></i>
                                     Cart
                                     <div className="border-inner"></div>
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/manage-products" className="border-container">
+                                <NavLink to="/manage-products" className="border-container" onClick={scrollToTop}>
                                     <i className="fa fa-user-secret" aria-hidden="true"></i>
                                     About
                                     <div className="border-inner"></div>

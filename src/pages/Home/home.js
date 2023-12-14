@@ -10,13 +10,28 @@ import Statistic from './statistic/statistic';
 import icons from '~/assets/icons';
 import images from '~/assets/images';
 import { useScroll } from '~/context/scrollContext';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+//
 
 const cx = classNames.bind(styles);
 
 const Home = (props) => {
     const { featureRef } = useScroll();
+    const location = useLocation();
+    useEffect(() => {
+        if (location.hash) {
+            const element = document.getElementById(location.hash.substring(1));
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location]);
+
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('home-wrapper')}>
             {/* <Header /> */}
 
             <div className={cx('container')}>
@@ -26,8 +41,10 @@ const Home = (props) => {
                         {/* <!-- hero-left --> */}
                         <div className={cx('content')}>
                             <div className={cx('title')}>😎 Best keyboard PLATFORM</div>
-                            <h1 className={cx('heading')}>Top 1 Keyboard selling website</h1>
-                            <p className={cx('desc')}>
+                            <h1 className={cx('heading', 'animate__animated animate__fadeInUp animate__delay-200ms')}>
+                                Top 1 Keyboard selling website
+                            </h1>
+                            <p className={cx('desc', 'animate__animated animate__fadeInUp animate__delay-400ms')}>
                                 Explore the different types of keyboards, from mechanical to membrane, and find out which one is best for
                                 you
                             </p>
@@ -41,7 +58,7 @@ const Home = (props) => {
                             </div>
                         </div>
                         {/* <!-- hero-right --> */}
-                        <div className={cx('hero-block')}>
+                        <div className={cx('hero-block')} data-aos="fade-left" data-aos-duration="2000">
                             <img src={images.heroThumb} alt="heroImg" className={cx('thumb')} />
                             <div className={cx('hero-summary')}>
                                 {/* <!-- hero-summary item1 --> */}
@@ -64,7 +81,7 @@ const Home = (props) => {
                                 </div>
 
                                 {/* <!-- hero-summary item3 --> */}
-                                <div className={cx('student-stat')}>
+                                <div className={cx('student-stat')} data-aos="fade-down-right">
                                     <p className={cx('desc')}>Our Active User</p>
                                     <div className={cx('avatar-group')}>
                                         <img src={icons.avatarIcon1} alt="avaIcons" className={cx('avatar')} />
@@ -80,7 +97,9 @@ const Home = (props) => {
                 </div>
 
                 {/* <!-- feature --> */}
-                <Feature featureRef={featureRef} />
+                <div id="feature">
+                    <Feature featureRef={featureRef} />
+                </div>
 
                 {/* Products */}
                 <Products />

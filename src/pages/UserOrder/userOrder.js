@@ -46,7 +46,7 @@ const UserOrder = (props) => {
                                             <div className="order-item-header">
                                                 <span>Order ID: {item.id} </span>
                                                 <span>Order Date: {handleDate(item.createdAt)}</span>
-                                                <span>Total Amount: {item.amount} $ </span>
+                                                <span>Total Amount: {(+item.amount)?.toFixed(2)} $ </span>
                                                 <span>Status: {item.status}</span>
                                             </div>
                                         </Accordion.Header>
@@ -68,7 +68,7 @@ const UserOrder = (props) => {
                                                                     <span className="pName">{pItem.name}</span>
                                                                     <img alt="product item" src={pItem.thumbnail} />
                                                                 </th>
-                                                                <td>{pItem.price}$</td>
+                                                                <td>{pItem.price?.toFixed(2)}$</td>
                                                                 <td>x{pItem.Order_Detail.quantity}</td>
                                                                 <td>{pItem.Order_Detail.totalPrice}$</td>
                                                             </tr>

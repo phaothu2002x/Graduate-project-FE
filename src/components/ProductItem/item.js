@@ -12,6 +12,7 @@ const Items = (props) => {
     const handleItemClick = (id) => {
         navigate(`/product/${id}`);
     };
+
     return (
         <article className={cx('product-item')} onClick={() => handleItemClick(id)}>
             <figure className={cx('img-wrapper')}>
@@ -39,7 +40,7 @@ const Items = (props) => {
                         ))}
                 </div>
                 <div className={cx('item-info')}>
-                    <p className={cx('price')}>${price}</p>
+                    <p className={cx('price')}>$ {price.toFixed(2)}</p>
                     <p className={cx('star-icon')}>
                         <span className={cx('icon')}>
                             <i className="fa fa-star"></i>

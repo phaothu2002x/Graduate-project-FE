@@ -113,7 +113,7 @@ const ManageProduct = (props) => {
                                         <div className="order-item-header">
                                             <span>Order ID: {item.id}</span>
                                             <span>Order Date: {handleDate(item.createdAt)} </span>
-                                            <span>Total Amount: {item.amount}</span>
+                                            <span>Total Amount:{(+item.amount)?.toFixed(2)}$</span>
                                             <span>Status: {item.status}</span>
                                         </div>
                                     </Accordion.Header>
@@ -159,7 +159,7 @@ const ManageProduct = (props) => {
                                                             </th>
                                                             <td>{pItem.price}$</td>
                                                             <td>x{pItem.Order_Detail.quantity}</td>
-                                                            <td>{pItem.Order_Detail.totalPrice}$</td>
+                                                            <td>{pItem.Order_Detail.totalPrice?.toFixed(2)}$</td>
                                                         </tr>
                                                     ))
                                                 ) : (

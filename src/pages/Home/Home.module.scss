@@ -1,8 +1,12 @@
+.home-wrapper {
+    overflow: hidden;
+}
 .container {
     width: var(--content-width);
     max-width: calc(100% - 48px);
     margin-left: auto;
     margin-right: auto;
+
     // background-color: yellow;
 }
 

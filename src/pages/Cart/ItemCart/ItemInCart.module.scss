@@ -22,7 +22,7 @@
         .product-detail {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;
 
             .title {
                 margin: 8px 4px;
@@ -41,7 +41,7 @@
 
     .product-quantity,
     .product-price {
-        text-align: end;
+        text-align: center;
     }
 
     .product-quantity {

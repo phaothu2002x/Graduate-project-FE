@@ -4,12 +4,25 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { updateProfileUser } from '~/services/userService';
 import { toast } from 'react-toastify';
 import { UserContext } from '~/context/UserContext';
+import { getUserOrder } from '~/services/userService';
 const cx = classNames.bind(styles);
 
 const Profile = (props) => {
     const { user, fetchUser } = useContext(UserContext);
     const account = user.account;
     // console.log('check account', account);
+    const [userOrder, setUserOrder] = useState([]);
+    useEffect(() => {
+        fetchUserOrder();
+    }, []);
+
+    const fetchUserOrder = async () => {
+        let response = await getUserOrder();
+        if (response && response.EC === 0) {
+            setUserOrder(response.DT);
+        }
+    };
+
     //handle preview avatar
     const inputRef = useRef();
     const [avatar, setAvatar] = useState(account.avatar);
@@ -173,7 +186,7 @@ const Profile = (props) => {
                                 <div className={cx('bg-light p-4 d-flex justify-content-center text-center', 'order-section')}>
                                     <ul className="list-inline mb-0">
                                         <li className="list-inline-item">
-                                            <h4 className="font-weight-bold mb-0 d-block">215</h4>
+                                            <h4 className="font-weight-bold mb-0 d-block">{userOrder?.length}</h4>
                                             <small className={cx('text-muted')}>
                                                 <i className={cx('fa fa-briefcase')}></i>
                                                 Orders

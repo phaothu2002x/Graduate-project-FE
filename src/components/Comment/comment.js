@@ -7,15 +7,17 @@ import DeleteCommentModal from './Modals/deleteCommentModal';
 const CommentSection = (props) => {
     const { user } = useContext(UserContext);
     const account = user.account;
-    const { User, message, id } = props.value;
+    const { User, message, id, createdAt } = props.value;
 
     const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
 
-    const handleDate = () => {
-        const date = new Date();
+    const handleDate = (outputDate) => {
+        const dateString = outputDate;
+        const date = new Date(dateString);
+
         const month = date.getMonth() + 1; // Months are zero-based, so add 1
         const day = date.getDate();
-        const data = `${day}/${month}`;
+        const data = `${day}/${month} `;
         return data;
     };
 
@@ -36,7 +38,7 @@ const CommentSection = (props) => {
                 <div className="comment-body">
                     <div className="name">
                         {User.username}
-                        <span className="comment-date">.{handleDate()}</span>
+                        <span className="comment-date">.{handleDate(createdAt)}</span>
                     </div>
                     <div className="content">{message}</div>
                 </div>

@@ -134,7 +134,7 @@ const Cart = (props) => {
             <div className={cx('container')}>
                 <div className={cx('row')}>
                     <div className={cx('col-7', 'content-left')}>
-                        <h2 className={cx('heading')}>Thông tin vận chuyển</h2>
+                        <h2 className={cx('heading')}>PACKAGE INFORMATION</h2>
                         <div className={cx('row mb-3')}>
                             <div className={cx('col-6')}>
                                 <input
@@ -191,7 +191,7 @@ const Cart = (props) => {
                                 ></textarea>
                             </div>
                         </div>
-                        <h2 className={cx('heading')}>Phuong thuc thanh toan</h2>
+                        <h2 className={cx('heading')}>PAYMENT METHOD:</h2>
                         <section className={cx('payment-method')}>
                             <div className={cx('col-12')}>
                                 <div className={cx('form-check', 'payment-select')}>
@@ -250,7 +250,7 @@ const Cart = (props) => {
                         <div className={cx('Payment-info')}>
                             {paymentInfo && paymentInfo.length > 0 && (
                                 <>
-                                    <h2 className={cx('title')}>thong tin chuyen khoan</h2>
+                                    <h2 className={cx('title')}>BANKING INFORMATION:</h2>
                                     <div className={cx('payment-options')}>
                                         <div className={cx('first-option')}>
                                             <img src={paymentInfo[0].img} alt="payment img" />
@@ -266,7 +266,7 @@ const Cart = (props) => {
                     </div>
                     {/* cart info  orderDetail info*/}
                     <div className={cx('col-5', 'content-right')}>
-                        <h2 className={cx('heading')}>Giỏ hàng</h2>
+                        <h2 className={cx('heading')}>Your Shopping Cart</h2>
                         <div className={cx('desc', 'row')}>
                             <p className={cx('title-desc', 'col-8')}>Product Desc</p>
                             <p className={cx('quantity-desc', 'col-2')}>Quantity</p>
@@ -288,14 +288,14 @@ const Cart = (props) => {
                         </ul>
 
                         <div className={cx('purchase-section')}>
-                            <h2 className={cx('title')}>Tong thiet hai</h2>
-                            <p className={cx('price')}>{totalPriceInCart}$</p>
+                            <h2 className={cx('title')}>Total Price:</h2>
+                            <p className={cx('price')}>{totalPriceInCart?.toFixed(2)}$</p>
                             <button
                                 className={cx('btn btn-primary', 'purchase-btn')}
                                 onClick={() => handlePurchase()}
                                 disabled={cartList && cartList.length > 0 ? false : true}
                             >
-                                Thanh Toan
+                                Make Purchase Here
                             </button>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 const Subscription = (props) => {
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} data-aos="zoom-out-up" data-aos-anchor-placement="bottom-bottom" data-aos-duration="1000">
             <div className={cx('subscription')}>
                 <div className={cx('body')}>
                     <div className={cx('subscript-left')}>
@@ -13,7 +13,7 @@ const Subscription = (props) => {
                         <p className={cx('desc')}>Create your account and Find your Passion.</p>
                     </div>
                     <div className={cx('subscript-right')}>
-                        <a href="#!" className={cx('start-btn')}>
+                        <a href="/product" className={cx('start-btn')}>
                             Get Started
                         </a>
                     </div>

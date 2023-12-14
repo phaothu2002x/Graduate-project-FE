@@ -12,8 +12,11 @@ import { UserContext } from './context/UserContext';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 import './App.scss';
 import AdminNavbar from './components/AdminNavbar/adminNav';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 function App() {
     const { user } = useContext(UserContext);
+    AOS.init();
     // console.log(user);
     return (
         <CartProvider>
