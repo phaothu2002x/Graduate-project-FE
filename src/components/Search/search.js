@@ -16,6 +16,7 @@ const Search = (props) => {
 
     const handleSearchClicked = () => {
         SearchProduct();
+        setSearchValue('');
     };
 
     const handleOptionChanged = (e) => {
@@ -38,7 +39,7 @@ const Search = (props) => {
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', 'animate__animated animate__fadeInDown')}>
             <div className={cx('search')}>
                 <input
                     type="text"

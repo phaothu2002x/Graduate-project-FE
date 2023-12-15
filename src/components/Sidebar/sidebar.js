@@ -16,7 +16,6 @@ const Sidebar = (props) => {
     const defaultSelect = 0;
     const [categoryCheck, setCategoryCheck] = useState([]);
     const [brandSelect, setBrandSelect] = useState(defaultSelect);
-    const [supplierSelect, setSupplierSelect] = useState(defaultSelect);
 
     useEffect(() => {
         fetchAllSelection();
@@ -26,6 +25,7 @@ const Sidebar = (props) => {
         let response = await findAllSelectionSidebar();
         if (response && response.EC === 0) {
             setCategoryData(response.DT.category);
+            setCategoryCheck(response.DT.category.map((item) => item.id));
             setBrandData(response.DT.brand);
             setSupplierData(response.DT.supplier);
         }
@@ -33,7 +33,8 @@ const Sidebar = (props) => {
 
     const handleCategoryChanged = (id) => {
         setCategoryCheck((prev) => {
-            if (categoryCheck.includes(id)) {
+            const isChecked = categoryCheck.includes(id);
+            if (isChecked) {
                 return categoryCheck.filter((item) => item !== id);
             } else {
                 return [...prev, id];
@@ -44,9 +45,6 @@ const Sidebar = (props) => {
     const handleSelectChanged = (e, name) => {
         if (name === 'brand') {
             setBrandSelect(e.target.value);
-        }
-        if (name === 'supplier') {
-            setSupplierSelect(e.target.value);
         }
     };
 
@@ -66,27 +64,26 @@ const Sidebar = (props) => {
         }
     };
     const filterCheck = () => {
-        if (brandSelect === '0') {
+        if ((brandSelect === 0 || brandSelect === '0') && categoryCheck.length === 0) {
             return false;
         }
-        if (categoryCheck.length <= 0 || !categoryCheck) {
-            return false;
-        }
+
         return true;
     };
 
     const handleFilterClicked = () => {
         let check = filterCheck();
+        console.log(check);
+        console.log(categoryCheck, brandSelect);
         if (check) {
             findFilter();
         } else {
-            toast.error('Filter is missing value!');
             fetchProduct();
         }
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', 'animate__animated animate__fadeInLeft')}>
             <h1 className={cx('title')}>See more Products...</h1>
 
             <div className={cx('category-list')}>
@@ -102,6 +99,7 @@ const Sidebar = (props) => {
                                 <input
                                     className={cx('form-check-input')}
                                     type="checkbox"
+                                    checked={categoryCheck.includes(item.id)}
                                     id={item.name}
                                     onChange={() => handleCategoryChanged(item.id)}
                                 />
@@ -123,23 +121,6 @@ const Sidebar = (props) => {
                         {brandData &&
                             brandData.length > 0 &&
                             brandData.map((item, index) => (
-                                <option value={item.id} key={index}>
-                                    {item.name}
-                                </option>
-                            ))}
-                    </select>
-                </div>
-                <div className={cx('filter-item')} style={{ display: 'none' }}>
-                    <div className={cx('filter-title')}>Supplier:</div>
-                    <select
-                        className={cx('form-select', 'filter-choice')}
-                        value={supplierSelect}
-                        onChange={(e) => handleSelectChanged(e, 'supplier')}
-                    >
-                        <option value="0">--select--</option>
-                        {supplierData &&
-                            supplierData.length > 0 &&
-                            supplierData.map((item, index) => (
                                 <option value={item.id} key={index}>
                                     {item.name}
                                 </option>

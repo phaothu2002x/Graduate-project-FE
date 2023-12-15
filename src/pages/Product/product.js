@@ -24,6 +24,7 @@ const Product = (props) => {
     const [currentLimit, setCurrentLimit] = useState(8);
 
     useEffect(() => {
+        //check
         fetchProduct();
     }, [currentPage]);
 
@@ -61,7 +62,12 @@ const Product = (props) => {
                             {productData && productData.length > 0 ? (
                                 productData.map((item, index) => {
                                     return (
-                                        <div key={`item-${item.id}`}>
+                                        <div
+                                            key={`item-${item.id}`}
+                                            data-aos="zoom-in-down"
+                                            data-aos-delay="400"
+                                            data-aos-easing="ease-in-sine"
+                                        >
                                             <Item data={item} fetchProduct={fetchProduct} />
                                         </div>
                                     );

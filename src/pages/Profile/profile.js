@@ -136,7 +136,7 @@ const Profile = (props) => {
 
     return (
         <>
-            <div className={cx('wrapper')}>
+            <div className={cx('wrapper')} data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" data-aos-easing="ease-in-out">
                 <div className={cx('inner')}>
                     <div className="row py-5 px-4">
                         <div className="col-md-5 mx-auto">

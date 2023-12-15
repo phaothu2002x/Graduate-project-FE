@@ -133,7 +133,7 @@ const Cart = (props) => {
             {/* <Header /> */}
             <div className={cx('container')}>
                 <div className={cx('row')}>
-                    <div className={cx('col-7', 'content-left')}>
+                    <div className={cx('col-7', 'content-left')} data-aos="fade-right" data-aos-delay="400" data-aos-easing="ease-in-sine">
                         <h2 className={cx('heading')}>PACKAGE INFORMATION</h2>
                         <div className={cx('row mb-3')}>
                             <div className={cx('col-6')}>
@@ -250,14 +250,16 @@ const Cart = (props) => {
                         <div className={cx('Payment-info')}>
                             {paymentInfo && paymentInfo.length > 0 && (
                                 <>
-                                    <h2 className={cx('title')}>BANKING INFORMATION:</h2>
-                                    <div className={cx('payment-options')}>
-                                        <div className={cx('first-option')}>
-                                            <img src={paymentInfo[0].img} alt="payment img" />
-                                            <p>Scan QR code</p>
-                                        </div>
-                                        <div className={cx('second-option')}>
-                                            <h3 className={cx('desc')}>{paymentInfo[0].description}</h3>
+                                    <div data-aos="flip-up" data-aos-delay="300" data-aos-easing="ease-in-out-quart">
+                                        <h2 className={cx('title')}>BANKING INFORMATION:</h2>
+                                        <div className={cx('payment-options')}>
+                                            <div className={cx('first-option')}>
+                                                <img src={paymentInfo[0].img} alt="payment img" />
+                                                <p>Scan QR code</p>
+                                            </div>
+                                            <div className={cx('second-option')}>
+                                                <h3 className={cx('desc')}>{paymentInfo[0].description}</h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -265,7 +267,12 @@ const Cart = (props) => {
                         </div>
                     </div>
                     {/* cart info  orderDetail info*/}
-                    <div className={cx('col-5', 'content-right')}>
+                    <div
+                        className={cx('col-5', 'content-right')}
+                        data-aos="zoom-in-left"
+                        data-aos-delay="400"
+                        data-aos-easing="ease-in-out-cubic"
+                    >
                         <h2 className={cx('heading')}>Your Shopping Cart</h2>
                         <div className={cx('desc', 'row')}>
                             <p className={cx('title-desc', 'col-8')}>Product Desc</p>
