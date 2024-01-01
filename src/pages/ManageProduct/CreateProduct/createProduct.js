@@ -176,7 +176,6 @@ const CreateProduct = (props) => {
                 cateChecked,
                 supChecked,
                 brandChecked,
-                typeSelect,
             };
 
             formData.append('thumb', thumbnail);
@@ -190,7 +189,7 @@ const CreateProduct = (props) => {
             }
             // console.log('check typecheck', data);
             // call api
-            let response = await createNewProduct(formData);
+            let response = await createNewProduct(formData, typeSelect);
             if (response && response.EC === 0) {
                 toast.success(response.EM);
                 setProductData(defaultProductData);
@@ -205,7 +204,7 @@ const CreateProduct = (props) => {
 
     // console.log('check typelist', typeList); .from db
     // console.log('check selectList', selectList); ok
-    // console.log('typeselection', typeSelect);ok
+    //console.log('typeselection', typeSelect);
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}

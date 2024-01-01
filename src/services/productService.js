@@ -7,8 +7,18 @@ const fetchAllProduct = (currentPage, currentLimit) => {
     return axios.get(`/api/products/read?page=${currentPage}&limit=${currentLimit}`);
 };
 
-const createNewProduct = (formData) => {
-    return axios.post(`/api/manage-products/create`, formData);
+const createNewProduct = (formData, typeSelect) => {
+    // for (const [key, value] of formData.entries()) {
+    //     console.log(`${key}: ${value}`);
+    // }
+    return axios.post(`/api/manage-products/create`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        params: {
+            typeSelect: typeSelect,
+        },
+    });
 };
 
 const findProductByIdinUser = (id) => {
