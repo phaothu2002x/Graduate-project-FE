@@ -16,7 +16,6 @@ import UserOrder from '~/pages/UserOrder/userOrder';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/product', component: Product },
-    { path: '/cart', component: Cart },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/product/:id', component: ProductDetail },
@@ -35,6 +34,7 @@ const privateRoutes = [
     { path: `/manage-order`, component: ManageOrder },
     { path: `/profile/:profile`, component: Profile },
     { path: `/profile/orders`, component: UserOrder },
+    { path: '/cart', component: Cart },
 ];
 
 // export default CheckRoute;

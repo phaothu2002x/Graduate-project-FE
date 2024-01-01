@@ -17,7 +17,7 @@ import 'aos/dist/aos.css';
 function App() {
     const { user } = useContext(UserContext);
     AOS.init();
-    // console.log(user);
+
     return (
         <CartProvider>
             <Router>

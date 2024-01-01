@@ -67,14 +67,13 @@ const Sidebar = (props) => {
         if ((brandSelect === 0 || brandSelect === '0') && categoryCheck.length === 0) {
             return false;
         }
-
         return true;
     };
 
     const handleFilterClicked = () => {
         let check = filterCheck();
-        console.log(check);
-        console.log(categoryCheck, brandSelect);
+        // console.log(check);
+        // console.log(categoryCheck, brandSelect);
         if (check) {
             findFilter();
         } else {

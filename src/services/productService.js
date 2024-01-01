@@ -10,6 +10,11 @@ const fetchAllProduct = (currentPage, currentLimit) => {
 const createNewProduct = (formData) => {
     return axios.post(`/api/manage-products/create`, formData);
 };
+
+const findProductByIdinUser = (id) => {
+    return axios.get(`/api/product/findProduct/${id}`);
+};
+
 // find product before update
 const findProductById = (id) => {
     return axios.get(`/api/manage-products/findProduct/${id}`);
@@ -42,6 +47,7 @@ export {
     createNewProduct,
     updateProduct,
     findProductById,
+    findProductByIdinUser,
     findAllSelection,
     findAllSelectionSidebar,
     findType,

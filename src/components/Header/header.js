@@ -53,7 +53,7 @@ const Header = (props) => {
             <header className={cx('wrapper', 'fixed')}>
                 <div className={cx('inner')}>
                     <div className={cx('logo')}>
-                        <Link to="/product">
+                        <Link to="/">
                             <img src={images.logo} alt="logo" />
                         </Link>
                     </div>

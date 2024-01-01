@@ -75,7 +75,7 @@ const Register = (props) => {
         let check = isValidate();
 
         if (check === true) {
-            toast.success('pass data ok');
+            // toast.success('pass data ok');
             let serverData = await registerNewUser(email, phone, username, password, confirmPass);
 
             if (+serverData.EC === 0) {

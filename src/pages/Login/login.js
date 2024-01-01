@@ -62,7 +62,7 @@ const Login = (props) => {
                 localStorage.setItem('jwt', token);
                 loginContext(data);
                 toast.success('Login successfully');
-                navigate('/manage-user');
+                navigate('/');
             }
             if (res && +res.EC !== 0) {
                 //failed
@@ -81,7 +81,7 @@ const Login = (props) => {
                         <h1 className={cx('heading')}>LOGIN</h1>
                         <div className={cx('col-12', 'mb-3')}>
                             <label htmlFor="email" className={cx('form-label', 'title')}>
-                                Email/Password
+                                Email/Phone Number
                             </label>
                             <input
                                 type="text"

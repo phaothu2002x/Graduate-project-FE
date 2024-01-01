@@ -4,12 +4,15 @@
     height: 100vh;
     display: flex;
     align-items: center;
+    background: #654ea3;
+    background: linear-gradient(to right, #e96443, #904e95);
 }
 
 .content-right {
     width: 400px;
     height: 350px;
     margin: auto;
+    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
     .heading {

@@ -88,6 +88,7 @@ const ManageUser = (props) => {
     const handleRefresh = async () => {
         await fetchUsers();
     };
+
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -136,7 +137,7 @@ const ManageUser = (props) => {
                                                 <td>{row.id}</td>
                                                 <td>{row.username}</td>
                                                 <td>{row.email}</td>
-                                                <td>{row.Role ? row.Role.name : ''}</td>
+                                                <td>{row.Group ? row.Group.name : ''}</td>
                                                 <td>
                                                     <div className={cx('btn-wrap')}>
                                                         <button

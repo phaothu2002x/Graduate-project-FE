@@ -33,7 +33,7 @@ const CommentSection = (props) => {
         <div className="comment-wrapper">
             <div className="inner">
                 <div className="comment-img">
-                    <img src={User ? User.avatar : images.defaultAvatar} alt="user-ava" />
+                    <img src={User && User.avatar ? User.avatar : images.defaultAvatar} alt="user-ava" />
                 </div>
                 <div className="comment-body">
                     <div className="name">

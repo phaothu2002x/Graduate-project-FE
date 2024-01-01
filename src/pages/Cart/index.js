@@ -121,7 +121,7 @@ const Cart = (props) => {
             if (response && response.EC === 0) {
                 toast.success(response.EM);
                 clearCartList();
-                navigate('/manage-order');
+                navigate('/profile/orders');
             }
             if (response && response.EC !== 0) {
                 toast.error(response.EM);

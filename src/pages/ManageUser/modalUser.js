@@ -32,7 +32,7 @@ const ModalUser = (props) => {
         if (action === 'UPDATE') {
             // console.log(dataModalUser);
 
-            setUserData({ ...dataModalUser, role: dataModalUser.Role ? dataModalUser.Role.id : '' });
+            setUserData({ ...dataModalUser, role: dataModalUser.Group ? dataModalUser.Group.id : '' });
         }
     }, [dataModalUser]);
 
@@ -53,8 +53,9 @@ const ModalUser = (props) => {
                 // console.log('>>> check role', role);
                 setUserData({ ...userData, role: role[0].id });
             }
-        } else {
-            toast.error('Get role failed');
+        }
+        if (res && res.EC !== 0) {
+            toast.error(res.EM);
         }
     };
 
@@ -90,8 +91,8 @@ const ModalUser = (props) => {
         if (check === true) {
             let response =
                 action === 'CREATE'
-                    ? await createUser({ ...userData, roleId: userData['role'] })
-                    : await updateCurrentUser({ ...userData, roleId: userData['role'] });
+                    ? await createUser({ ...userData, GroupId: userData['role'] })
+                    : await updateCurrentUser({ ...userData, GroupId: userData['role'] });
 
             if (response && response.EC === 0) {
                 props.onHide();
@@ -112,7 +113,8 @@ const ModalUser = (props) => {
         setUserData(defaultUserData);
         setValidInput(defaultValidInput);
     };
-
+    // console.log('user role:', userRole);
+    console.log('user data:', userData);
     return (
         <>
             <Modal show={props.show} size="lg" onHide={() => handleCloseModalUser()} centered>

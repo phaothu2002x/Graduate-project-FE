@@ -18,12 +18,33 @@ const UserProvider = ({ children }) => {
         setUser({ ...defaultData, isLoading: false });
     };
 
+    const allowedPaths = ['/login', '/', '/product', '/#feature', '/register'];
+    const regex = /^\/product\/\d+$/;
+    function isPathAllowed(path) {
+        // console.log(allowedPaths.includes(path));
+        return allowedPaths.includes(path);
+    }
+
     useEffect(() => {
         //window.location.pathname !== '/' &&
-        if (window.location.pathname !== '/login') {
+        // if (window.location.pathname !== '/login') {
+        //     fetchUser();
+        // } else {
+        //     setUser({ ...user, isLoading: false });
+        // }
+        // console.log('check regex', regex.test(window.location.pathname));
+        // console.log('check allow path', isPathAllowed(window.location.pathname));
+        if (!(regex.test(window.location.pathname) || isPathAllowed(window.location.pathname))) {
             fetchUser();
         } else {
             setUser({ ...user, isLoading: false });
+        }
+    }, []);
+
+    useEffect(() => {
+        let jwtExisted = localStorage.getItem('jwt');
+        if (jwtExisted) {
+            fetchUser();
         }
     }, []);
 

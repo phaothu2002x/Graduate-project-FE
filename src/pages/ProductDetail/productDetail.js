@@ -4,7 +4,7 @@ import Header from '~/components/Header/header';
 import images from '~/assets/images';
 
 import { useState, useEffect, useContext } from 'react';
-import { findProductById, findSuggestion } from '~/services/productService';
+import { findProductByIdinUser, findSuggestion } from '~/services/productService';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '~/services/cartService';
@@ -35,7 +35,7 @@ const ProductDetail = (props) => {
     }, []);
 
     const fetchProductDetail = async () => {
-        let response = await findProductById(id);
+        let response = await findProductByIdinUser(id);
         if (response && response.EC === 0) {
             setProductData(response.DT);
             if (response.DT.Product_Galleries) {
@@ -109,6 +109,9 @@ const ProductDetail = (props) => {
         let response = await addProductToCart(id, quantity, price);
         if (response && response.EC === 0) {
             toast.success(response.EM);
+        }
+        if (response && response.EC !== 0) {
+            toast.warn(response.EM);
         }
         fetchItem();
     };
@@ -188,7 +191,7 @@ const ProductDetail = (props) => {
         <div className={cx('wrapper')}>
             {/* <Header quantity={finalQuant} /> */}
             <div className={cx('inner')}>
-                <div className={cx('banner')}>Breadcrumbs</div>
+                <div className={cx('banner')}>Product Details...</div>
                 <div className={cx('product-container')}>
                     <div className={cx('content-left')}>
                         <div className={cx('product-item')}>
@@ -226,12 +229,7 @@ const ProductDetail = (props) => {
                             <span className={cx('review-numb')}> {commentList.length} reviews</span>
                         </div>
                         <h3 className={cx('desc-title')}>Detail:</h3>
-                        <p className={cx('desc')}>
-                            It comes with extra teflon pads (in case you want to perform the Force Break mod) and tape (in case you want to
-                            perform a Tape mod). The M3 offers flexibility for you to modify it and make it truly yours while also offering
-                            a great out-of-the-box
-                            {description}
-                        </p>
+                        <p className={cx('desc')}>{description}</p>
                         <div className={cx('category')}>
                             <section className={cx('product-category')}>
                                 <h3 className={cx('desc-title')}>Category & Brand:</h3>
