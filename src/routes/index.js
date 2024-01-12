@@ -11,6 +11,7 @@ import UpdateProduct from '~/pages/ManageProduct/UpdateProduct/updateProduct';
 import ManageOrder from '~/pages/ManageOrder/manageOrder';
 import Profile from '~/pages/Profile/profile';
 import UserOrder from '~/pages/UserOrder/userOrder';
+import AboutPage from '~/pages/About/about';
 
 // Public routes
 const publicRoutes = [
@@ -19,6 +20,7 @@ const publicRoutes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/product/:id', component: ProductDetail },
+    { path: '/about', component: AboutPage },
 ];
 
 // Private routes

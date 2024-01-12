@@ -11,7 +11,7 @@ import icons from '~/assets/icons';
 import images from '~/assets/images';
 import { useScroll } from '~/context/scrollContext';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 //
 
 const cx = classNames.bind(styles);
@@ -49,12 +49,12 @@ const Home = (props) => {
                                 you
                             </p>
                             <div className={cx('action-btn')}>
-                                <a href="#!" className={cx('start-btn')}>
+                                <Link to="/product" className={cx('start-btn')}>
                                     Get Started
-                                </a>
-                                <a href="#!" className={cx('play-btn')}>
+                                </Link>
+                                <Link to="/product" className={cx('play-btn')}>
                                     <img src={icons.playBtnRightChervon} alt="right-chervon" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         {/* <!-- hero-right --> */}

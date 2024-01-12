@@ -8,6 +8,10 @@ const images = {
     productImg5: require('~/assets/images/joey-r-XUdUrw4fJWU-unsplash.jpg'),
     productImg6: require('~/assets/images/paul-esch-laurent-8ssNFn4VPLg-unsplash.jpg'),
     defaultAvatar: require('~/assets/images/defaultAvatar.png'),
+    personalAvatar: require('~/assets/images/cook.jpg'),
+    project1: require('~/assets/images/project1-img.png'),
+    project2: require('~/assets/images/project2-img.png'),
+    project3: require('~/assets/images/project3-img.png'),
 };
 
 export default images;

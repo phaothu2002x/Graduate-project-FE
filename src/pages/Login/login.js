@@ -98,7 +98,7 @@ const Login = (props) => {
                         </div>
                         <div className={cx('col-12', 'mb-3')}>
                             <label htmlFor="confirmPass" className={cx('form-label', 'title')}>
-                                Confirm password
+                                Enter Password
                             </label>
                             <input
                                 type="password"
@@ -108,7 +108,7 @@ const Login = (props) => {
                                         : cx('form-control is-invalid', 'password-input')
                                 }
                                 id="confirmPass"
-                                placeholder="Confirm password"
+                                placeholder="Enter Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />

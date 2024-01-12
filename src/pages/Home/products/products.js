@@ -2,9 +2,33 @@ import classNames from 'classnames/bind';
 import styles from './Products.module.scss';
 import images from '~/assets/images';
 import { Link } from 'react-router-dom';
-
+import { useEffect, useState } from 'react';
+import { fetchAllProduct } from '~/services/productService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 const Products = (props) => {
+    const navigate = useNavigate();
+    const [productList, setProductList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentLimit, setCurrentLimit] = useState(3);
+    useEffect(() => {
+        fetchProduct();
+    }, []);
+
+    const fetchProduct = async () => {
+        let response = await fetchAllProduct(currentPage, currentLimit);
+        if (response && response.EC === 0) {
+            setProductList(response.DT.product);
+        } else if (response && response.EC !== 0) {
+            toast.error(response.EM);
+        }
+    };
+
+    const handleItemClick = (id) => {
+        navigate(`/product/${id}`);
+    };
+
     return (
         <div
             className={cx('product-wrapper')}
@@ -27,7 +51,7 @@ const Products = (props) => {
                             data-aos-duration="800"
                             data-aos-anchor-placement="top-center"
                         >
-                            Popular Keyboards
+                            Newest Keyboards
                         </h1>
                         <div className={cx('course-desc')}>
                             <p
@@ -49,68 +73,92 @@ const Products = (props) => {
                     {/* <!-- course-content --> */}
                     <div className={cx('course-content')}>
                         <div className={cx('course-list')}>
-                            {/* <!-- course-item1 --> */}
-                            <div className={cx('course-item')}>
-                                <div className={cx('thumb-wrap')}>
-                                    <a href="#!">
-                                        <img src={images.productImg} alt="course1" className={cx('thumb')} />
-                                    </a>
-                                </div>
+                            {productList && productList.length > 0 ? (
+                                productList.map((item, index) => (
+                                    <div className={cx('course-item')} key={index}>
+                                        <div className={cx('thumb-wrap')}>
+                                            <Link to={`/product/${item.id}`}>
+                                                <img src={item.thumbnail} alt={`item-${item.id}`} className={cx('thumb')} />
+                                            </Link>
+                                        </div>
 
-                                <div className={cx('course-info')}>
-                                    <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
-                                    <p className={cx('price')}>
-                                        Fee <strong>$200</strong>
-                                    </p>
-                                    <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
-                                    <div className={cx('course-length')}>
-                                        <p className={cx('class-numb')}>40 Classes</p>
-                                        <p className={cx('class-time')}>3 Months insurance</p>
+                                        <div className={cx('course-info')}>
+                                            <h2 className={cx('course-title')}>{item.name}</h2>
+                                            <p className={cx('price')}>
+                                                Fee <strong>${item.price}</strong>
+                                            </p>
+                                            <p className={cx('desc')}>{item.description}</p>
+                                            <div className={cx('course-length')}>
+                                                <p className={cx('class-numb')}>40 Classes</p>
+                                                <p className={cx('class-time')}>3 Months insurance</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                ))
+                            ) : (
+                                <>
+                                    {/* <!-- course-item1 --> */}
+                                    <div className={cx('course-item')}>
+                                        <div className={cx('thumb-wrap')}>
+                                            <a href="#!">
+                                                <img src={images.productImg} alt="course1" className={cx('thumb')} />
+                                            </a>
+                                        </div>
 
-                            {/* <!-- course-item2 --> */}
-                            <div className={cx('course-item')}>
-                                <div className={cx('thumb-wrap')}>
-                                    <a href="#!">
-                                        <img src={images.productImg2} alt="course1" className={cx('thumb')} />
-                                    </a>
-                                </div>
-
-                                <div className={cx('course-info')}>
-                                    <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
-                                    <p className={cx('price')}>
-                                        Fee <strong>$200</strong>
-                                    </p>
-                                    <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
-                                    <div className={cx('course-length')}>
-                                        <p className={cx('class-numb')}>40 Classes</p>
-                                        <p className={cx('class-time')}>3 Months insurance</p>
+                                        <div className={cx('course-info')}>
+                                            <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
+                                            <p className={cx('price')}>
+                                                Fee <strong>$200</strong>
+                                            </p>
+                                            <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
+                                            <div className={cx('course-length')}>
+                                                <p className={cx('class-numb')}>40 Classes</p>
+                                                <p className={cx('class-time')}>3 Months insurance</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    {/* <!-- course-item2 --> */}
+                                    <div className={cx('course-item')}>
+                                        <div className={cx('thumb-wrap')}>
+                                            <a href="#!">
+                                                <img src={images.productImg2} alt="course1" className={cx('thumb')} />
+                                            </a>
+                                        </div>
 
-                            {/* <!-- course-item3 --> */}
-                            <div className={cx('course-item')}>
-                                <div className={cx('thumb-wrap')}>
-                                    <a href="#!">
-                                        <img src={images.productImg3} alt="course1" className={cx('thumb')} />
-                                    </a>
-                                </div>
-
-                                <div className={cx('course-info')}>
-                                    <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
-                                    <p className={cx('price')}>
-                                        Fee <strong>$200</strong>
-                                    </p>
-                                    <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
-                                    <div className={cx('course-length')}>
-                                        <p className={cx('class-numb')}>40 Classes</p>
-                                        <p className={cx('class-time')}>3 Months insurance</p>
+                                        <div className={cx('course-info')}>
+                                            <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
+                                            <p className={cx('price')}>
+                                                Fee <strong>$200</strong>
+                                            </p>
+                                            <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
+                                            <div className={cx('course-length')}>
+                                                <p className={cx('class-numb')}>40 Classes</p>
+                                                <p className={cx('class-time')}>3 Months insurance</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    {/* <!-- course-item3 --> */}
+                                    <div className={cx('course-item')}>
+                                        <div className={cx('thumb-wrap')}>
+                                            <a href="#!">
+                                                <img src={images.productImg3} alt="course1" className={cx('thumb')} />
+                                            </a>
+                                        </div>
+
+                                        <div className={cx('course-info')}>
+                                            <h2 className={cx('course-title')}>Ergonomic keyboard</h2>
+                                            <p className={cx('price')}>
+                                                Fee <strong>$200</strong>
+                                            </p>
+                                            <p className={cx('desc')}>Enhance Your Comfort and Productivity</p>
+                                            <div className={cx('course-length')}>
+                                                <p className={cx('class-numb')}>40 Classes</p>
+                                                <p className={cx('class-time')}>3 Months insurance</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

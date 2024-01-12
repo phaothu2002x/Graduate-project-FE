@@ -89,7 +89,7 @@ const Header = (props) => {
                                 </NavLink>
                             </li>
                             <li className={cx('item', 'item-scss')}>
-                                <NavLink to="/manage-products" className="border-container" onClick={scrollToTop}>
+                                <NavLink to="/about" className="border-container" onClick={scrollToTop}>
                                     <i className="fa fa-user-secret" aria-hidden="true"></i>
                                     About
                                     <div className="border-inner"></div>
